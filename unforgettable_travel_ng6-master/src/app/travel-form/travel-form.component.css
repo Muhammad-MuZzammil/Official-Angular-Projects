@@ -1,0 +1,80 @@
+.reqVal {
+    padding-left: 15px;
+    color: #f00;
+    font-size: 14px;
+}
+.invalidVal{
+    color: #f00;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    text-align:center;
+    font-size: 15px;
+}
+.required-span{
+    padding-left: 5px;
+    color: #f00;
+    font-size: 14px;
+}
+
+.time_pickerKV input, 
+.time_pickerKV span, 
+.time_pickerKV select {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.time_pickerKV input {
+    max-width: 70px;
+    width: 100%;
+    margin: 0 7px;
+}
+.time_pickerKV select {
+    max-width: 75px;
+    width: 100%;
+}
+
+.close_fields_sign button.btn {
+    width: 37px;
+    height: 37px;
+    font-size: 15px;
+    line-height: 34px;
+    padding: 0;
+    display: inline-block;
+    cursor: pointer;
+    background: #d51d25;
+    color: #fff;
+    border: 1px solid #d51d25;
+    border-radius: 80%;
+    padding-bottom: 6px;
+}
+.add_fields_sign button.btn {
+    font-size: 0;
+    position: relative;
+    width: 37px;
+    height: 37px;
+    display: inline-block;
+    right: 40px;
+    float: right;
+}
+.add_fields_sign button.btn:before {
+    cursor: pointer;
+    line-height: 31px;
+    content: "+";
+    width: 37px;
+    height: 37px;
+    display: block;
+    position: absolute;
+    top: 0px;
+    font-size: 28px;
+    background: #d51d25;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    margin: 0px;
+}
+.add_fields_sign button.btn:focus {
+    
+    box-shadow: none;
+}

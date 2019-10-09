@@ -1,0 +1,27 @@
+<div class="head-sec">
+  <div class="container">
+    <div class="row main-title">
+      <div class="col-md-12">
+        <div class="title">
+          <h1>Find Second Hand Cars for Sale
+            <span class="count">
+              <a>( {{totalPage}} )</a>
+            </span>
+          </h1>
+          <ngx-loading  [show]="loading"
+                 [config]="{
+                backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+                backdropBorderRadius: '40px',
+                primaryColour: '#1A578C',
+                secondaryColour: '#1A578C',
+                tertiaryColour: '#1A578C'
+               }">
+
+                </ngx-loading>
+          <p>Search new and used cars by make and model.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<used-car-list (passTotalPage)="receiveTotalPage($event)"></used-car-list>

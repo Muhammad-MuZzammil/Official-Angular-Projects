@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row main-title">
+    <div class="col-md-7">
+      <div class="title">
+        <h1>Used Cars Trader &amp; Dealers in Pakistan<span class="count"><a
+              >( {{generalVarArr.totalRecords}} )</a></span></h1>
+        <p>Search new and used cars Dealers/Traders.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="used-car-list sec-saiyaara-car">
+    <div class="row">
+      <dealer-showroom-listing (passTotalRecords)="receiveTotalRecords($event)"></dealer-showroom-listing>
+    </div>
+  </div>
+</div>

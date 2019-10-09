@@ -1,0 +1,16 @@
+.moreSearchDiv{
+    display: none;
+}
+.s-s-wrap{
+    position: relative;
+}
+.ss-wrap{
+    width: 100%;
+    float: left;
+}
+.moreSearchDiv{
+    float: left;
+}
+#secondHandCarSearch .moreSearchDiv .form-group.col-md-3 {
+    height: 70px;
+}

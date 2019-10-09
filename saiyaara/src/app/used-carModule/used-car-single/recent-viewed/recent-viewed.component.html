@@ -1,0 +1,45 @@
+ <ngx-loading [show]="loading" [config]="{
+  backdropBackgroundColour: 'rgba(255, 251, 251, 0.51)',
+  backdropBorderRadius: '40px',
+  primaryColour: '#1A578C',
+  secondaryColour: '#1A578C',
+  tertiaryColour: '#1A578C'
+  }">
+  </ngx-loading>
+<div class="recent-viewed">
+    <div class="container">
+    <div class="sub-title">
+     <h3 *ngIf="recentCars?.length">Recent View Cars</h3>
+    </div>
+   <div>
+   </div>
+    <div class="row item">
+      <div class="col-md-3" *ngFor="let recentCar of recentCars; let i =index">
+        <div class="pro-car cursorPointer">
+          <div class="thumbnail">
+            <div class="tag" *ngIf="recentCar.package_id=== 2">Featured</div>
+            <div *ngIf="recentCar.package_id=== 3" class="urgentTag">Urgent</div>
+            <a [routerLink]="['/used-car-single',recentCar.id]" class="com-img">
+              <img *ngIf="recentCar.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg') == -1" src="{{carAdsImages}}/{{recentCar?.user_id}}/{{imageSize2}}{{recentCar.dummy_picture[0]['image1']}}" alt="">
+              <img *ngIf="recentCar.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg') != -1" src="{{recentCar.dummy_picture[0]['image1']}}" alt="">
+            </a>
+          </div>
+          <div class="caption">
+            <h4><a [routerLink]="['/used-car-single',recentCar.id]">{{recentCar.munuf_name}}
+              {{recentCar.car_name}} {{recentCar.model_name}}  {{recentCar.year}}</a></h4>
+            <div class="additional-info">
+              <ul>
+                <li *ngIf="recentCar.city_name"><span><i class="fa fa-map-marker" aria-hidden="true"></i></span>{{recentCar.city_name}}</li>
+                <li><span><i class="fa fa-tachometer" aria-hidden="true"></i></span>{{recentCar.mileage}}
+                  Km</li>
+              </ul>
+            </div>
+            <div class="p-area">
+              <p class="price"> {{numberWithCommas(recentCar.price)}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

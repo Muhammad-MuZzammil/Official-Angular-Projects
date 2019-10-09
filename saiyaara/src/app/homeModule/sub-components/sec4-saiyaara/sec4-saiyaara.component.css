@@ -1,0 +1,15 @@
+.popularBrands{
+    cursor: pointer;
+}
+.searchCount{
+    color:#000000 !important
+}
+.populars-search{
+    list-style: none;
+}
+
+.popupHeader{
+	font-weight: bold;
+    text-align: center;
+    color: #0842B0;
+}

@@ -1,0 +1,200 @@
+<div class="row">
+  <div class="col-md-9 tab-section">
+    <div class="panel with-nav-tabs panel-default">
+      <div class="panel-heading">
+        <ul class="nav nav-tabs">
+          <li class="active"><a
+              href="#tab1default"
+              data-toggle="tab">Inventory</a></li>
+          <li><a href="#tab2default"
+              data-toggle="tab">About this
+              Dealership</a></li>
+          <li><a href="#tab3default"
+            data-toggle="tab" (click)="getReviews(generalArr['paramsID'], null, true)">Reviews</a></li>    
+        </ul>
+      </div>
+      <div class="panel-body">
+        <div class="tab-content">
+          <div class="tab-pane fade in active"
+            id="tab1default">
+            <h3>Featured Inventory</h3>
+            <p>The Car images are stock photos
+              and are not axact
+              representations of the vehicles
+              offered for sale.</p>
+            <div class="sub-panel-heading">
+              <ul class="nav nav-tabs">
+                <li><a href="#subtab2"
+                    data-toggle="tab">Used</a></li>
+              </ul>
+            </div>
+            <div class="tab-content">
+                <h3 class="title">Used Car</h3>
+                <ul class="row car-listing">
+                    <ngx-loading  [show]="loading2"
+                    [config]="{
+                    backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+                    backdropBorderRadius: '40px',
+                    primaryColour: '#1A578C',
+                    secondaryColour: '#1A578C',
+                    tertiaryColour: '#1A578C'
+                    }">
+                    </ngx-loading>
+                  <li class="col-md-4" *ngFor="let dealerUsedCar of generalArr.dealerUsedCars; let i =index">
+                    <div
+                      class="car-box">
+                      <div
+                        class="img">
+                        <a [routerLink]="['/used-car-single', dealerUsedCar.id]">
+                          <img
+                          src="{{imageUrl}}/{{dealerUsedCar.user_id}}/{{imageSize2}}{{dealerUsedCar.picture[0].image1}}"
+                          width="500"
+                          height="500">
+                        </a>
+                          </div>
+                      <div
+                        class="car-d">
+                        <h3>
+                          <a [routerLink]="['/used-car-single', dealerUsedCar.id]">{{dealerUsedCar.add_title}} {{dealerUsedCar.first_name}}</a></h3>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div>
+                 
+                    <div class="container">
+                      <div class="text-center">
+                        <ul *ngIf="carAds && carAds.length; let i = index" class="pagination">
+                          <li [ngClass]="{disabled:firstPrevDisable2}" class="cursorPointer">
+                              <a  (click)="pagination2(0)">First</a>
+                          </li>
+                          <li [ngClass]="{disabled:firstPrevDisable2}" class="cursorPointer">
+                              <a (click)="pagination2(globalCV2-1)">Previous</a>
+                          </li>
+                          <li *ngIf="paginationPageNo?.length > 4 && globalCV2 > 1">
+                            <a id="page" (click)="pagination2(0)" class="cursorPointer">1</a>
+                          </li>
+                          <li  class="disabled" *ngIf="paginationPageNo?.length > 4 && globalCV2 != 0">
+                            <a id="page" class="cursorPointer disabled">...</a>
+                          </li>
+                          <li *ngFor="let page of paginationPageNo | slice: startOff2:startOff2+4 ; let i = index; " class="active" [ngClass]="{'active disabled':globalCV2 === page}">
+                            <a id="page" class="cursorPointer" (click)="pagination2(page)">{{page +1 }}
+                            </a>
+                          </li>
+                          <li  class="disabled" *ngIf="paginationPageNo?.length > 4 && globalCV2 < user_ads?.last_page-4">
+                            <a id="page" class="cursorPointer disabled">...</a>
+                          </li>
+                          <li  *ngIf="paginationPageNo?.length > 4 && globalCV2 < user_ads?.last_page-5">
+                            <a id="page" class="cursorPointer" (click)="pagination2(user_ads?.last_page-1)">{{ user_ads?.last_page }}</a>
+                          </li>  
+                          <li [ngClass]="{disabled:lastNextDisable2}">
+                              <a (click)="pagination2(globalCV2 +1)"   class="cursorPointer">Next</a>
+                          </li>
+                          <li [ngClass]="{disabled:lastNextDisable2}">
+                              <a (click)="pagination2(user_ads?.last_page-1)"   class="cursorPointer">Last</a>
+                          </li>
+                      </ul>
+                      
+                      </div>
+                  </div>
+                  </div>
+            </div>
+
+          </div>
+          <div class="tab-pane fade"
+            id="tab2default">
+            <p [innerHTML]="generalArr.aboutUs"></p>
+          </div>
+          <div class="tab-pane fade"
+            id="tab3default">
+            <ngx-loading  [show]="loading3"
+              [config]="{
+              backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+              backdropBorderRadius: '40px',
+              primaryColour: '#1A578C',
+              secondaryColour: '#1A578C',
+              tertiaryColour: '#1A578C'
+              }">
+              </ngx-loading>
+            <ul *ngIf="reviews?.total != 0">
+              <li *ngFor="let review of reviews?.data">
+                 <div class="username">
+                  <h3>{{review?.user_name}}</h3>
+                </div> 
+                <div class="username">
+                  <p>{{review?.review}}</p>
+                </div> 
+              </li>
+            </ul>
+            <div class="nofound" *ngIf="reviews?.total == 0" ><h4>There is no Reviews</h4></div>
+            <div class="pagination-wrap"  *ngIf="reviews?.total != 0">
+              <ul  class="pagination">
+                  <li [ngClass]="{disabled:firstPrevDisable}" class="cursorPointer">
+                      <a  (click)="pagination(0)">First</a>
+                  </li>
+                  <li [ngClass]="{disabled:firstPrevDisable}" class="cursorPointer">
+                      <a (click)="pagination(globalCV-1)">Previous</a>
+                  </li>
+                  <li *ngIf="paginationPageNo2?.length > 4 && globalCV > 1">
+                    <a id="page" (click)="pagination(0)" class="cursorPointer">1</a>
+                  </li>
+                  <li  class="disabled" *ngIf="paginationPageNo2?.length > 4 && globalCV != 0">
+                    <a id="page" class="cursorPointer disabled">...</a>
+                  </li>
+                  <li *ngFor="let page of  paginationPageNo2  | slice: startOff:(startOff+4); let i = index; " class="active" [ngClass]="{'active disabled':globalCV === page}">
+                    <a id="page" class="cursorPointer" (click)="pagination(page)">{{page +1 }}
+                    </a>
+                  </li>
+                  <li  class="disabled" *ngIf="paginationPageNo2?.length > 4 && globalCV < reviews?.last_page-4">
+                    <a id="page" class="cursorPointer disabled">...</a>
+                  </li>
+                  <li  *ngIf="paginationPageNo2?.length > 4 && globalCV < reviews?.last_page-5">
+                    <a id="page" class="cursorPointer" (click)="pagination(reviews?.last_page-1)">{{ reviews?.last_page }}</a>
+                  </li>  
+                  <li [ngClass]="{disabled:lastNextDisable}">
+                      <a (click)="pagination(globalCV +1)"   class="cursorPointer">Next</a>
+                  </li>
+                  <li [ngClass]="{disabled:lastNextDisable}">
+                      <a (click)="pagination(reviews?.last_page-1)"   class="cursorPointer">Last</a>
+                  </li>
+              </ul>
+            </div>
+            <!--  -->
+            <div class="review-txt-wrap" *ngIf="userData?.data?.login != 'false'">
+              <form method="post" ngNativeValidate (submit)="addReview(generalArr?.paramsID, userData?.data?.user_id)">
+                <div class="form-group" >
+                  <label>Review
+                    <textarea class="form-control" [(ngModel)]="s_review" name="s_review" required placeholder="Enter Review"></textarea>
+                  </label>
+                </div>
+                <div class="form-group">
+                  <input type="submit" class="btn btn-primary">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 sidebar">
+    <div class="map-area">
+      <h3>Location</h3>
+      <div class="map">
+          <agm-map
+           [latitude]="directionData.origin.lat"
+            [longitude]="directionData.origin.lng"
+            [zoom]="15"
+            >
+              <agm-marker
+              [latitude]="directionData.origin.lat"
+              [longitude]="directionData.origin.lng"
+              >
+          </agm-marker>
+            </agm-map>
+        </div>
+    </div>
+    <div class="ad"><img src="../../../../assets/images/ad7.jpg"
+        width="285" height="247"></div>
+  </div>
+</div>

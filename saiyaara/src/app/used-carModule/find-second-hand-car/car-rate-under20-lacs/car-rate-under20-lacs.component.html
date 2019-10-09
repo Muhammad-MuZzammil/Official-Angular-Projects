@@ -1,0 +1,165 @@
+<div class="used-car-s sec-saiyaara-sea">
+  <div class="heading-area"><h3>Used Cars under 20 lacs</h3><a 
+    [routerLink]="['/used-car']" [queryParams]="{price: '1000000,2000000'}"
+      class="link cursorPointer">View More Listing</a></div>
+  <div class="carousel row slide" id="Carousel2" *ngIf="carDescs">
+    <div class="carousel-inner">
+      <div class="item active" >
+        <ul class="car-list">
+          <ng-container *ngFor="let carDesc of carDetail?.car_under_twenty_lac | slice:0:4; let i=
+            index">
+            <li class="col-sm-3">
+              <div class="pro-car">
+                <div class="thumbnail cursorPointer">
+                  <div class="tag" *ngIf="carDesc?.package_id=== 2">Featured</div>
+                  <div *ngIf="carDesc?.package_id=== 3" class="urgentTag">Urgent</div>
+                  <a [routerLink]="['/used-car-single',carDesc.id]" class="com-img  ad-thumbnail">
+                      <img
+                      *ngIf="carDesc.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg')==
+                      -1"
+                      src="{{usedCarImages}}/{{carDesc?.user_id}}/{{imageSize2}}{{carDesc.dummy_picture[0]['image1']}}"
+                      alt="">
+
+                    <img
+                      *ngIf="carDesc.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg')
+                      != -1" src="{{carDesc.dummy_picture[0]['image1']}}"
+                      alt="">
+                    </a>
+                </div>
+                <div class="caption">
+                  <h4 class="cursorPointer">
+                    <a [routerLink]="['/used-car-single',carDesc.id]">{{carDesc?.munuf_name}}
+                      {{carDesc?.car_name}}
+                      {{carDesc?.model_name}}
+                      {{carDesc?.year}} </a></h4>
+                  <div class="additional-info">
+                    <ul>
+                      <li *ngIf="carDesc?.city_name"><span><i class="fa
+                            fa-map-marker"
+                            aria-hidden="true"></i></span>{{carDesc?.city_name}}</li>
+                      <li><span><i class="fa
+                            fa-tachometer"
+                            aria-hidden="true"></i></span>{{carDesc?.mileage}}
+                        Km</li>
+                    </ul>
+                  </div>
+                  <div class="p-area">
+                    <p class="price"> {{numberWithCommas(carDesc.price)}}</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ng-container>
+
+        </ul>
+      </div><!-- /Slide1 -->
+      <div class="item" *ngIf="carDetail?.car_under_twenty_lac?.length > 4">
+        <ul class="car-list">
+          <ng-container *ngFor="let carDesc of carDetail?.car_under_twenty_lac | slice:4:8 ; let i=
+            index">
+            <li class="col-sm-3" >
+              <div class="pro-car">
+                <div class="thumbnail cursorPointer">
+                  <div class="tag" *ngIf="carDesc?.package_id=== 2">Featured</div>
+                  <div *ngIf="carDesc?.package_id=== 3" class="urgentTag">Urgent</div>
+                  <a [routerLink]="['/used-car-single',carDesc.id]"  class="com-img  ad-thumbnail">
+                      <img
+                      *ngIf="carDesc.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg')==
+                      -1"
+                      src="{{usedCarImages}}/{{carDesc?.user_id}}/{{imageSize2}}{{carDesc.dummy_picture[0]['image1']}}"
+                      alt="">
+
+                    <img
+                      *ngIf="carDesc.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg')
+                      != -1" src="{{carDesc.dummy_picture[0]['image1']}}"
+                      alt="">
+                    </a>
+                </div>
+                <div class="caption">
+                  <h4 class="cursorPointer"
+                    ><a [routerLink]="['/used-car-single',carDesc.id]">{{carDesc?.munuf_name}}
+                      {{carDesc?.car_name}}
+                      {{carDesc?.model_name}}
+                      {{carDesc?.year}} </a></h4>
+                  <div class="additional-info">
+                    <ul>
+                      <li *ngIf="carDesc?.city_name"><span><i class="fa
+                            fa-map-marker"
+                            aria-hidden="true"></i></span>{{carDesc?.city_name}}</li>
+                      <li><span><i class="fa
+                            fa-tachometer"
+                            aria-hidden="true"></i></span>{{carDesc?.mileage}}
+                        Km</li>
+                    </ul>
+                  </div>
+                  <div class="p-area">
+                    <p class="price"> {{numberWithCommas(carDesc.price)}}</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+      <div class="item" *ngIf="carDetail?.car_under_twenty_lac?.length > 8">
+        <ul class="car-list">
+          <ng-container *ngFor="let carDesc of carDetail?.car_under_twenty_lac | slice:8:12 ; let i=
+            index">
+            <li class="col-sm-3" >
+              <div class="pro-car">
+                <div class="thumbnail cursorPointer"
+                 >
+                  <div class="tag" *ngIf="carDesc?.package_id=== 2">Featured</div>
+                  <div *ngIf="carDesc?.package_id=== 3" class="urgentTag">Urgent</div>
+                  <a  [routerLink]="['/used-car-single',carDesc.id]"  class="com-img  ad-thumbnail">
+                      <img
+                      *ngIf="carDesc.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg')==
+                      -1"
+                      src="{{usedCarImages}}/{{carDesc?.user_id}}/{{imageSize}}{{carDesc.dummy_picture[0]['image1']}}"
+                      alt="">
+
+                    <img
+                      *ngIf="carDesc.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg')
+                      != -1" src="{{carDesc.dummy_picture[0]['image1']}}"
+                      alt="">
+                  </a>
+                </div>
+                <div class="caption">
+                  <h4 class="cursorPointer"
+                    ><a [routerLink]="['/used-car-single',carDesc.id]">{{carDesc?.munuf_name}}
+                      {{carDesc?.car_name}}
+                      {{carDesc?.model_name}}
+                      {{carDesc?.year}} </a></h4>
+                  <div class="additional-info">
+                    <ul>
+                      <li *ngIf="carDesc?.city_name"><span><i class="fa
+                            fa-map-marker"
+                            aria-hidden="true"></i></span>{{carDesc?.city_name}}</li>
+                      <li><span><i class="fa
+                            fa-tachometer"
+                            aria-hidden="true"></i></span>{{carDesc?.mileage}}
+                        Km</li>
+                    </ul>
+                  </div>
+                  <div class="p-area">
+                    <p class="price"> {{numberWithCommas(carDesc.price)}}</p>
+                  </div>
+
+                </div>
+              </div>
+            </li>
+          </ng-container>
+
+        </ul>
+      </div>
+    </div>
+    <nav>
+      <ul class="control-box pager">
+        <li *ngIf="carDetail?.car_under_twenty_lac?.length > 4"><a data-slide="prev" href="#Carousel2" class=""><i class="glyphicon
+              glyphicon-chevron-left"></i></a></li>
+        <li *ngIf="carDetail?.car_under_twenty_lac?.length > 4"><a data-slide="next" href="#Carousel2" class=""><i class="glyphicon
+              glyphicon-chevron-right"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</div>

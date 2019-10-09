@@ -1,0 +1,658 @@
+<div class="car-loading" [hidden]="!loading">
+    <svg class="mainSVG" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+        <defs>   
+        <path id="puff" d="M4.5,8.3C6,8.4,6.5,7,6.5,7s2,0.7,2.9-0.1C10,6.4,10.3,4.1,9.1,4c2-0.5,1.5-2.4-0.1-2.9c-1.1-0.3-1.8,0-1.8,0
+        s-1.5-1.6-3.4-1C2.5,0.5,2.1,2.3,2.1,2.3S0,2.3,0,4.4c0,1.1,1,2.1,2.2,2.1C2.2,7.9,3.5,8.2,4.5,8.3z" fill="#fff"/>
+        <circle id="dot"  cx="0" cy="0" r="5" fill="#000"/>   
+        </defs>
+        <circle id="mainCircle" fill="none" stroke="none" stroke-width="2" stroke-miterlimit="10" cx="400" cy="300" r="130"/>
+        <circle id="circlePath" fill="none" stroke="none" stroke-width="2" stroke-miterlimit="10" cx="400" cy="300" r="80"/>
+        <g id="mainContainer" >
+            <g id="car">
+        <path id="carRot" fill="#0842b0"  d="M45.6,16.9l0-11.4c0-3-1.5-5.5-4.5-5.5L3.5,0C0.5,0,0,1.5,0,4.5l0,13.4c0,3,0.5,4.5,3.5,4.5l37.6,0
+        C44.1,22.4,45.6,19.9,45.6,16.9z M31.9,21.4l-23.3,0l2.2-2.6l14.1,0L31.9,21.4z M34.2,21c-3.8-1-7.3-3.1-7.3-3.1l0-13.4l7.3-3.1
+        C34.2,1.4,37.1,11.9,34.2,21z M6.9,1.5c0-0.9,2.3,3.1,2.3,3.1l0,13.4c0,0-0.7,1.5-2.3,3.1C5.8,19.3,5.1,5.8,6.9,1.5z M24.9,3.9
+        l-14.1,0L8.6,1.3l23.3,0L24.9,3.9z"/>      
+            </g>
+        </g>
+    </svg>
+</div>
+<div class="used-car-list sec-saiyaara-car u-car">
+  <div class="container" >
+      <form id="adFilter">
+      <div class="row">
+          <div *ngIf="allFields?.user_id && user_ads?.data[0]?.full_name" class="dealerName">
+              <h1>Dealer Name: {{user_ads?.data[0]?.dealer_name}}</h1>
+            </div>
+          <div class="col-md-3 left-sidebar">
+              <div id="accordion" class="panel panel-primary behclick-panel">
+                  <div class="panel-heading">
+                      <h3 class="panel-title">Search Filter Car</h3> 
+                      <a href="javascript:;" *ngIf="filterData?.saiyaara_certified?.length || filterData?.manufacture?.length || filterData?.car_name?.length || filterData?.car_model?.length || filterData?.body_type?.length || filterData?.ad_city?.length || filterData?.reg_city?.length || filterData?.Unregistered_city?.length || filterData?.transmission?.length || filterData?.engine_type?.length || filterData?.assembly?.length || (filterData?.engine_capacity != '0,5000' && filterData?.engine_capacity != null )  || filterData?.color?.length || (filterData?.price != '0,100000000' && filterData?.price != null ) || (filterData?.mileage != '0,1000000' && filterData?.mileage != null )" (click)="resetFilter('all')" class="red">Clear</a>
+                  </div>
+                  <div class="panel-body" >
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a  class="toggle-panel"    href="#collapse0">
+                              <i class="indicator fa fa-caret-right" aria-hidden="true"></i>
+                              Inspected Cars
+                              </a>
+                              <a href="javascript:;"  *ngIf="filterData?.saiyaara_certified?.length"  (click)="resetFilter('saiyaara_certified')" class="red">Clear</a>
+                          </h4>
+                      </div>
+                      <div id="collapse0" class="kv-panel  panel-show-normal">
+                          <ul class="list-group">
+                              <li class="list-group-item">
+                                  <div class="checkbox">
+                                      <label class="filter-check clearfix">
+                                      <a  rel="nofollow" title="Cars for Sale in
+                                          Pakistan">
+                                      <input type="checkbox"  id="inspected_car" name="saiyaara_certified" (change)="adFilter()" value="1">
+                                      Saiyaara Certified
+                                      <span class="pull-right count">{{generalVarArr.saiyaaraCertifiedCount}}</span>
+                                      </a>
+                                      </label>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                      
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="toggle-panel" href="#collapse102" id="manufacture">
+                                <i class="indicator fa fa-caret-right" aria-hidden="true"></i>
+                                Make
+                                </a>
+                                <a href="javascript:;" *ngIf="filterData?.manufacture?.length" (click)="resetFilter('manufacture')"  class="red">Clear</a>
+                            </h4>
+                        </div>
+                        <div id="collapse102" class="kv-panel  ">
+                            <input type="text" [(ngModel)]="m_s" name="m_s" class="car-attr" placeholder="Search Make" >
+                            <ngx-loading  [show]="!loading2"
+                            [config]="{
+                            backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+                            backdropBorderRadius: '40px',
+                            primaryColour: '#1A578C',
+                            secondaryColour: '#1A578C',
+                            tertiaryColour: '#1A578C'
+                            }">
+                            </ngx-loading>
+                            <ul class="list-group">
+                                <li class="list-group-item"  *ngFor="let manuf_name of carManufactures | search:m_s; let i =index ">
+                                <div class="checkbox" >
+                                    <label class="filter-check clearfix">
+                                    <a>
+                                    <input type="radio"  id="manufacture_car"  name="manufacture"
+                                    [value]="manuf_name.id" [checked]="allFields?.manufacture == manuf_name.id" (change)="getCarNameAndCarModel('manu', manuf_name.id);adFilter();manuCarNameTouch=true">
+                                    {{manuf_name.name}}
+                                    <span class="pull-right count">{{manuf_name.count}}</span>
+                                    </a>
+                                    </label>
+                                </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div [hidden]="!carNameShow">
+                            <div [hidden]="!carNameShow">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a  class="toggle-panel"  href="#collapse103" id="carname">
+                                        <i class="indicator fa fa-caret-right" aria-hidden="true"></i>
+                                        Car Name
+                                        </a>
+                                        <a href="javascript:;"  *ngIf="filterData?.car_name?.length"  (click)="resetFilter('car_name')" class="red">Clear</a>
+                                    </h4>
+                                </div>
+                                <div id="collapse103" class="kv-panel reset-scroll-c " [ngStyle]="{'overflow-y': carAttrLoad1 ? 'hidden' : 'scroll'}">
+                                    <input type="text" [(ngModel)]="c_s" name="c_s" class="car-attr" placeholder="Search Car Name" >
+                                    <div class="loading" *ngIf="carAttrLoad1">
+                                        <ngx-loading  [show]="carAttrLoad1"
+                                        [config]="{
+                                        backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+                                        backdropBorderRadius: '40px',
+                                        primaryColour: '#1A578C',
+                                        secondaryColour: '#1A578C',
+                                        tertiaryColour: '#1A578C'
+                                        }">
+                                        </ngx-loading>
+                                    </div>
+                                    <ul class="list-group">
+                                        <li class="list-group-item"  *ngFor="let carname of carnames | search:c_s; let i =index">
+                                        <div class="checkbox" >
+                                            <label class="filter-check clearfix">
+                                            <a>
+                                            <input type="radio"  id="car_name"  name="car_name"
+                                            [value]="carname.id" [checked]="allFields?.car_name == carname.id && !manuCarNameTouch" (change)="getCarNameAndCarModel('carname', carname.id);adFilter();manuCarNameTouch=true">
+                                            {{carname.name}}
+                                            <span class="pull-right count">{{carname.count}}</span>
+                                            </a>
+                                            </label>
+                                        </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div [hidden]="!carModelShow">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a  class="toggle-panel"  href="#collapse104" id="carmodel">
+                                        <i class="indicator fa fa-caret-right" aria-hidden="true"></i>
+                                        Car Model
+                                        </a>
+                                        <a href="javascript:;"  *ngIf="filterData?.car_model?.length" (click)="resetFilter('car_model')" class="red">Clear</a>
+                                    </h4>
+                                </div>
+                                <div id="collapse104" class="kv-panel reset-scroll-m    qs " [ngClass]="{'panel-show-normal': carmodels?.length == 0}" [ngStyle]="{'overflow-y': carAttrLoad2 ? 'hidden' : 'scroll'}">
+                                    <input type="text" [(ngModel)]="cm_s" *ngIf="carmodels?.length != 0" name="cm_s" class="car-attr" placeholder="Search Car Model" >
+                                    <div class="loading" *ngIf="carAttrLoad2">
+                                        <ngx-loading [show]="carAttrLoad2"
+                                        [config]="{
+                                        backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+                                        backdropBorderRadius: '40px',
+                                        primaryColour: '#1A578C',
+                                        secondaryColour: '#1A578C',
+                                        tertiaryColour: '#1A578C'
+                                        }">
+                                        </ngx-loading>
+                                    </div>
+                                    <ul class="list-group" *ngIf="carmodels?.length != 0">
+                                        <li class="list-group-item"  *ngFor="let carmodel of carmodels | search:cm_s; let i =index">
+                                        <div class="checkbox" >
+                                            <label class="filter-check clearfix">
+                                            <a>
+                                            <input type="checkbox"  id="car_model" class="car_model"  name="car_model.{{i}}"
+                                            [value]="carmodel.id" [checked]="allFields?.car_model == carmodel.id && !manuCarNameTouch" (change)="adFilter();manuCarNameTouch=true">
+                                            {{carmodel.name}}
+                                            <span class="pull-right count">{{carmodel.count}}</span>
+                                            </a>
+                                            </label>
+                                        </div>
+                                        </li>
+                                    </ul>
+                                    <p class="nofoundmsg" *ngIf="carmodels?.length == 0">Model not exist for this car </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a  class="toggle-panel"  href="#collapse100" id="bodytype">
+                            <i class="indicator fa fa-caret-right" aria-hidden="true"></i>
+                            Body Type
+                            </a>
+                            <a href="javascript:;" *ngIf="filterData?.body_type?.length" (click)="resetFilter('body_type')" class="red">Clear</a>
+                        </h4>
+                        </div>
+                        <div id="collapse100" class="kv-panel  ">
+                            <ul class="list-group">
+                                <li class="list-group-item"  *ngFor="let body_type of carBodyTypes; let i =index">
+                                <div class="checkbox" >
+                                    <label class="filter-check clearfix">
+                                    <a >
+                                    <input type="checkbox"  id="body_type"  name="body_type.{{i}}"
+                                    [value]="body_type.id" [checked]="allFields?.body_type == body_type.id" (change)="adFilter()">
+                                    {{body_type.name}}
+                                    <span class="pull-right count">{{body_type.count}}</span>
+                                    </a>
+                                    </label>
+                                </div>
+                                </li>
+                            </ul>
+                        </div>
+                      <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a  class="toggle-panel"  href="#collapse11"><i
+                                    class="indicator
+                                    fa fa-caret-right" aria-hidden="true"></i>City</a>
+                                    <a href="javascript:;" *ngIf="filterData?.ad_city?.length"  (click)="resetFilter('ad_city')" class="red">Clear</a>    
+                            </h4>
+                        </div>
+                        <div id="collapse11" class="kv-panel  ">
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngFor="let carCity of adCarCities; let i =index">
+                                <div class="checkbox">
+                                    <label class="filter-check clearfix">
+                                    <a  title="Cars for Sale in Karachi, Pakistan">
+                                    <input type="checkbox"  (change)="adFilter()" id="ad_city"  name="ad_city.{{i}}" [value]="carCity.id" [checked]="allFields?.ad_city == carCity.id"  >
+                                    {{carCity.name}}
+                                    <span class="pull-right count">{{carCity.count}}</span>
+                                    </a>
+                                    </label>
+                                </div>
+                                </li>
+                            </ul>
+                        </div>
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a  class="toggle-panel"  href="#collapse3"><i
+                                  class="indicator
+                                  fa fa-caret-right" aria-hidden="true"></i>Registration City</a>
+                                  <a href="javascript:;"  *ngIf="filterData?.reg_city?.length"   (click)="resetFilter('reg_city')" class="red">Clear</a>  
+                          </h4>
+                      </div>
+                      <div id="collapse3" class="kv-panel  ">
+                        
+                          <ul class="list-group">
+                              <li class="list-group-item"  *ngFor="let carCity of carCities; let i =index">
+                              <div class="checkbox">
+                                  <label class="filter-check clearfix">
+                                  <a  title="Cars for Sale in Karachi, Pakistan">
+                                  <input type="checkbox"  (change)="adFilter()" id="city"  name="reg_city.{{i}}" [value]="carCity.id" [checked]="allFields?.reg_city == carCity.id"  >
+                                  {{carCity.name}}
+                                  <span class="pull-right count">{{carCity.count}}</span>
+                                  </a>
+                                  </label>
+                              </div>
+                              </li>
+                          </ul>
+                      </div>
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a  class="toggle-panel"    href="#collapse101">
+                                <i class="indicator fa fa-caret-right" aria-hidden="true"></i>
+                                Unregistered City
+                                </a>
+                                <a href="javascript:;"  *ngIf="filterData?.Unregistered_city?.length"  (click)="resetFilter('Unregistered_city')" class="red">Clear</a>
+                            </h4>
+                        </div>
+                        <div id="collapse101" class="kv-panel panel-show-normal">
+                        
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="checkbox">
+                                        <label class="filter-check clearfix">
+                                        <a  rel="nofollow" title="Cars for Sale in
+                                            Pakistan">
+                                        <input type="checkbox"  id="Unregistered_city" name="Unregistered_city" (change)="adFilter()" value="1">
+                                        Unregistered City
+                                        <span class="pull-right count">{{carUnregisteredCount || 0 }}</span>
+                                        </a>
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a  class="toggle-panel"  href="#collapse4"><i
+                                  class="indicator
+                                 fa fa-caret-right" aria-hidden="true"></i>Transmission</a>
+                                 <a href="javascript:;"   *ngIf="filterData?.transmission?.length"  (click)="resetFilter('transmission')" class="red">Clear</a> 
+                          </h4>
+                      </div>
+                      <div id="collapse4" class="kv-panel panel-show-normal">
+                            
+                            <ul class="list-group">
+                              <li class="list-group-item" *ngFor="let tranmissoin of carTransmissions; let i =index" >
+                                  <div class="checkbox">
+                                      <label class="filter-check clearfix">
+                                      <a  title="Cars for Sale in Karachi, Pakistan">
+                                      <input type="checkbox"   (change)="adFilter()" id="tranmissoin"  name="transmission.{{i}}"
+                                      [value]="tranmissoin.tranmissoin" [checked]="allFields?.transmission == tranmissoin.tranmissoin" >
+                                      {{tranmissoin.tranmissoin}}
+                                      <span class="pull-right count">{{tranmissoin.count}}</span>
+                                      </a>
+                                      </label>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a  class="toggle-panel"  href="#collapse5"><i
+                                  class="indicator
+                                  fa fa-caret-right" aria-hidden="true"></i>Engine Type</a>
+                                  <a href="javascript:;" *ngIf="filterData?.engine_type?.length"  (click)="resetFilter('engine_type')" class="red">Clear</a>    
+                          </h4>
+                      </div>
+                      <div id="collapse5" class="kv-panel">
+                          <ul class="list-group">
+                              <li class="list-group-item" *ngFor="let engineType of carEngineTypes; let i = index" >
+                                  <div class="checkbox" >
+                                      <label class="filter-check clearfix">
+                                      <a
+                                          title="Cars
+                                          for Sale in Karachi, Pakistan">
+                                      <input type="checkbox"  (change)="adFilter()" id="engine_type" name="engine_type.{{i}}" [checked]="allFields?.engine_type == engineType.engine_type" [value]="engineType.engine_type"
+                                      >
+                                      {{engineType.engine_type}}
+                                      <span class="pull-right count">{{engineType.count}}</span>
+                                      </a>
+                                      </label>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a  class="toggle-panel"  href="#collapse6"><i
+                                  class="indicator
+                                  fa fa-caret-right" aria-hidden="true"></i>Assembly</a>
+                                  <a href="javascript:;"  *ngIf="filterData?.assembly?.length"  (click)="resetFilter('assembly')" class="red">Clear</a>    
+                          </h4>
+                      </div>
+                      <div id="collapse6" class="kv-panel panel-show-normal">
+                            
+                          <ul class="list-group">
+                              <li class="list-group-item" *ngFor="let assembly of carAssembly; let i = index">
+                                  <div class="checkbox">
+                                      <label class="filter-check clearfix">
+                                      <a
+                                          title="Cars
+                                          for Sale in Karachi, Pakistan">
+                                      <input type="checkbox"   (change)="adFilter()" id="assembly"  name="assembly.{{i}}"
+                                      [value]="assembly.car_assemble" [checked]="allFields?.assembly == assembly.car_assemble" >
+                                      {{assembly.car_assemble}}
+                                      <span class="pull-right count">{{assembly.count}}</span>
+                                      </a>
+                                      </label>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a  class="toggle-panel"  href="#collapse7"><i
+                                  class="indicator
+                                  fa fa-caret-right" aria-hidden="true"></i>Engine Capacity
+                              (cc)</a>
+                              <a href="javascript:;"  *ngIf="filterData?.engine_capacity != '0,5000' && filterData?.engine_capacity"  (click)="resetFilter('engine_capacity')" class="red">Clear</a> 
+                          </h4>
+                      </div>
+                      <div id="collapse7" class="kv-panel panel-show-normal">
+                          <ul class="list-group">
+                              <li class="list-group-item">
+                                  <div class="checkbox">
+                                      <label class="filter-check clearfix">
+                                      <a
+                                          title="Cars
+                                          for Sale in Karachi, Pakistan">
+                                      Car Capacity: <b>0 CC</b> <b> to 5000 CC</b>
+                                      <input name="engine_capacity" id="ex2" type="text" class="span2" value="" data-slider-min="0"
+                                          data-slider-max="5000" data-slider-step="5" data-slider-value="[0,5000]"/>
+                                      </a>
+                                      </label>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a  class="toggle-panel"  href="#collapse8"><i
+                                  class="indicator
+                                  fa fa-caret-right" aria-hidden="true"></i>Color</a>
+                                  <a href="javascript:;" *ngIf="filterData?.color?.length"  (click)="resetFilter('color')" class="red">Clear</a>     
+                          </h4>
+                      </div>
+                      <div id="collapse8" class="kv-panel">
+                          <ul class="list-group">
+                              <li class="list-group-item"  *ngFor="let carColor of carColors ; let i =index">
+                              <div class="checkbox">
+                                  <label class="filter-check clearfix">
+                                  <a
+                                      title="Cars
+                                      for Sale in Karachi, Pakistan">
+                                  <input type="checkbox"   (change)="adFilter()" id="color"  name="color.{{i}}" [value]="carColor.id" [checked]="allFields?.color == carColor.id"  >
+                                  {{carColor.name}}
+                                  <span class="pull-right count">{{carColor.count}}</span>
+                                  </a>
+                                  </label>
+                              </div>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a  class="toggle-panel"  href="#collapse12"><i
+                                  class="indicator
+                                  fa fa-caret-right" aria-hidden="true"></i>Price</a>
+                                  <a href="javascript:;"  *ngIf="filterData?.price != '0,100000000' && filterData?.price"  (click)="resetFilter('price')" class="red">Clear</a>   
+                          </h4>
+                      </div>
+                      <div id="collapse12" class="kv-panel panel-show-normal">
+                          <ul class="list-group">
+                              <li class="list-group-item">
+                                  <div class="checkbox">
+                                      <label class="filter-check clearfix">
+                                          <a
+                                              title="Cars
+                                              for Sale in Karachi, Pakistan">
+                                              Car Price: <b>50000 PKR</b>  <b> to 100000000 PKR</b>
+                                              <input    id="price" name="price"  (change)="adFilter()" type="text" class="span2" value="" data-slider-min="0"
+                                                  data-slider-max="100000000" data-slider-step="1"
+                                                  data-slider-value="[0,100000000]"  />
+                                                    <div class="price-slider-wrap">
+                                                        <div class="psfmin">
+                                                            <input type="number" min="0" [(ngModel)]="minValS" name="minnValS" placeholder="Min Price">
+                                                        </div>
+                                                        <div class="psfmax">
+                                                            <input type="number" min="0"  [(ngModel)]="maxValS" name="maxnValS" placeholder="Max Price">
+                                                        </div>
+                                                        <div  class="psfbtn">
+                                                            <a href="javascript:;" (click)="minMaxValS('maxValS')"><i class="fa fa-play"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div  class="psfmsg alert-danger"  *ngIf="minMaxPriceError">
+                                                        <span >{{minMaxPriceError}}</span>
+                                                    </div>  
+                                          </a>
+                                      </label>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a  class="toggle-panel"  href="#collapse13"><i
+                                  class="indicator
+                                  fa fa-caret-right" aria-hidden="true"></i>Mileage </a>
+                                  <a href="javascript:;"  *ngIf="filterData?.mileage != '0,1000000' && filterData?.mileage"  (click)="resetFilter('mileage')" class="red">Clear</a>   
+                          </h4>
+                      </div>
+                      <div id="collapse13" class="kv-panel panel-show-normal">
+                          <ul class="list-group">
+                              <li class="list-group-item">
+                                  <div class="checkbox">
+                                      <label class="filter-check clearfix">
+                                        <a
+                                          title="Cars
+                                          for Sale in Karachi, Pakistan">
+                                      Car Mileage: <b>0 Km</b> <b> to 1000000 Km</b>
+                                      <input   id="mileage"  name="mileage" (change)="adFilter()" type="text" class="span2" value="" data-slider-min="0"
+                                          data-slider-max="1000000" data-slider-step="5" data-slider-value="[0,1000000]"/>
+                                            <div class="price-slider-wrap">
+                                                <div class="psfmin">
+                                                    <input type="number" min="0" [(ngModel)]="minMValS" name="minMnValS" placeholder="Min Mileage">
+                                                </div>
+                                                <div class="psfmax">
+                                                    <input type="number" min="0"  [(ngModel)]="maxMValS" name="maxMnValS" placeholder="Max Mileage">
+                                                </div>
+                                                <div  class="psfbtn">
+                                                    <a href="javascript:;" (click)="minMaxMValS('maxMValS')"><i class="fa fa-play"></i></a>
+                                                </div>
+                                            </div> 
+                                            <div  class="psfmsg alert-danger"  *ngIf="minMaxMPriceError">
+                                                <span >{{minMaxMPriceError}}</span>
+                                            </div>     
+                                        </a>
+                                      </label>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-7">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="well well-sm">
+                          <div class="pagination">
+                              <div class="pages">
+                                  <ul>
+                                      <li class="pre cursorPointer" [ngClass]="{disabled:firstPrevDisable}" >
+                                          <a  (click)="pagination(globalCV-1)">
+                                          <i class="fa fa-chevron-left"
+                                              aria-hidden="true"></i></a>
+                                      </li>
+                                      <li class="next cursorPointer" [ngClass]="{disabled:lastNextDisable}">
+                                          <a  (click)="pagination(globalCV+1)">
+                                          <i class="fa fa-chevron-right"
+                                              aria-hidden="true"></i></a>
+                                      </li>
+                                  </ul>
+                                  <p class="numbers">Page {{globalCV+1}} of {{user_ads?.last_page}}</p>
+                              </div>
+                          </div>
+                          <div class="btn-group">
+                              <a id="list" (click)="list()" class="btn btn-default btn-sm"  [ngClass]="{'active': isGridOrList == 'list'}">
+                              <span class="glyphicon glyphicon-th-list">
+                              </span>List</a>
+                              <a id="grid" (click)="grid()" class="btn btn-default
+                                  btn-sm" [ngClass]="{'active': isGridOrList == 'grid'}">
+                              <span class="glyphicon glyphicon-th"></span>Grid</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div id="products" class="row list-group">
+                          <ngx-loading  [show]="loading"
+                          [config]="{
+                          backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+                          backdropBorderRadius: '40px',
+                          primaryColour: '#1A578C',
+                          secondaryColour: '#1A578C',
+                          tertiaryColour: '#1A578C'
+                          }">
+                          </ngx-loading>
+                          <div class="notFound" *ngIf="totalRecords == 0">
+                              <h1>Record not found</h1>
+                          </div>
+                          <div class="item col-xs-12 col-lg-6" *ngFor="let carAd of carAds; let i = index;">
+                              <div class="car-u " >
+                                  <div class="thumbnail">
+                                      <div class="tag" *ngIf="carAd.package_id=== 2">Featured</div>
+                                      <div *ngIf="carAd.package_id=== 3" class="urgentTag">Urgent</div>
+                                      <a [routerLink]="['/used-car-single',carAd.id]" class="com-img used-list-f">
+                                      <img *ngIf="!(carAd.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg') != -1)"  src="{{carAdsImages}}/{{carAd?.user_id}}/{{imageSize2}}{{carAd.dummy_picture[0]['image1']}}"
+                                          alt="">
+                                      <img *ngIf="(carAd.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg') != -1)"  src="{{carAd.dummy_picture[0]['image1']}}"
+                                          alt="">
+                                      </a>
+                                  </div>
+                                  <div class="caption">
+                                      <div class="item-title">
+                                          <h4><a [routerLink]="['/used-car-single',carAd.id]">{{carAd.munuf_name}}
+                                              {{carAd.car_name}} {{carAd.model_name}} {{carAd.year}}</a>
+                                          </h4>
+                                      </div>
+                                      <div class="additional-info">
+                                          <ul>
+                                              <li *ngIf="carAd.city_name"><span><i class="fa fa-map-marker"
+                                                  aria-hidden="true"></i></span>{{carAd.city_name}}</li>
+                                              <li><span><i class="fa fa-tachometer"
+                                                  aria-hidden="true"></i></span>{{carAd.mileage}} Km</li>
+                                              <li><span><i class="fa fa-bolt" aria-hidden="true"></i></span>{{carAd.engine_capacity}}
+                                                  cc
+                                              </li>
+                                              <li><span><i class="fa fa-tint" aria-hidden="true"></i></span>{{carAd.engine_type}}</li>
+                                          </ul>
+                                      </div>
+                                      <div class="content">
+                                          <p class="price"> {{numberWithCommas(carAd.price)}}<span
+                                              *ngIf="!carAd.negotiable==0">Negotiable </span></p>
+                                          <ng-template #popTemplate>
+                                              <div [innerHtml]="popoveruser + ' '+carAd.full_name +popoverbr + popoverphone + ' '+ carAd.cell_number"></div>
+                                          </ng-template>
+                                          <button
+                                          [popover]="popTemplate"
+                                          placement="bottom"
+                                          triggers="focus"
+                                          class="btn blue contactSeller{{carAd.id}}"  (click)="ContactSellerFunc('contactSeller',carAd.id, carAd.number_counter)"><i class="fa fa-phone"
+                                              aria-hidden="true" ></i>  Contact Seller</button>
+                                      </div>
+                                      <div class="ftr">
+                                          <p class="posted">Last Updated:{{carAd.updated_at}}</p>
+                                          <ul>
+                                              <li>
+                                                  <a class="btn lite-border unlog saveMsg{{i}}" *ngIf="userData?.data?.login == 'false'"  (click)="heartClicked(carAd.id,i)">
+                                                    <i [ngClass]="{'saveAds-block':(saveAdsID?.indexOf(carAd.id) != -1 && saveAdsID != null) }" class="fa
+                                                      fa-heart" aria-hidden="true"></i>
+                                                  </a>
+                                                  <a class="btn lite-border log saveMsg{{i}}"  *ngIf="userData?.data?.login == 'true'"  (click)="heartClicked(carAd.id,i)">
+                                                    <i [ngClass]="{'saveAds-block': (uSaveAdsID.indexOf(carAd.id) != -1 && uSaveAdsID != null) }" class="fa
+                                                        fa-heart" aria-hidden="true"></i>
+                                                    </a>
+                                              </li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div>
+                  <div class="saveAdShow row" *ngIf="generalVarArr.saveAdShow">
+                      <i [ngClass]="{'help-block':generalVarArr.saveAdsActive}"  class="fa fa-heart col-md-6" col-md-6 aria-hidden="true"></i>
+                      <div class="col-md-6">
+                          <h4>Ad saved successfully</h4>
+                          <a href="{{userData?.data?.save_ads_url }}">View All saved Ads</a>
+                      </div>
+                  </div>
+                  <div class="saveAdHide row" *ngIf="generalVarArr.saveAdHide">
+                      <i class="fa fa-heart-o  col-md-6" aria-hidden="true"></i>
+                      <div class="col-md-6">
+                          <h4>Ad removed successfully</h4>
+                          <a href="{{userData?.data?.save_ads_url }}">View All saved Ads</a>
+                      </div>
+                  </div>
+                  <div class="text-center">
+                      <ul *ngIf="carAds && carAds.length; let i = index" class="pagination">
+                          <li [ngClass]="{disabled:firstPrevDisable}" class="cursorPointer">
+                              <a  (click)="pagination(0)">First</a>
+                          </li>
+                          <li [ngClass]="{disabled:firstPrevDisable}" class="cursorPointer">
+                              <a (click)="pagination(globalCV-1)">Previous</a>
+                          </li>
+                          <li   *ngIf="paginationPageNo?.length > 4 && globalCV > 1">
+                            <a id="page" (click)="pagination(0)" class="cursorPointer">1</a>
+                          </li>
+                          <li  class="disabled" *ngIf="paginationPageNo?.length > 4 && globalCV != 0">
+                            <a id="page" class="cursorPointer disabled">...</a>
+                          </li>
+                          <li *ngFor="let page of paginationPageNo | slice: startOff:startOff+4 ; let i = index; " class="active" [ngClass]="{'active disabled':globalCV === page}">
+                            <a id="page" class="cursorPointer" (click)="pagination(page)">{{page +1 }}
+                            </a>
+                          </li>
+                          <li  class="disabled" *ngIf="paginationPageNo?.length > 4 && globalCV < user_ads?.last_page-4">
+                            <a id="page" class="cursorPointer disabled">...</a>
+                          </li>
+                          <li  *ngIf="paginationPageNo?.length > 4 && globalCV < user_ads?.last_page-5">
+                            <a id="page" class="cursorPointer" (click)="pagination(user_ads?.last_page-1)">{{ user_ads?.last_page }}</a>
+                          </li>   
+                          <li [ngClass]="{disabled:lastNextDisable}">
+                              <a (click)="pagination(globalCV +1)"   class="cursorPointer">Next</a>
+                          </li>
+                          <li [ngClass]="{disabled:lastNextDisable}">
+                              <a (click)="pagination(user_ads?.last_page-1)"   class="cursorPointer">Last</a>
+                          </li>
+                      </ul>
+                      
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-2">
+              <div class="ad">
+                  <img src="../../../../assets/images/ads2.jpg" width="179" height="536">
+              </div>
+          </div>
+      </div>
+      <input type="hidden" [(ngModel)]="adsAuthor" name="user_id" > 
+      <input type="hidden" [(ngModel)]="nearly_new" name="nearly_new" > 
+      <input type="hidden" name="condition_variable" value="1" > 
+    </form>
+  </div>
+</div>

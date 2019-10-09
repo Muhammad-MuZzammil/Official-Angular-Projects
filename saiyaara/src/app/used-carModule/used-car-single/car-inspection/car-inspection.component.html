@@ -1,0 +1,105 @@
+<div class="car-inspection content-area new-car-list our-services ">
+    <div class="row">
+      <div class="col-md-12" *ngIf="adUserID !== generalFields.userData.data.user_id">
+        <div class="newsletter-form">
+          <!-- Auto ALert Form -->
+          <form [formGroup]="autoALertForm"
+            (ngSubmit)="autoForm(autoALertForm.value)" autocomplete="off">
+            <div class="form-head">
+              <h3>Auto Alert</h3>
+              <p>Set your Alerts for Daihatsu Hijet in Multan and we will
+                email you relevant ads.</p>
+            </div>
+            <div class="form-body" *ngIf="this.generalFields.userData.data.login == 'false'">
+              <div class="form-group">
+                <label>Email</label>
+                <div class="input-group">
+                  <input type="text" [formControl]="email" name="email"
+                    (change)="formFieldsFocus('email')" placeholder="Enter your email address">
+                  <div class="help-block"
+                    *ngIf=" email &&
+                    autoALertForm.get('email').errors?.pattern">
+                    {{validEmail}}
+                  </div>
+                  <div class="help-block"
+                    *ngIf=" email && autoALertForm.get('email').errors?.required
+                    &&   autoALertForm.get('email').touched
+                    ">
+                    {{emailRequired}}
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" >
+                <label>Phone no</label>
+                <div class="input-group">
+                  <input type="text" [formControl]="cell_number" name="cell_number" placeholder="Enter your phone no"
+                     (change)="formFieldsFocus('cell_number')" >
+                  <div class="help-block"
+                    *ngIf=" cell_number && autoALertForm.get('cell_number').errors?.required &&
+                    autoALertForm.get('cell_number').touched">
+                    {{cellNumberRequired}}
+                  </div>
+
+                  <div class="help-block" *ngIf="cell_number &&  autoALertForm.get('cell_number').errors?.pattern && autoALertForm.get('cell_number').touched" >
+                      {{cellNumberMax}}
+                      <!-- <h2>{{autoALertForm.get('cell_number').errors | json}}</h2> -->
+                 </div>
+                </div>
+              </div>
+              <small class="alert autoAlertFormSuccess" *ngIf="submitSuccessAlert">{{autoAlertSuccess}}</small>
+
+              <small class="alert autoAlertFormError"  *ngIf="submitErrorAlert">{{alreadySubscribedError}}</small>
+
+            </div>
+            <!-- {{ autoALertForm.get('cell_number').errors | json}} -->
+            <div class="form-body" *ngIf="this.generalFields.userData.data.login == 'true'">
+                <div class="form-group">
+                  <label>Email</label>
+                  <div class="input-group">
+                    <input type="text" [formControl]="email" name="email"
+                       (change)="formFieldsFocus('email')">
+                    <div class="help-block"
+                      *ngIf=" email &&
+                      autoALertForm.get('email').errors?.pattern">
+                      {{validEmail}}
+                    </div>
+                    <div class="help-block"
+                      *ngIf=" email && autoALertForm.get('email').errors?.required
+                      &&   autoALertForm.get('email').touched
+                      ">
+                      {{emailRequired}}
+
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" >
+                  <label>Phone no</label>
+                  <div class="input-group">
+                    <input type="text" [formControl]="cell_number"  name="cell_number"
+                       (change)="formFieldsFocus('cell_number')" >
+                    <div class="help-block"
+                      *ngIf=" cell_number && autoALertForm.get('cell_number').errors?.required &&
+                      autoALertForm.get('cell_number').touched">
+                      {{cellNumberRequired}}
+                    </div>
+                    <div class="help-block" *ngIf="autoALertForm.get('cell_number').errors?.pattern && autoALertForm.get('cell_number').touched" >
+                        {{cellNumberMax}}
+                   </div>
+                  </div>
+                </div>
+                
+                <small class="alert autoAlertFormSuccess" *ngIf="submitSuccessAlert">{{autoAlertSuccess}}</small>
+
+                <small class="alert autoAlertFormError"  *ngIf="submitErrorAlert">{{alreadySubscribedError}}</small>
+
+              </div>
+            <div class="form-footer">
+              <button type="submit" class="btn lite-blue"
+                [disabled]="autoALertForm.invalid">Submit</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>

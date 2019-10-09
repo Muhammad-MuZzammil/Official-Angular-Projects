@@ -1,0 +1,145 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~jquery-ui/themes/base/all.css";
+@import "~ngx-bootstrap/datepicker/bs-datepicker.css";
+@import "~toastr/build/toastr.css";
+@import "./assets/css/font-family.css";
+.wrapper{margin:40px 0;}
+img{max-width:100%;}
+.row a{color:#d51d25;}
+.row a:hover{color:#000;text-decoration:underline;}
+.row .form-control:focus{color:#495057;background-color:#fff;border-color:#d51d25;outline:0;box-shadow:0 0 0 0.2rem rgba(213,29,37,0.3);}
+section.companyLogos,section.paymentPage,section.bookingReference{margin:20px 0;}
+section.PaymentInformation,section.PassengerInformation,section.deliveryAddress{margin:50px 0;}
+section.PassengerInformations{margin:20px 0;}
+section.CreditCardInformation,section.NotesSection{margin:30px 0;}
+.companyLogos a{border:2px solid #fff;display:block;}
+.companyLogos a:hover{border:2px solid #d51d25;display:block;}
+.custom-control{margin-bottom:10px;}
+label.custom-control-label a{text-decoration:underline;}
+.tollNumbers{text-align:center;display:block;}
+.tollNumbers ul{margin:0;padding:0;}
+.tollNumbers ul li{display:inline-block;background:#ededed;padding:5px 20px 5px 40px;margin-bottom:15px;border:1px solid #d1cfcf;border-radius:30px;position:relative;}
+.tollNumbers ul li a{font-family:'Raleway',sans-serif;color:#2a2a2a;font-size:15px;font-weight:600;}
+.table thead th{text-transform:uppercase;vertical-align:middle!important;}
+.tollNumbers ul li{margin-right:20px;}
+/* .tollNumbers ul li.usa:after{background:url(../images/usa-icon.png);content:"";display:block;width:25px;height:25px;position:absolute;left:5px;top:4px;}
+.tollNumbers ul li.uk:after{background:url(../images/uk-icon.png);content:"";display:block;width:25px;height:25px;position:absolute;left:5px;top:4px;}
+.tollNumbers ul li.email:after{background:url(../images/email-icon.png);content:"";display:block;width:25px;height:25px;position:absolute;left:5px;top:4px;} */
+.text-center{margin:0 0 10px;}
+.paymentPage h1{font-size:25px;text-transform:uppercase;font-weight:600;padding:10px 0px;}
+.button-red{background:#d51d25;border:2px solid #d51d25;color:#fff;font-size:18px;padding:4px 25px;border-radius:30px;width:100%;margin-bottom:10px;-webkit-appearance:none;}
+.button-red:hover{background:transparent;border:2px solid #d51d25;color:#2a2a2a;cursor:pointer;}
+.border-line{border:2px solid #eaeaea;border-radius:30px;}
+.border-line label{font-size:16px;font-weight:500;color:#737373;padding:18px 0;margin:0;}
+.border-line input,.border-line select{background:#ededed;border-radius:30px;margin:10px 0;border:0;}
+.custom-control-label::before{border:2px solid #d51d25!important;}
+.custom-checkbox .custom-control-label::before,.custom-radio .custom-control-label::before{background:transparent;}
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before,.custom-radio .custom-control-input:checked~.custom-control-label::before{background-color:#d51d25!important;}
+.custom-control-label span{color:#b2b1b1;}
+.border-line select{background:#fff;}
+.brand-section{background:#e5e5e5;border-radius:0 23px 23px 0;}
+.payment-border{border:2px solid #ededed;border-radius:15px;}
+.payment-heading{background:#d51d25;color:#fff;font-size:18px;font-weight:600;margin-top:-20px;text-align:center;padding:8px 0;border-radius:33px;text-transform:uppercase;}
+.custom-control-label{font-size:15px;font-weight:600;text-transform:capitalize;}
+.radioGroup label.label{font-size:16px;font-weight:600;color:#3b3b3b;text-transform:uppercase;}
+.Grandtotal{background:#ededed;padding:15px 0 0;border-radius:0 0 10px 10px;}
+.Grandtotal label.label{font-size:18px;color:#3b3b3b;font-weight:600;text-transform:uppercase;margin:0;padding:5px 0px;}
+.Grandtotal input{border-radius:30px;color:#808080;font-weight:600;height:calc(2.2rem + 4px);}
+.Grandtotal input::placeholder{color:#808080;text-transform:uppercase;font-size:13px;font-weight:600;}
+.Grandtotal span.input-group-text{background:#fff;border-radius:30px;font-size:15px;font-weight:600;}
+.input-append.date.form_datetime{position:relative;}
+span.add-on:after{background:url(./assets/images/date-icon.png);content:"";width:15px;height:16px;display:block;position:absolute;top:10px;right:15px;}
+label{color:#3b3b3b;font-size:15px;font-weight:600;text-transform:uppercase;}
+.form-group input,.form-group select{border-radius:30px;border:1px solid #d8d8d8;color:#808080;font-weight:600;height:calc(2.2rem + 4px);}
+.form-group textarea{border-radius:30px;border:1px solid #d8d8d8;color:#808080;font-weight:600;padding:15px;}
+.form-group input::placeholder{color:#808080;font-weight:600;text-transform:uppercase;font-size:13px;}
+.form-group textarea::placeholder{color:#808080;font-weight:600;text-transform:uppercase;font-size:13px;}
+.addFieldsSign{position:relative;}
+.addFieldsSign a {font-size: 0;position: relative;width: 50px;height: 50px;right: 27px;float: right;cursor: pointer;top: -5px;}
+.addFieldsSign a:before {
+    content: "+ Add Passenger";
+    width: 175px;
+    display: block;
+    position: absolute;
+    top: 0px;
+    font-size: 14px;
+    background: #d51d25;
+    color: #fff;
+    text-align: center;
+    margin: 10px;
+    line-height: 30px;
+    right: 0;
+    border-radius: 50px;
+}
+.addFieldsSign a:hover:before{ content: "+ Add Passenger";width: 175px;display:block;position:absolute;top:0px;font-size:14px;background:#ededed;color:#d51d25;text-align:center;margin:10px;border:1px solid #d51d25; right: 0; border-radius: 50px;}
+.remove-row a{font-size: 0;position: relative;width: 50px;height: 50px;right: 27px;float: right;cursor: pointer;top: 20px;}
+.remove-row a:before{content:"x";width:37px;height:37px;display:block;position:absolute;top:0px;font-size:20px;background:#d51d25;border-radius:50%;color:#fff;text-align:center;margin:10px; line-height: 30px;}
+.remove-row a:hover:before{content:"x";width:37px;height:37px;display:block;position:absolute;top:0px;font-size:20px;background:#ededed;border-radius:50%;color:#d51d25;text-align:center;margin:10px;border:1px solid #d51d25;}
+
+.enterManually a{color:#d51d25;font-weight:600;text-align:center;border:1px solid #d51d25;padding:10px;margin: 5px;}
+.enterManually a:hover{background:#d51d25; color:#fff; text-decoration:none;}
+.upload-box .btn-file{background-color:#d51d25;}
+.upload-box .hold{float:left;width:100%;position:relative;border:1px solid #d8d8d8;border-radius:30px;padding:10px 15px;}
+.upload-box .hold a{color:#808080;text-decoration:none;font-size:13px;text-transform:uppercase;font-weight:600;display:inline-block;margin:10px 0;}
+.upload-box .btn-file{position:relative;overflow:hidden;float:left;padding:10px 50px;color:#fff;margin:0 10px 0 0;text-transform:uppercase;border-radius:30px;cursor:pointer;font-size:14px;font-weight:600;}
+.form-group.padding{padding:20px 0;margin:0;}
+.upload-box .btn-file input[type=file]{position:absolute;top:0;right:0;min-width:100%;min-height:100%;font-size:100px;text-align:right;opacity:0;outline:none;background:#fd0707;cursor:inherit;display:block;}
+.large{font-size:24px;text-transform:uppercase;padding:5px 0;}
+.currency span.input-group-text{background:#fff;border-radius:30px;font-size:15px;font-weight:600;}
+footer.footer{background:#000;padding:18px 0 8px;}
+footer.footer a{color:#fff;font-size:12px;}
+footer.footer a:hover{text-decoration:underline;color:#fff;}
+table.UserEdit:hover a.edit:after{display:block;content:"\f040";font-family:FontAwesome;background:#d51d25;padding:10px 15px;border-radius:50%;font-size:20px;color:#fff;position:absolute;right:-20px;top:-13px;}
+table.UserEdit:hover a.edit:hover:after{background:#000;color:#fff;}
+a.edit{font-size:0;}
+.grey-content{color:#808080;margin-top:0.5rem;margin-bottom:0.5rem;}
+.border-bottom .row:last-child{border-bottom:none;}
+.border-bottom .row label.label{margin-bottom:0}
+.border-bottom .row{border-bottom:1px solid #000;display:flex;align-items:center;}
+.preloader{position:fixed;left:0;top:0;z-index:999;width:100%;height:100%;overflow:visible;background:#33333338;text-align:center;}
+.preloader img{margin:45vh;}
+.message-box-title-404 {
+    margin-bottom: 20px;
+}
+.red-color {color: #d51d25}
+.message-box-wrapper-404{padding:20px 0;text-align:center;}
+.message-box-wrapper-404 .message-box-title-404 span{background:#d51d25;color:#fff;display:inline-block;font-size:250px;line-height:220px;margin:0 5px 0 0;padding:20px;}
+.message-box-wrapper-404 .message-box-title-404 span:nth-child(2n){background:#000;}
+.message-box-wrapper-404 .message-box-content-404{ 
+    font-size: 23px;
+    /* margin: 50px 0 0; */
+    /* width: 593px;
+    margin: 0 auto;
+    line-height: 28px; */
+}
+
+/* 404 PAGE MESSAGE */
+
+section.message-404 h1 {
+    font-size: 165px;
+    font-weight: 800;
+}
+section.message-404 p {
+    font-size: 20px;
+    margin: 30px 0;
+}
+/* 404 PAGE MESSAGE */
+
+@media only screen and (max-width:991px) and (min-width:768px){
+    .border-line label{font-size:12px;}
+    section.message-404 h1{font-size:120px !important;}
+	section.message-404 br{display:none;}
+}
+@media only screen and (max-width:767px){
+    .addFieldsSign a:before{position:relative; width: auto; border-radius: 50px;}
+    .addFieldsSign a { width: 100%; right: inherit;}
+
+    .addFieldsSign a:hover:before { position:relative; width: auto; border-radius: 50px; }
+    .addFieldsSign a:hover { width: 100%; right: inherit; text-decoration: none;}
+    section.message-404 h1{font-size:90px !important;}
+	section.message-404 br{display:none;}
+} 
+
+
+

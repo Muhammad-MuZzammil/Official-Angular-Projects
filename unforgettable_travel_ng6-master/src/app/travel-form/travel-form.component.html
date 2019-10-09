@@ -1,0 +1,1621 @@
+<div class="wrapper">
+  <app-header></app-header>
+  <form
+    #bookingForm="ngForm"
+    (ngSubmit)="saveBooking(arr_date.value, dep_date.value)"
+    autocomplete="off"
+  >
+    <section class="paymentPage">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+            <h1>Advance Passenger Information</h1>
+          </div>
+        </div>
+        <!-- end row -->
+
+        <!-- end row -->
+      </div>
+    </section>
+    <!-- start loader -->
+    <div class="preloader" *ngIf="loader">
+      <img
+        src="https://unforgettabletravelcompany.com/ufg-front/assets/images/loading.gif"
+      />
+    </div>
+    <!-- end loader -->
+
+    <!-- Start ADVANCE PASSENGER INFORMATION -->
+    <section class="AdvancePassengerInformation">
+      <div class="container">
+        <div class="row payment-border">
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row form-group">
+              <div class="col-lg-4 col-md-6 col-sm-4">
+                <h3 class="payment-heading">Booking Information</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row form-group">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                      <label for="refNo">Reference No</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="refNo"
+                        name="refNum"
+                        [value]="
+                          initialData.reference_number != ''
+                            ? initialData.reference_number
+                            : ''
+                        "
+                        placeholder="Reference No"
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                      <label for="deparDate">Departure Date</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="deparDate"
+                        name="depaDate"
+                        [value]="
+                          initialData.date_of_travel != ''
+                            ? (initialData.date_of_travel | date: 'dd-MMM-yyyy')
+                            : ''
+                        "
+                        placeholder="Departure Date"
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                      <label for="bookDetail">Your Booking Details</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="bookDetail"
+                        name="bookingDetail"
+                        [value]="
+                          initialData.booking_details != ''
+                            ? initialData.booking_details
+                            : ''
+                        "
+                        placeholder="Your Booking Details"
+                        disabled
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- row end -->
+              </div>
+            </div>
+            <!-- row end -->
+          </div>
+        </div>
+      </div>
+      <!-- end container -->
+    </section>
+    <!-- end ADVANCE PASSENGER INFORMATION -->
+
+    <section class="PaymentInformation">
+      <div class="container">
+        <div class="row payment-border">
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row form-group">
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <h3 class="payment-heading">Arrival Information</h3>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="ArrivalDate"
+                    >Arrival Date <span class="required-span">*</span></label
+                  >
+                  <div class="input-append date form_datetime">
+                    <!-- <span class="add-on"> -->
+                    <input
+                      class="form-control scroll"
+                      name="arr_date"
+                      ngModel
+                      id="arrDate"
+                      type="text"
+                      placeholder="DD-MM-YYYY"
+                      disabled
+                      #arr_date
+                      [value]="
+                        initialData.arr_date != ''
+                          ? (initialData.arr_date | date: 'dd-MMM-yyyy')
+                          : ''
+                      "
+                    />
+                    <!-- <span
+                        class="reqVal"
+                        *ngIf="
+                          (bookingForm.errors && arr_date.value == '') ||
+                          (arrivalDateValidation.touched &&
+                            arrivalDateValidation.invalid)
+                        "
+                        >Arrival Date is required</span
+                      > -->
+                    <!-- </span> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end row -->
+            <div>
+              <h3 *ngIf="selectArrService" class="invalidVal ">
+                You've to Select one of these services given below
+              </h3>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-3 col-md-3 col-sm-12 radio-inline">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="airport"
+                    name="arr_service"
+                    ngModel
+                    #arr_service="ngModel"
+                    value="arr_airport"
+                    class="custom-control-input "
+                    (change)="clickedArrService(arr_service)"
+                  />
+                  <label class="custom-control-label" for="airport"
+                    >Airport</label
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 radio-inline">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="hotel"
+                    ngModel
+                    #arr_service="ngModel"
+                    value="arr_hotel"
+                    name="arr_service"
+                    class="custom-control-input"
+                    (change)="clickedArrService(arr_service)"
+                  />
+                  <label class="custom-control-label" for="hotel"
+                    >Hotel / Accommodation Name</label
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 radio-inline">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="carhire"
+                    name="arr_service"
+                    class="custom-control-input"
+                    ngModel
+                    #arr_service="ngModel"
+                    value="arr_carhire"
+                    (change)="clickedArrService(arr_service)"
+                  />
+                  <label class="custom-control-label" for="carhire"
+                    >Car Hire</label
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 radio-inline">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="others"
+                    name="arr_service"
+                    class="custom-control-input"
+                    ngModel
+                    #arr_service="ngModel"
+                    value="arr_others"
+                    (change)="clickedArrService(arr_service)"
+                  />
+                  <label class="custom-control-label" for="others">Other</label>
+                </div>
+              </div>
+            </div>
+            <!-- end row -->
+
+            <div
+              class="row airport_section"
+              *ngIf="arr_service.value == 'arr_airport'"
+            >
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="form-group">
+                  <label for="flightNo"
+                    >Flight #<span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="arr_flight_no"
+                    id="flightNo"
+                    placeholder=""
+                    required
+                    #arr_flight_no="ngModel"
+                    ngModel
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && arr_flight_no.value == '') ||
+                      (arr_flight_no.touched && arr_flight_no.invalid)
+                    "
+                    >Flight is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="form-group">
+                  <label for="arrivalTime"
+                    >Arrival Time <span class="required-span">*</span></label
+                  >
+                  <!----Timepicker Start------->
+
+                  <div class="time_pickerKV">
+                    <input
+                      type="number"
+                      class="form-control scroll"
+                      required
+                      name="arr_timeHr"
+                      id="arrivalTime"
+                      #arr_timeHr="ngModel"
+                      ngModel
+                      #arrHr
+                      [value]="
+                        arrHr.value > 23
+                          ? 0
+                          : arrHr.value && arrHr.value < 0
+                          ? 23
+                          : arrHr.value
+                      "
+                      (input)="format(arrHr)"
+                      *ngIf="!generalArr.arrFormat"
+                    />
+                    <input
+                      type="number"
+                      class="form-control scroll"
+                      name="arr_timeHr"
+                      id="arrivalTime"
+                      required
+                      #arr_timeHr="ngModel"
+                      ngModel
+                      #arrHr
+                      [value]="
+                        arrHr.value > 12
+                          ? 1
+                          : arrHr.value && arrHr.value < 1
+                          ? 12
+                          : arrHr.value
+                      "
+                      (input)="format(arrHr)"
+                      *ngIf="generalArr.arrFormat"
+                    />
+                    <!--  -->
+                    <span>:</span>
+                    <input
+                      type="number"
+                      class="form-control scroll"
+                      name="arr_timeMin"
+                      id="arrivalTime"
+                      required
+                      #arr_timeMin="ngModel"
+                      ngModel
+                      #arrMin
+                      [value]="
+                        arrMin.value > 59
+                          ? 0
+                          : arrMin.value && arrMin.value < 0
+                          ? 59
+                          : arrMin.value
+                      "
+                      (input)="format(arrMin)"
+                    />
+                    <select
+                      class="form-control"
+                      id="arrTimeForm"
+                      (change)="clickedArrService(arr_service)"
+                    >
+                      <option *ngFor="let time of timeForm" [value]="time">
+                        {{ time }}</option
+                      >
+                    </select>
+                  </div>
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors &&
+                        (arrHr?.value == '' || arrMin.value == '')) ||
+                      ((arr_timeMin.touched && arr_timeMin.invalid) ||
+                        (arr_timeHr?.touched && arr_timeHr?.invalid))
+                    "
+                    >Arrival Time is required
+                  </span>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="form-group">
+                  <label for="Airline"
+                    >Airline <span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="arr_airline"
+                    required
+                    id="Airline"
+                    placeholder=""
+                    #arr_airline="ngModel"
+                    ngModel
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && arr_airline.value == '') ||
+                      (arr_airline.touched && arr_airline.invalid)
+                    "
+                    >Airline is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="form-group">
+                  <label for="OriginofFlight"
+                    >Origin of Flight
+                    <span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="arr_orgin_flight"
+                    required
+                    id="OriginofFlight"
+                    placeholder=""
+                    #arr_orgin_flight="ngModel"
+                    ngModel
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && arr_orgin_flight.value == '') ||
+                      (arr_orgin_flight.touched && arr_orgin_flight.invalid)
+                    "
+                    >Origin of Flight is required</span
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- end airport_section -->
+            <div
+              class="row hotel_section"
+              *ngIf="arr_service.value == 'arr_hotel'"
+            >
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="hotel_name"
+                    >Name <span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="arr_hotel"
+                    id="hotel_name"
+                    placeholder=""
+                    required
+                    #arr_hotel="ngModel"
+                    ngModel
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && arr_hotel.value == '') ||
+                      (arr_hotel.touched && arr_hotel.invalid)
+                    "
+                    >name is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="hotel_address"
+                    >Address<span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="arr_hotel_add"
+                    id="hotel_address"
+                    placeholder=""
+                    required
+                    #arr_hotel_add="ngModel"
+                    ngModel
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && arr_hotel_add.value == '') ||
+                      (arr_hotel_add.touched && arr_hotel_add.invalid)
+                    "
+                    >address is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="hotel_phone_no"
+                    >Phone No Incl. country code
+                  </label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="arr_hotel_phone"
+                    id="hotel_phone_no"
+                    placeholder=""
+                    #arr_hotel_phone="ngModel"
+                    ngModel
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- end Hotel_section -->
+            <div
+              class="row car_section"
+              *ngIf="arr_service.value == 'arr_carhire'"
+            >
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="car_rental_company"
+                    >Car Rental Company
+                    <span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="arr_car_comp"
+                    id="car_rental_company"
+                    placeholder=""
+                    required
+                    #arr_car_comp="ngModel"
+                    ngModel
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && arr_car_comp.value == '') ||
+                      (arr_car_comp.touched && arr_car_comp.invalid)
+                    "
+                    >Car Rental Company is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="pickup_location"
+                    >Car Rental Location
+                    <span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="arr_pick_up"
+                    id="pickup_location"
+                    placeholder=""
+                    required
+                    #arr_pick_up="ngModel"
+                    ngModel
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && arr_pick_up.value == '') ||
+                      (arr_pick_up.touched && arr_pick_up.invalid)
+                    "
+                    >Car Rental Location is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="car_phone_no">Phone No Incl. country code</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="arr_car_phone"
+                    id="car_phone_no"
+                    placeholder=""
+                    #arr_car_phone="ngModel"
+                    ngModel
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- end Car_section -->
+            <div
+              class="row others_section"
+              *ngIf="arr_service.value == 'arr_others'"
+            >
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group">
+                  <label for="arr_desc"
+                    >Description <span class="required-span">*</span></label
+                  >
+                  <textarea
+                    class="form-control scroll"
+                    name="arr_descripion"
+                    id="others_desc"
+                    cols="20"
+                    rows="5"
+                    required
+                    #arr_descripion="ngModel"
+                    ngModel
+                  ></textarea>
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && arr_descripion.value == '') ||
+                      (arr_descripion.touched && arr_descripion.invalid)
+                    "
+                    >Description is required</span
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- end others_section -->
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group">
+                  <textarea
+                    class="form-control"
+                    cols="20"
+                    rows="2"
+                    #add_arr_info="ngModel"
+                    ngModel
+                    placeholder="Additional Arrival Information"
+                    name="arr_add_information"
+                    ngModel
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end container -->
+    </section>
+    <!-- end PaymentInformation -->
+
+    <section class="PaymentInformation">
+      <div class="container">
+        <div class="row payment-border">
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row form-group">
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <h3 class="payment-heading">Departure Information</h3>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="DepartureDate"
+                    >Departure Date <span class="required-span">*</span></label
+                  >
+                  <div class="input-append date form_datetime">
+                    <!-- <span class="add-on"> -->
+                    <input
+                      class="form-control "
+                      name="dep_date"
+                      ngModel
+                      id="depDate"
+                      type="text"
+                      #dep_date
+                      placeholder="DD-MM-YYYY"
+                      disabled
+                      [value]="
+                        initialData.dep_date != ''
+                          ? (initialData.dep_date | date: 'dd-MMM-yyyy')
+                          : ''
+                      "
+                    />
+                    <!-- <span
+                        class="reqVal"
+                        *ngIf="
+                          (bookingForm.errors && dep_date.value == '') ||
+                          (departDateValidation.touched &&
+                            departDateValidation.invalid)
+                        "
+                        >Departure Date is required</span
+                      > -->
+                    <!-- </span> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end row -->
+            <div>
+              <h3 *ngIf="selectDepService" class="invalidVal ">
+                You've to Select one of these services given below
+              </h3>
+            </div>
+            <div class="row form-group">
+              <div class="col-lg-3 col-md-3 col-sm-12 radio-inline">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="departureAirport"
+                    name="dep_service"
+                    class="custom-control-input"
+                    ngModel
+                    #dep_service="ngModel"
+                    value="dep_airport"
+                    (change)="clickedDepService(dep_service)"
+                  />
+                  <label class="custom-control-label" for="departureAirport"
+                    >Airport
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 radio-inline">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="departureHotel"
+                    name="dep_service"
+                    class="custom-control-input"
+                    ngModel
+                    #dep_service="ngModel"
+                    value="dep_hotel"
+                    (change)="clickedDepService(dep_service)"
+                  />
+                  <label class="custom-control-label" for="departureHotel"
+                    >Hotel / Accommodation Name</label
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 radio-inline">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="departureCarhire"
+                    name="dep_service"
+                    class="custom-control-input"
+                    ngModel
+                    #dep_service="ngModel"
+                    value="dep_Carhire"
+                    (change)="clickedDepService(dep_service)"
+                  />
+                  <label class="custom-control-label" for="departureCarhire"
+                    >Car Hire</label
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 radio-inline">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input
+                    type="radio"
+                    id="departureOthers"
+                    name="dep_service"
+                    class="custom-control-input"
+                    ngModel
+                    #dep_service="ngModel"
+                    value="dep_others"
+                    (change)="clickedDepService(dep_service)"
+                  />
+                  <label class="custom-control-label" for="departureOthers"
+                    >Other</label
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- end row -->
+            <div
+              class="row airport_section"
+              *ngIf="dep_service.value == 'dep_airport'"
+            >
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="form-group">
+                  <label for="dep_flight_no"
+                    >Flight # <span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="dep_flight_no"
+                    id="flightNo"
+                    placeholder=""
+                    required
+                    ngModel
+                    #dep_flight_no="ngModel"
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && dep_flight_no.value == '') ||
+                      (dep_flight_no.touched && dep_flight_no.invalid)
+                    "
+                    >Flight is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="form-group">
+                  <label for="departureTime"
+                    >Departure Time <span class="required-span">*</span></label
+                  >
+
+                  <!----Timepicker Start------->
+                  <div class="time_pickerKV">
+                    <input
+                      type="number"
+                      class="form-control scroll"
+                      name="dep_timeHr"
+                      id="departureTime"
+                      required
+                      #dep_timeHr="ngModel"
+                      ngModel
+                      #depHr
+                      [value]="
+                        depHr.value > 23
+                          ? 0
+                          : depHr.value && depHr.value < 0
+                          ? 23
+                          : depHr.value
+                      "
+                      (input)="format(depHr)"
+                      *ngIf="!generalArr.depFormat"
+                    />
+                    <input
+                      type="number"
+                      class="form-control scroll"
+                      name="dep_timeHr"
+                      id="departureTime"
+                      required
+                      #dep_timeHr="ngModel"
+                      ngModel
+                      [(ngModel)]="generalArr.depHr"
+                      #depHr
+                      [value]="
+                        depHr.value > 12
+                          ? 1
+                          : depHr.value && depHr.value < 1
+                          ? 12
+                          : depHr.value
+                      "
+                      (input)="format(depHr)"
+                      *ngIf="generalArr.depFormat"
+                    />
+                    <span>:</span>
+                    <input
+                      type="number"
+                      class="form-control scroll"
+                      name="dep_timeMin"
+                      id="departureTime"
+                      required
+                      #dep_timeMin="ngModel"
+                      ngModel
+                      #depMin
+                      [value]="
+                        depMin.value > 59
+                          ? 0
+                          : depMin.value && depMin.value < 0
+                          ? 59
+                          : depMin.value
+                      "
+                      (input)="format(depMin)"
+                    />
+                    <select
+                      class="form-control"
+                      id="depTimeForm"
+                      (change)="clickedDepService(dep_service)"
+                    >
+                      <option *ngFor="let time of timeForm" [value]="time">
+                        {{ time }}</option
+                      >
+                    </select>
+                  </div>
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors &&
+                        (depMin.value == '' || depHr?.value == '')) ||
+                      ((dep_timeMin.touched && dep_timeMin.invalid) ||
+                        (dep_timeHr?.touched && dep_timeHr?.invalid))
+                    "
+                    >Departure Time is required
+                  </span>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="form-group">
+                  <label for="dep_airline"
+                    >Airline <span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="dep_airline"
+                    id="Airline"
+                    placeholder=""
+                    required
+                    ngModel
+                    #dep_airline="ngModel"
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && dep_airline.value == '') ||
+                      (dep_airline.touched && dep_airline.invalid)
+                    "
+                    >Airline is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="form-group">
+                  <label for="dep_orgin_flight"
+                    >Origin of Flight
+                    <span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="dep_orgin_flight"
+                    id="OriginofFlight"
+                    placeholder=""
+                    required
+                    ngModel
+                    #dep_orgin_flight="ngModel"
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && dep_orgin_flight.value == '') ||
+                      (dep_orgin_flight.touched && dep_orgin_flight.invalid)
+                    "
+                    >Origin of Flight is required</span
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- end airport_section -->
+            <div
+              class="row hotel_section"
+              *ngIf="dep_service.value == 'dep_hotel'"
+            >
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="dep_hotel"
+                    >Name <span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="dep_hotel"
+                    id="hotel_name"
+                    placeholder=""
+                    required
+                    ngModel
+                    #dep_hotel="ngModel"
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && dep_hotel.value == '') ||
+                      (dep_hotel.touched && dep_hotel.invalid)
+                    "
+                    >Name is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="dep_hotel_add"
+                    >Address <span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="dep_hotel_add"
+                    id="hotel_address"
+                    placeholder=""
+                    required
+                    ngModel
+                    #dep_hotel_add="ngModel"
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && dep_hotel_add.value == '') ||
+                      (dep_hotel_add.touched && dep_hotel_add.invalid)
+                    "
+                    >Address is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="dep_hotel_phone"
+                    >Phone No Incl. country code</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="dep_hotel_phone"
+                    id="hotel_phone_no"
+                    placeholder=""
+                    ngModel
+                    #dep_hotel_phone="ngModel"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- end Hotel_section -->
+            <div
+              class="row car_section"
+              *ngIf="dep_service.value == 'dep_Carhire'"
+            >
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="dep_car_company"
+                    >Car Rental Company
+                    <span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="dep_car_comp"
+                    id="car_rental_comp"
+                    placeholder=""
+                    required
+                    ngModel
+                    #dep_car_comp="ngModel"
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && dep_car_comp.value == '') ||
+                      (dep_car_comp.touched && dep_car_comp.invalid)
+                    "
+                    >Car Rental Company is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="dep_pick_up"
+                    >Car Rental Location
+                    <span class="required-span">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control scroll"
+                    name="dep_pick_up"
+                    id="pickup_location"
+                    placeholder=""
+                    required
+                    ngModel
+                    #dep_pick_up="ngModel"
+                  />
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && dep_pick_up.value == '') ||
+                      (dep_pick_up.touched && dep_pick_up.invalid)
+                    "
+                    >Car Rental Location is required</span
+                  >
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="form-group">
+                  <label for="dep_car_phone">Phone No Incl. country code</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="dep_car_phone"
+                    id="car_phone_no"
+                    placeholder=""
+                    ngModel
+                    #dep_car_phone="ngModel"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- end Car_section -->
+            <div
+              class="row others_section"
+              *ngIf="dep_service.value == 'dep_others'"
+            >
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group">
+                  <label for="dep_descripion"
+                    >Description <span class="required-span">*</span></label
+                  >
+                  <textarea
+                    class="form-control scroll"
+                    name="dep_descripion"
+                    id="others_desc"
+                    cols="20"
+                    rows="5"
+                    required
+                    ngModel
+                    #dep_descripion="ngModel"
+                  ></textarea>
+                  <span
+                    class="reqVal"
+                    *ngIf="
+                      (bookingForm.errors && dep_descripion.value == '') ||
+                      (dep_descripion.touched && dep_descripion.invalid)
+                    "
+                    >Description is required</span
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- end others_section -->
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group">
+                  <textarea
+                    class="form-control"
+                    cols="20"
+                    rows="2"
+                    #add_dep_info="ngModel"
+                    ngModel
+                    placeholder="Additional Departure Information"
+                    name="dep_add_information"
+                    ngModel
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end container -->
+    </section>
+    <!-- end PaymentInformation -->
+    <section class="PassengerInformation">
+      <div class="container">
+        <div class="row payment-border">
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row form-group">
+              <div class="col-lg-4 col-md-6 col-sm-4">
+                <h3 class="payment-heading">Additional Information</h3>
+              </div>
+            </div>
+
+            <!-- row end -->
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row form-group">
+                  <div class="col-lg-8 col-md-8 col-sm-12">
+                    <div class="form-group">
+                      <label for="holiday"
+                        >Please provide a contact number you'll be accessilbe
+                        whilst on holiday</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <span class="form-group">
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="holiday"
+                        name="phone"
+                        [ngModel]="phone.value"
+                        #phone
+                        placeholder="Phone No Incl. country code"
+                        [value]="
+                          initialData.phone !== ''
+                            ? initialData.phone
+                            : phone.value
+                        "
+                      />
+                    </span>
+                  </div>
+                </div>
+                <!-- row end -->
+              </div>
+            </div>
+            <!-- row end -->
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row form-group">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <label for="travelPackAddress"
+                      >Please confirm where we should deliver your travel
+                      documents to :
+                    </label>
+                  </div>
+                </div>
+                <!-- row end -->
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row form-group">
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                          <div class="col-lg-2 col-md-3 col-sm-12">
+                            <label for="streetAddress"
+                              >street Address
+                              <span class="required-span">*</span>
+                            </label>
+                          </div>
+                          <div class="col-lg-10 col-md-9 col-sm-12">
+                            <div class="form-group">
+                              <input
+                                type="text"
+                                class="form-control scroll"
+                                id="streetAddress"
+                                #sAdd
+                                required
+                                placeholder="Street Address"
+                                name="address"
+                                #streetAdd="ngModel"
+                                ngModel
+                              />
+                              <span
+                                class="reqVal"
+                                *ngIf="
+                                  (bookingForm.errors && sAdd.value == '') ||
+                                  (streetAdd.touched && streetAdd.invalid)
+                                "
+                                >Street Address is required</span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- row end -->
+                    <div class="row form-group">
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                              <label for="City">City</label>
+                              <input
+                                type="text"
+                                class="form-control scroll"
+                                id="city"
+                                placeholder="City"
+                                name="city"
+                                required
+                                #city
+                                [ngModel]="city.value"
+                                #cityField="ngModel"
+                                [value]="
+                                  initialData.city !== ''
+                                    ? initialData.city
+                                    : city.value"
+                              />
+                              <span
+                                class="reqVal"
+                                *ngIf="
+                                  (bookingForm.errors && city.value == '') ||
+                                  (cityField.touched && cityField.invalid)
+                                "
+                                >City is required</span
+                              >
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                              <label for="state">State / County</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="state"
+                                placeholder="State"
+                                name="state"
+                                #state
+                                [ngModel]="state.value"
+                                [value]="
+                                  initialData.state !== ''
+                                    ? initialData.state
+                                    : state.value
+                                "
+                              />
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                              <label for="ZipCode">ZIPCODE / POSTCODE</label>
+                              <input
+                                type="text"
+                                class="form-control scroll"
+                                id="ZipCode"
+                                placeholder="Zip Code"
+                                name="zipCode"
+                                #zipCode
+                                #zip="ngModel"
+                                required
+                                [ngModel]="zipCode.value"
+                                [value]="
+                                  initialData.zipcode !== ''
+                                    ? initialData.zipcode
+                                    : zipCode.value
+                                "
+                              />
+                              <span
+                                class="reqVal"
+                                *ngIf="
+                                  (bookingForm.errors && zipCode.value == '') ||
+                                  (zip.touched && zip.invalid)
+                                "
+                                >ZIPCODE is required</span
+                              >
+                            </div>
+                          </div>
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                              <label for="country">country</label>
+                              <select
+                                class="form-control scroll"
+                                name="country"
+                                #country
+                                [required]="country.value == ''"
+                                #countryField="ngModel"
+                                [ngModel]="
+                                  initialData?.country == null ||
+                                  initialData?.country == ''
+                                    ? ''
+                                    : initialData?.country.id
+                                "
+                              >
+                                <option
+                                  [value]="
+                                    initialData?.country == null ||
+                                    initialData?.country == ''
+                                      ? ''
+                                      : initialData?.country.id
+                                  "
+                                  >{{
+                                    initialData?.country == null ||
+                                    initialData?.country == ""
+                                      ? "Select Country"
+                                      : initialData?.country.name
+                                  }}
+                                </option>
+
+                                <option
+                                  *ngFor="let country of countryArr"
+                                  [value]="country?.id"
+                                  >{{ country?.name }}</option
+                                >
+                                
+                              </select>
+                              <span
+                              class="reqVal"
+                              *ngIf="
+                                (bookingForm.errors && country.value == '') ||
+                                (countryField.touched && countryField.invalid)
+                              "
+                              >Country is required</span
+                            >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- row end -->
+                    <div class="row form-group">
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row form-group">
+                          <div class="col-lg-8 col-md-9 col-sm-1"></div>
+                          <div class="col-lg-4 col-md-3 col-sm-11"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- row end -->
+                  </div>
+                </div>
+                <!-- row end -->
+              </div>
+            </div>
+            <!-- row end -->
+            <!-- ngFor div start -->
+            <!-- ngModelGroup="additionalInformation" -->
+            <div
+              *ngFor="
+                let add_info of additional_info;
+                let i = index;
+                let a = index
+              "
+              id="addArr"
+            >
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="row form-group">
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                      <div class="form-group">
+                        <label for="additionalPassenger"
+                          >{{
+                            i == 0
+                              ? initialData.contact_type == ""
+                                ? "You have to select contact type from backend"
+                                : initialData.contact_type
+                              : "passenger " + (i + 1)
+                          }}
+                          <span class="required-span">*</span>
+                        </label>
+                        <!-- {{ add_info?.name}}  -->
+                        <input
+                          type="text"
+                          class="form-control scroll psngr_name_{{ i }}"
+                          name="psngr_name_{{ i }}"
+                          required="psngr.value + {{ i }} == '' "
+                          #psngr
+                          pattern="(?=^.{0,40}$)^[a-zA-Z-]+\s[a-zA-Z-]+$"
+                          placeholder="Full Name"
+                          [value]="add_info?.name != '' ? add_info?.name : ''"
+                          (change)="fillData($event, i, 'name')"
+                          (keydown)="fillData($event, i, 'name')"
+                          (input)="blurField(add_info.name, 'name', i, psngr)"
+                          (blur)="blurField(add_info.name, 'name', i, psngr)"
+                          (focus)="blurField(add_info.name, 'name', i, psngr)"
+                        />
+                        <!-- i == 0 ?  (initialData.contact_type == '' ? 'You have to select contact type from backend' : initialData.contact_type) : 'passenger ' +(i+1) -->
+                        <span
+                          *ngIf="
+                            generalArr.fullNamePattern &&
+                            psngr.value != '' &&
+                            i == generalArr.nameIndex
+                          "
+                          class="reqVal"
+                          >Enter a valid Full name e.g "john doe"</span
+                        >
+                        <span
+                          class="reqVal"
+                          *ngIf="
+                            (bookingForm.errors && psngr.value == '' &&
+                              generalArr.psngrRequired &&
+                              !psngr.checkValidity()) ||
+                            (generalArr.touchedField &&
+                              i == generalArr.nameIndex &&
+                              !psngr.checkValidity() && psngr.value == '')
+                          "
+                          >{{
+                            i == 0
+                              ? initialData.contact_type == ""
+                                ? "You have to select contact type from backend"
+                                : initialData.contact_type
+                              : "passenger " + (i + 1)
+                          }}
+                          is required</span
+                        >
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12">
+                      <div class="form-group">
+                        <label for="BirthDate">DATE OF BIRTH</label>
+                        <div class="input-append date form_datetime">
+                          <span class="add-on">
+                            <!-- {{add_info?.date_of_birth}} -->
+                            <input
+                              class="form-control "
+                              name="date_of_birth"
+                              type="text"
+                              placeholder="DD-MM-YYYY"
+                              readonly
+                              #birthDate
+                              appDatePicker
+                              [value]="
+                                add_info?.date_of_birth == '' ||
+                                add_info?.date_of_birth == '0000-00-00'
+                                  ? ''
+                                  : (add_info?.date_of_birth
+                                    | date: 'dd-MMM-yyyy')
+                              "
+                              (change)="fillData($event, i, 'date_of_birth')"
+                              (keydown)="fillData($event, i, 'date_of_birth')"
+                            />
+                          </span>
+                        </div>
+                        <!-- 0000-00-00 -->
+                        <!-- "add_info?.date_of_birth != '' ? (add_info?.date_of_birth  | date: 'dd-MMM-yyyy') : ''" -->
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                      <div class="form-group">
+                        <label for="EmailAd">EMAIL ADDRESS</label>
+                        <!-- {{add_info?.email}} -->
+                        <input
+                          type="email"
+                          class="form-control"
+                          pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
+                          #emailAddress
+                          name="email_{{ i }}"
+                          attr.name="email_{{ i }}"
+                          placeholder="Email Address"
+                          [value]="add_info?.email != '' ? add_info?.email : ''"
+                          (change)="fillData($event, i, 'email')"
+                          (keydown)="fillData($event, i, 'email')"
+                          (blur)="emailValidation('email', i, emailAddress)"
+                          (input)="emailValidation('email', i, emailAddress)"
+                          (focus)="emailValidation('email', i, emailAddress)"
+                        />
+                        <!-- {{emailAddress.name.substr(6,1)}} -->
+                        <span
+                          *ngIf="
+                            generalArr.emailPattern &&
+                            emailAddress.value !== '' &&
+                            i == generalArr.emailIndex
+                          "
+                          class="reqVal"
+                        >
+                          Please enter a valid email
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                      <div class="form-group">
+                        <label for="passengerPhone"
+                          >Phone No Incl. country code</label
+                        >
+                        <!-- {{add_info?.phone}} -->
+
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="passengerPhone"
+                          name="psngrPhone"
+                          placeholder="Phone No Incl. country code"
+                          [value]="add_info?.phone != '' ? add_info?.phone : ''"
+                          (change)="fillData($event, i, 'phone')"
+                          (keydown)="fillData($event, i, 'phone')"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- row end -->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="row form-group">
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                      <div class="form-group">
+                        <label for="DietaryRequirements"
+                          >Dietary Preferences</label
+                        >
+                        <!-- {{add_info?.dietary_preference}} -->
+
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="DietaryRequirements"
+                          name="dietary_info"
+                          placeholder="Dietary Preferences"
+                          [value]="
+                            add_info?.dietary_preference != ''
+                              ? add_info?.dietary_preference
+                              : ''
+                          "
+                          (change)="fillData($event, i, 'dietary_preference')"
+                          (keydown)="fillData($event, i, 'dietary_preference')"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                      <div class="form-group">
+                        <label for="SpecialRequests">Bedding Preference</label>
+                        <!-- {{add_info?.bedding_preferences}} -->
+
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="bedPreference"
+                          name="bedding_preferences"
+                          placeholder="Bedding Preference"
+                          [value]="
+                            add_info?.bedding_preferences != ''
+                              ? add_info?.bedding_preferences
+                              : ''
+                          "
+                          (change)="fillData($event, i, 'bedding_preferences')"
+                          (keydown)="fillData($event, i, 'bedding_preferences')"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                      <div class="form-group">
+                        <label for="SpecialRequests"
+                          >Special Requirements</label
+                        >
+                        <!-- {{add_info?.special_requirements}} -->
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="SpecialRequests"
+                          name="special_request"
+                          placeholder="Special Requirements"
+                          [value]="
+                            add_info?.special_requirements != ''
+                              ? add_info?.special_requirements
+                              : ''
+                          "
+                          (change)="fillData($event, i, 'special_requirements')"
+                          (keydown)="
+                            fillData($event, i, 'special_requirements')
+                          "
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-lg-1 col-md-1 col-sm-12">
+                      <div class="form-group">
+                        <div class="close_fields_sign remove-row">
+                          <a
+                            *ngIf="additional_info.length > 1"
+                            (click)="deleteArr(i)"
+                            >x</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- row end -->
+                </div>
+              </div>
+              <!-- row end -->
+            </div>
+            <!-- ngFor div end -->
+            <div class="row form-group">
+              <div class="col-lg-12 col-md-12 col-sm-12 addFieldsSign">
+                <div class="add_fields_sign">
+                  <a (click)="addData()" title="Add passenger">Add Passenger</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- end container -->
+    </section>
+    <!-- end PassengerInformation -->
+    <section class="NotesSection">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="form-group">
+              <textarea
+                class="form-control"
+                rows="6"
+                placeholder="Additional Information // additional passenger dietary preference // special request"
+                name="additional_info"
+                ngModel
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+            <button class="large button-red col-lg-3 col-md-5 col-sm-12">
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- end container -->
+    </section>
+    <!-- end NotesSection -->
+  </form>
+  <!-- end form -->
+</div>
+<!-- end wrapper -->

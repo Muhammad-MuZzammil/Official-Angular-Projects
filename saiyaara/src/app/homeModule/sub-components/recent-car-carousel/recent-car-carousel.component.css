@@ -1,0 +1,15 @@
+.urgentTag {
+	position: absolute;
+	left: 15px;
+	background: red;
+	top: 1px;
+	padding:2px 8px;
+	color: #fff;
+	font-size: 11px;
+	text-transform: uppercase;
+	border-radius: 0 0;
+}
+.f-u-ads {
+    width: 255px;
+    height: 148px;
+}

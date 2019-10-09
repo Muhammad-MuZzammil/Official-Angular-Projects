@@ -1,0 +1,135 @@
+<header>
+  <div class="top-info-bar hidden-xs">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2">
+            <ng-container *ngIf="userData">
+              <ul *ngIf="userData?.data?.login == 'false'">
+                <li><a href="{{userData?.data?.sign_in_url}}">Sign In </a></li>
+                <li><a href="{{userData?.data?.sign_up_url}}">Sign Up</a></li>
+              </ul>
+              <ul *ngIf="userData?.data?.login != 'false'">
+                <li><a href="{{userData?.data?.dashboard_url}}">{{userData?.data?.user_name}}</a></li>
+                <li><a href="{{userData?.data?.logout_url}}">Logout</a></li>
+              </ul>
+            </ng-container>
+        </div>
+        <div class="col-md-8">
+          <div class="news_tricker">
+            <ul id="ticker">
+              <li><a > Business heads back DTI bid for free mall space
+                  for MSMEs </a></li>
+              <li><a > OECD-FAO Agricultural Outlook 2016-2025 </a></li>
+              <li><a > President Mukherjee condoles passing away of A.C.
+                  Jose </a></li>
+              <li><a > New International Standard to tackle Informal
+                  Economy </a></li>
+              <li><a > Mandatory Energy Assesmdent by Dec 2015 </a></li>
+              <li><a > South African Minister for Small Business
+                  Development.</a></li>
+              <li><a > Small Businesses are the Big Deal not only for
+                  Economy butin.</a></li>
+              <li><a > AEC 2015 - Advantage SMEs </a></li>
+              <li><a > Green Business Practice – Some Easy Steps for SMEs</a></li>
+              <li><a > Small Business Impact Fund - Europe’s New
+                  Financial.</a></li>
+              <li><a > New National Policy on MSMEs approved </a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-2"><ul class="top-nav">
+            <li>
+              <a >Help</a>
+            </li>
+            <li>
+              <a >Sitemap</a>
+            </li>
+          </ul></div>
+      </div>
+    </div>
+  </div>
+  <div class="main-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9"><a class="logo" [routerLink]="['/home']"><img
+              src="../../../assets/images/saiyaara-logo.png" width="182"
+              height="52"></a></div>
+        <div class="col-md-3">
+          <div class="right">
+            <div class="counter">
+              <ul>
+                <a [routerLink]="['/second-hand-used-car']">
+                <li class="cars-count" >
+                  <img
+                    src="../../../assets/images/car-icon.png" width="32"
+                    height="21">
+                    {{ total_car_count }}
+                    </li>
+                  </a>
+              </ul>
+            </div>
+            <div class="buttons-h">
+              <ng-container *ngIf="userData">
+                <ul>
+                  <li><a href="{{ userData?.data?.post_an_ad_url }}" class="but-solid red">POST AN AD</a></li>
+                </ul>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main-navigation" role="navigation">
+    <div class="container">
+      <nav class="navbar navbar-inverse">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse"
+            data-target=".js-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+        </div>
+        <div class="collapse navbar-collapse js-navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li ><a [routerLink]="['']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
+            <li ><a [routerLink]="['/about-saiyaara']" routerLinkActive="active">About Saiyaara</a></li>
+            <li >
+              <a [routerLink]="['/used-car']" [queryParams]="queryPara"  routerLinkActive="active" >Buy A
+                Cars</a>
+            </li>
+            <li >
+              <a [routerLink]="['/car-dealer']"   routerLinkActive="active" >Find a  Dealers</a>
+            </li>
+            <li >
+              <a [routerLink]="['/car-loan']"   routerLinkActive="active" >Car Loan</a>
+            </li>
+            <li >
+              <a [routerLink]="['/car-insurance']"   routerLinkActive="active" >Car Insurance </a>
+            </li>
+            
+            <li ><a    >How It Works</a></li>
+            <li ><a  [routerLink]="['/contact-us']" routerLinkActive="active">Contact Us</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="save-ad">
+              <a href="{{userData?.data?.save_ads_url }}"><i class="fa fa-heart"
+                  aria-hidden="true">
+              <span class="saveAdsCounter" *ngIf="generalFieldArr.saveAdsCount != 0">{{generalFieldArr.saveAdsCount}}</span>
+                </i></a>
+            </li>
+            <li>
+              <a  *ngIf="userData?.data?.login != 'false'"><i class="fa fa-user"></i></a>
+
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </nav>
+    </div>
+    <!-- /.container -->
+  </div>
+</header>

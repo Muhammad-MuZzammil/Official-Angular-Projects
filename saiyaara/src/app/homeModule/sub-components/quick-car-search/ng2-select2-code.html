@@ -1,0 +1,170 @@
+<div class="mobile-header"><div class="container qs">
+    <div class="search-box">
+      <div class="title">
+        <h3>Quick Car Search</h3>
+      </div>
+      <form #quickSearchForm="ngForm" (ngSubmit)="searchCarSubmit()">
+        <div class="form-group show-field row">
+          <label class="col-md-3">Show</label>
+          <div class="col-md-9">
+            <label class="radio-inline" for="nearly-new">
+              <input type="checkbox" (change)="onCheckChange($event)"  name="Nearly new" id="nearly-new"
+                value="{{generalVarArr.nearlyNew}}">
+              Nearly new </label>
+
+          </div>
+        </div>
+        <div class="form-group drp row">
+          <div class="col-md-6">
+            <!-- <select name="manuF"  required
+              [(ngModel)]="selectManuFect"
+              (change)="getManuFectValue(selectManuFect, 'manuf', false)" class="form-control
+              selectpicker select2">
+              <option value="undefined" disabled selected hidden>Manufacture Car</option>
+              <option value="{{manuFact.id}}" *ngFor="let manuFact of
+                carManufec">{{manuFact.name}}</option>
+              </select> -->
+
+              <select2 name="manuF" (valueChanged)="selectManuFect=$event.value;"   [data]="carManufec" [(ngModel)]="selectManuFect" ngDefaultControl
+              class="form-control
+              selectpicker" ></select2>
+
+
+          </div>
+          <div class="col-md-6">
+            <!-- <select name="carName" required class="form-control selectpicker  select2"
+              (change)="getManuFectValue(selectCarName, 'carname', true)"
+              [(ngModel)]="selectCarName">
+              <option value="undefined" disabled selected hidden>Car Name</option>
+              <option *ngFor="let carNameOpt of selectCarNameArr"
+                value="{{carNameOpt.id}}">{{carNameOpt.name}}</option>
+            </select> -->
+             <select2 name="carName" (valueChanged)="selectCarName=$event.value;"   [data]="selectCarNameArr" [(ngModel)]="selectCarName" ngDefaultControl
+              class="form-control
+              selectpicker" ></select2>
+          </div>
+        </div>
+        <div class="row drp form-group">
+          <div class="col-md-6">
+            <!-- <select name="carModel" required [(ngModel)]="selectCarModel"
+              class="form-control selectpicker  select2"
+              (change)="getManuFectValue(selectCarModel, 'model', false)">
+              <option value="undefined" disabled selected hidden>Car Model</option>
+              <option value="{{carModel.id}}" *ngFor="let carModel of
+                carModelArr">{{carModel.name}}</option>
+            </select> -->
+
+            <select2 name="carModel"    [data]="carModelArr" [(ngModel)]="selectCarModel" ngDefaultControl
+              class="form-control
+              selectpicker" ></select2>
+          </div>
+          <ngx-loading [show]="loading"
+            [config]="{
+            backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+            backdropBorderRadius: '40px',
+            primaryColour: '#1A578C',
+            secondaryColour: '#1A578C',
+            tertiaryColour: '#1A578C'
+            }">
+
+          </ngx-loading>
+          <div class="col-md-6">
+            <!-- <select name="city" required class="form-control selectpicker  select2"
+              [(ngModel)]="selectCities"
+              (change)="getManuFectValue(selectCities, 'city', false)">
+              <option value="undefined" disabled selected hidden>Cities</option>
+              <option *ngFor="let cityArr of cities" value="{{cityArr.id}}">{{cityArr.name}}</option>
+            </select> -->
+            <!-- selectCities=$event.value; -->
+            <select2 name="city" (valueChanged)="cityFN(selectCities, 'city', false, $event)"   [data]="cities" [value]="selectCities" [(ngModel)]="selectCities" ngDefaultControl
+              class="form-control
+              selectpicker" ></select2>
+          </div>
+        </div>
+        <div class="row drp form-group">
+          <div class="col-md-6">
+            <!-- <select name="minPrice" required class="form-control selectpicker  select2"
+              [(ngModel)]="selectMinPrice"
+              (change)="getManuFectValue(selectMinPrice, 'minprice', false)">
+              <option value="undefined" disabled selected hidden>Min Price</option>
+              <option value="{{minPrice}}" *ngFor="let minPrice of MinPriceArr">{{'PKR '+price_format(minPrice+'') }}</option>
+            </select> -->
+
+            <select2 name="minPrice" (valueChanged)="selectMinPrice=$event.value;minPriceFN(selectMinPrice, 'minprice', false)"   [data]="MinPriceArr" [(ngModel)]="selectMinPrice" ngDefaultControl
+              class="form-control
+              selectpicker" ></select2>
+          </div>
+          <div class="col-md-6">
+              <select2 name="maxPrice" (valueChanged)="selectMaxPrice=$event.value;maxPriceFN(selectMaxPrice, 'minprice', false)"   [data]="MaxPriceArr" [(ngModel)]="selectMaxPrice" ngDefaultControl
+              class="form-control
+              selectpicker" ></select2>
+            <!-- <select name="maxPrice" required class="form-control selectpicker  select2"
+              [(ngModel)]="selectMaxPrice"
+              (change)="getManuFectValue(selectMaxPrice, 'maxprice', false)">
+              <option value="undefined" disabled selected hidden>Max Price</option>
+              <option value="{{maxPrice}}" *ngFor="let maxPrice of MaxPriceArr"
+                [hidden]="!maxPrice">{{ 'PKR '+price_format(maxPrice+'')}}</option>
+            </select> -->
+          </div>
+        </div>
+
+        <div class="show-more-fields" *ngIf="isMoreFieldVis">
+          <div class="row drp form-group">
+            <div class="col-md-6">
+              <!-- <select name="selectColors" required class="form-control selectpicker  select2"
+                [(ngModel)]="selectColors"
+                (change)="getManuFectValue(selectColors, 'colors', false)">
+                <option value="undefined" disabled selected hidden>Colors</option>
+                <option value="{{color?.id}}" *ngFor="let color of quickSearch?.colors">{{color?.name}}</option>
+              </select> -->
+
+              <select2 name="selectColors" (valueChanged)="selectColors=$event.value;carColorFN(selectColors, 'colors', false)"   [data]="carColorArr" [(ngModel)]="selectColors" ngDefaultControl
+              class="form-control
+              selectpicker" ></select2>
+            </div>
+
+            <div class="col-md-6">
+                <!-- <select2 name="selectTransmission" (valueChanged)="selectTransmission=$event.value;carTransmissionFN(selectTransmission, 'transmission', false)"   [data]="carTransmissionArr" [(ngModel)]="selectTransmission" ngDefaultControl
+                class="form-control
+                selectpicker" ></select2> -->
+              <select name="selectTransmission" required class="form-control selectpicker select2"
+                [(ngModel)]="selectTransmission"
+                (change)="getManuFectValue(selectTransmission, 'transmission', false)">
+                <option value="undefined" disabled selected hidden>Transmission</option>
+                <option value="{{trans?.tranmissoin}}" *ngFor="let trans of quickSearch?.transmission">{{trans?.tranmissoin}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row drp form-group">
+            <div class="col-md-6">
+              <select name="selectEngingeTypes" required class="form-control selectpicker  select2"
+                [(ngModel)]="selectEngingeTypes"
+                (change)="getManuFectValue(selectEngingeTypes, 'engingeTypes', false)">
+                <option value="undefined" disabled selected hidden>Enginge Types</option>
+                <option value="{{engine_t.engine_type}}" *ngFor="let engine_t of quickSearch?.engine_type">{{ engine_t.engine_type }}</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <select name="selectAssembly" required class="form-control selectpicker select2"
+                [(ngModel)]="selectAssembly"
+                (change)="getManuFectValue(selectAssembly, 'assembly', false)">
+                <option value="undefined" disabled selected hidden>Assembly</option>
+                <option value="{{assemb.car_assemble}}" *ngFor="let assemb of quickSearch?.assembly">{{ assemb.car_assemble}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="more-field-btn">
+          <a href="javascript:;" (click)="isMoreFieldVis=!isMoreFieldVis">
+            <i class="fa " [ngClass]="{'fa-angle-double-down': !isMoreFieldVis, 'fa-angle-double-up': isMoreFieldVis}"></i>
+          </a>
+        </div>
+        <div class="ftr-form">
+          <button type="submit"  >
+            Search Cars<span>{{generalVarArr.quickSearchCarAvailable}} cars available</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

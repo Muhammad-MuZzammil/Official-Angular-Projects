@@ -1,0 +1,11 @@
+.car-dealer{
+    cursor: pointer;
+}
+
+.active{
+  background-color: #1da8fe !important;
+}
+.saveAdsCounter{
+  color: #ce0000;
+
+}

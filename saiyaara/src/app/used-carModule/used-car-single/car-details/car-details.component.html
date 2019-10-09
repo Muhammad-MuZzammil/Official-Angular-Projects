@@ -1,0 +1,1026 @@
+<div id="waitingDiv">
+  <ngx-loading [show]="loading" [config]="{
+  backdropBackgroundColour: 'rgba(255, 251, 251, 0.51)',
+  backdropBorderRadius: '40px',
+  primaryColour: '#1A578C',
+  secondaryColour: '#1A578C',
+  tertiaryColour: '#1A578C'
+  }">
+  </ngx-loading>
+</div>
+<div class="car-loading" >
+    <svg class="mainSVG" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+        <defs>   
+        <path id="puff" d="M4.5,8.3C6,8.4,6.5,7,6.5,7s2,0.7,2.9-0.1C10,6.4,10.3,4.1,9.1,4c2-0.5,1.5-2.4-0.1-2.9c-1.1-0.3-1.8,0-1.8,0
+        s-1.5-1.6-3.4-1C2.5,0.5,2.1,2.3,2.1,2.3S0,2.3,0,4.4c0,1.1,1,2.1,2.2,2.1C2.2,7.9,3.5,8.2,4.5,8.3z" fill="#fff"/>
+        <circle id="dot"  cx="0" cy="0" r="5" fill="#000"/>   
+        </defs>
+        <circle id="mainCircle" fill="none" stroke="none" stroke-width="2" stroke-miterlimit="10" cx="400" cy="300" r="130"/>
+        <circle id="circlePath" fill="none" stroke="none" stroke-width="2" stroke-miterlimit="10" cx="400" cy="300" r="80"/>
+        <g id="mainContainer" >
+            <g id="car">
+        <path id="carRot" fill="#0842b0"  d="M45.6,16.9l0-11.4c0-3-1.5-5.5-4.5-5.5L3.5,0C0.5,0,0,1.5,0,4.5l0,13.4c0,3,0.5,4.5,3.5,4.5l37.6,0
+        C44.1,22.4,45.6,19.9,45.6,16.9z M31.9,21.4l-23.3,0l2.2-2.6l14.1,0L31.9,21.4z M34.2,21c-3.8-1-7.3-3.1-7.3-3.1l0-13.4l7.3-3.1
+        C34.2,1.4,37.1,11.9,34.2,21z M6.9,1.5c0-0.9,2.3,3.1,2.3,3.1l0,13.4c0,0-0.7,1.5-2.3,3.1C5.8,19.3,5.1,5.8,6.9,1.5z M24.9,3.9
+        l-14.1,0L8.6,1.3l23.3,0L24.9,3.9z"/>      
+            </g>
+        </g>
+    </svg>
+</div>
+<div class="modal fade " id="offerModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content contentOffer">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title popupHeader">MAKE AN OFFER</h4>
+        </div>
+        <div class="modal-body">
+        <form [formGroup]="offerForm" (ngSubmit)="submitOffer(offerForm.value)" autocomplete="off">
+
+            <div *ngFor="let singleCar of carDetailsArr; let i = index;">
+              <h5>{{ singleCar?.munuf_name}} {{ singleCar?.car_name}} {{ singleCar?.model_name}} {{
+                singleCar?.year}}</h5>
+              <h6>Demand {{singleCar?.price}}</h6>
+            </div>
+            <!--  -->
+            <div *ngIf="generalFields?.userData?.data?.login == 'false'">
+              <label for="name">Name:
+              </label>
+              <input [formControl]="username" class="nameInput" type="text" required>
+              <div class="help-block"
+                *ngIf=" username && offerForm.get('username').errors?.required
+                &&   offerForm.get('username').touched
+                ">
+                <span class="nameRequired">{{nameRequired}}</span>
+              </div>
+            </div>
+            <div *ngIf="generalFields?.userData?.data?.login == 'false'">
+              <label for="name">Phone No:
+              </label>
+              <input [formControl]="cell_number" class="phoneInput" type="text" required>
+              <div class="help-block"
+              *ngIf=" cell_number && offerForm.get('cell_number').errors?.required
+              &&   offerForm.get('cell_number').touched
+              ">
+              <span class="nameRequired">{{phoneRequired}}</span>
+            </div>
+            <div class="help-block" *ngIf="offerForm.get('cell_number').errors?.pattern && offerForm.get('cell_number').touched" >
+                <span class="nameRequired">{{cellNumberMax}}</span>
+           </div>
+            </div>
+            <div>
+              <label for="name">Offer Price:
+              </label>
+              <input [formControl]="offer" class="OfferInput" type="number" required min="0">PKR
+              <div class="help-block"
+                *ngIf=" username && offerForm.get('offer').errors?.required
+                &&   offerForm.get('offer').touched
+                ">
+                <span class="nameRequired">{{offerRequired}}</span>
+              </div>
+              <div class="help-block"
+                *ngIf="username && offerForm.get('offer').errors?.min
+                && offerForm.get('offer').touched
+                ">
+                <span class="nameRequired">{{offerMin}}{{minOffer | number}}</span>
+              </div>
+
+            </div>
+
+          <div class=" popupFooter">
+            <div *ngIf="generalFields?.userData?.data?.login == 'false'; else elseBlock">
+              <button type="submit" class="btn btn-default submitButton" [disabled]="offerForm.invalid">SUBMIT</button>
+            </div>
+            <ng-template #elseBlock>
+              <div *ngIf="generalFields?.userData?.data?.login == 'true'">
+                <button type="submit" class="btn btn-default submitButton" [disabled]="offerForm.get('offer').invalid">SUBMIT</button>
+              </div>
+            </ng-template>
+          </div>
+          <div class="alert alert-success fade in" *ngIf="makeOfferSuccess">
+            <a class="close" data-dismiss="alert">&times;</a>
+            <strong>Success!</strong> {{generalFields.SuccessMsg}}.
+          </div>
+          <div class="alert alert-danger fade in" *ngIf="offerFailure">
+            <a class="close" data-dismiss="alert">&times;</a>
+            <strong>Error!</strong> {{generalFields.errorMsg}}.
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="modal fade-scale product_view car-gallery" id="product_view">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 product_img">
+            <div id="custom_carousel" class="carousel slide" data-ride="carousel" data-interval="false" >
+              <div class="carousel-inner">
+                <div class="item" *ngFor="let dummyImage of carDetailsArr[0]?.dummy_picture; let j=index;" [ngClass]="{'active': j == 0}">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-md-12 car-single-p com-img">
+                        <img src="{{CarsImagesUrl}}/{{carDetailsArr[0]?.user_id}}/{{dummyImage['image'+(j+1)]}}" class="img-responsive">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="product_content sidebar-card">
+              <div class="card-area">
+                <div class="title-area">
+                  <div class="title">
+                    <h1>{{ carDetailsArr[0]?.munuf_name}} {{ carDetailsArr[0]?.car_name}} {{ carDetailsArr[0]?.model_name}} {{
+                      carDetailsArr[0]?.year}}</h1>
+                  </div>
+                  <div class="price-con">
+                    <ul>
+                      <li class="price">Demand PKR {{ carDetailsArr[0]?.original_price | number}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div class="row gal-thumb">
+          <div class="col-md-12">
+            <div class="controls">
+              <ul class="nav">
+                <li data-target="#custom_carousel" [attr.data-slide-to]="j" *ngFor="let dummyImage of carDetailsArr[0]?.dummy_picture; let j=index;"
+                  [ngClass]="{'active': j == 0}">
+                  <a class="com-img sin-p-thumb">
+                    <img src="{{CarsImagesUrl}}/{{carDetailsArr[0]?.user_id}}/{{imageSize}}{{dummyImage['image'+(j+1)]}}" alt="">
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="car-details">
+  <div class="container">
+    <div class="row" *ngFor="let singleCar of carDetailsArr; let i = index;">
+      <div class="col-md-8">
+        <div class="title-area">
+          <div class="row">
+            <div class="col-md-9">
+              <div class="title">
+                <h1>{{singleCar.munuf_name}} {{singleCar.car_name}} {{singleCar.model_name}} {{singleCar.year}}
+                </h1>
+              </div>
+              <div class="price-con">
+                <ul>
+                  <li class="price">Demand {{numberWithCommas(singleCar.price)}}
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="make-offer" *ngIf="generalFields?.adUserID !== generalFields?.userData?.data?.user_id && carDetailsArr[0]?.rec_offer == 1">
+                <a class="btn blue btn-info btn-lg" data-toggle="modal" data-target="#offerModal" >Make An Offer</a>
+              </div>
+              <div class="social-cont">
+                  <div class="social">
+                    <a  class="social-icon facebook" [href]="'https://www.facebook.com/sharer/sharer.php?u='+shareUrl" target="blank" data-tooltip="Facebook">
+                      <i class="fa fa-facebook"></i>
+                    </a>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row image-gallery">
+              <ngx-loading [show]="loading" [config]="{
+                backdropBackgroundColour: 'rgba(255, 251, 251, 0.51)',
+                backdropBorderRadius: '40px',
+                primaryColour: '#1A578C',
+                secondaryColour: '#1A578C',
+                tertiaryColour: '#1A578C'
+                }">
+                </ngx-loading>
+
+          <div class="col-sm-4 scrollbar" id="slider-thumbs">
+            <ul id="car_gl" class="hide-bullets  ">
+              <ng-container *ngFor="let dummyImage of singleCar.dummy_picture; let j=index;">
+                <li class="gl-img" data-target="#myCarousel_" attr.data-slide-to="{{j}}" [ngClass]="{'active': j == 0 }" *ngIf="singleCar.dummy_picture[j]['image'+(j+1)] != ''">
+                  <a class="thumbnail com-img" id="carousel-selector-0">
+                    <img src="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize}}{{dummyImage['image'+(j+1)]}}" alt="">
+                  </a>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+          <div class="col-sm-8">
+
+            <div class="car-slider" id="slider">
+              <div class="tag" *ngIf="singleCar.package_id == '2'">Featured</div>
+              <div class="urgentTag without-space" *ngIf="singleCar.package_id == '3'">Urgent</div>
+              <div *ngIf="!(singleCar.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg') != -1)">
+                <div class="carousel-box" id="carousel-bounding-box">
+                  <div id="myCarousel_" class="carousel slide"    data-ride="carousel" >
+                    <div class="carousel-inner">
+                      <ng-container *ngFor="let dummyImage of singleCar.dummy_picture; let j=index;">
+                        <div class="item " *ngIf="singleCar.dummy_picture[j]['image'+(j+1)] != ''" [ngClass]="{'active': j == 0}">
+                          <a data-toggle="modal" class="com-img" data-target="#product_view" attr.index="{{j}}">
+                            <img src="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize3}}{{dummyImage['image'+(j+1)]}}" alt="{{ carDetailsArr[0]?.munuf_name}} {{ carDetailsArr[0]?.car_name}} {{ carDetailsArr[0]?.model_name}} {{ carDetailsArr[0]?.year}}" style="width:100%;">
+                          </a>
+                        </div>
+                        <div>
+                        </div>
+                      </ng-container>
+                    </div>
+
+                    <a class="left carousel-control" href="#myCarousel_" data-slide="prev">
+                      <span class="glyphicon glyphicon-chevron-left"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel_" data-slide="next">
+                      <span class="glyphicon glyphicon-chevron-right"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="(singleCar.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg') != -1)">
+                <div class="img-not-found ">
+                  <img src="{{ singleCar.dummy_picture[0]['image1'] }}" alt="{{ carDetailsArr[0]?.munuf_name}} {{ carDetailsArr[0]?.car_name}} {{ carDetailsArr[0]?.model_name}} {{ carDetailsArr[0]?.year}}" style="width:100%;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="main-feature">
+            <ul>
+              <li>
+                <span class="icon">
+                  <i class="fa fa-tachometer" aria-hidden="true"></i>
+                </span>{{singleCar.mileage}} Km</li>
+              <li>
+                <span class="icon">
+                  <i class="fa fa-wrench" aria-hidden="true"></i>
+                </span>{{singleCar.transmission}}</li>
+              <li>
+                <span class="icon">
+                  <img src="../../../../assets/images/fuel.png" width="17" height="20">
+                </span>{{singleCar.engine_type}}</li>
+              <li>
+                <span class="icon">
+                  <i class="fa fa-bolt" aria-hidden="true"></i>
+                </span>{{singleCar.engine_capacity}} cc
+              </li>
+            </ul>
+          </div>
+          <div class="car-features">
+            <div class="sub-features">
+              <div class="sub-title">
+                <h3>Car Features</h3>
+              </div>
+              <ul class="row">
+                <li class="col-md-6">
+                  <div class="points">Year
+                    <span>{{singleCar.year}}</span>
+                  </div>
+                </li>
+                <li class="col-md-6">
+                  <div class="points">Registered City
+                    <span>{{singleCar.city_name}}</span>
+                  </div>
+                </li>
+                <li class="col-md-6">
+                  <div class="points">Mileage
+                    <span>{{singleCar.mileage}} km</span>
+                  </div>
+                </li>
+                <li class="col-md-6">
+                  <div class="points">Color
+                    <span>{{singleCar.color}}</span>
+                  </div>
+                </li>
+                <li class="col-md-6">
+                  <div class="points">Transmission
+                    <span>{{singleCar.transmission}}</span>
+                  </div>
+                </li>
+                <li class="col-md-6">
+                  <div class="points">Assembly
+                    <span>{{singleCar.car_assemble}}</span>
+                  </div>
+                </li>
+                <li class="col-md-6">
+                  <div class="points">Engine Capacity
+                    <span>{{singleCar.engine_capacity}} cc
+                    </span>
+                  </div>
+                </li>
+                <li class="col-md-6">
+                  <div class="points">Body Type
+                    <span>{{singleCar.car_body_type}}</span>
+                  </div>
+                </li>
+                <li class="col-md-6">
+                  <div class="points">Engine Type
+                    <span>{{singleCar.engine_type}}</span>
+                  </div>
+                </li>
+                <li class="col-md-6">
+                  <div class="points">City
+                    <span>{{singleCar.ad_city}}</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="other-features" *ngIf="carDetailsParts"> 
+              <ul class="">
+                <li class="col-md-3" *ngFor="let carDetailPart of carDetailsParts; let i=index">
+                  <span class="icon">
+                    <img src="{{carFeatureImg}}/{{carFKeys[i]+'.png'}}" alt="">
+                    </span>
+                    {{carDetailPart[carFKeys[i]]}}
+                </li>
+              </ul>
+            </div>
+            <div class="custom-detail">
+              <p>Proin mattis, neque id gravida viverra, enim lectus consequat diam, vel aliquam lectus turpis ac enim. Donec
+                ornare lorem sed arcu tincidunt pharetra. Praesent pulvinar ac nunc id hendrerit. Nulla dapibus, nibh quis
+                pretium imperdiet, ex odio ornare mauris, et ultricies nisl metus vitae nulla. Mauris vel est id odio pretium
+                ornare. Praesent congue velit at enim sodales, ut sagittis mauris rhoncus. Cras pharetra non velit quis tempus.
+              </p>
+              <p>Cras ac orci congue, iaculis libero egestas, interdum ligula. Nunc vitae neque consequat, aliquam nibh sit
+                amet, pulvinar velit. Cras non dolor venenatis nisl faucibus pellentesque.
+              </p>
+              <ul>
+                <li>Nullam maximus justo at nisi finibus, sit amet luctus</li>
+                <li>Ligula interdum. Duis ut massa augue. Donec efficitur, nisl nec blandit
+                </li>
+                <li>Elementum, erat sapien commodo tortor, eu convallis sapien</li>
+                <li>Urna eget augue. Vivamus sed pharetra erat</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 sidebar-right">
+        <div class="profile-card">
+          <div class="row dated">
+            <div class="posted col-md-6">Post Date |
+              <a >{{singleCar.start_date | date }}</a>
+            </div>
+            <div class="end col-md-6">End Date |
+              <a >{{singleCar.end_date | date}}</a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 profile">
+              <div class="det">
+                <div class="profile-img">
+                  <img src="../../../../assets/images/pro-img.png">
+                </div>
+                <div class="caption">
+                  <div class="title">
+                    <h3>{{singleCar.full_name}}</h3>
+                  </div>
+                  <div *ngIf="userRole == 2 && singleCar.rating != null">
+                    <div class="rate ">
+                      <ng-container *ngFor="let rate of singleCar.ratingArr">
+                        <i class="fa fa-star" [ngClass]="{ratings: rate <= singleCar.ratingInNum}"></i>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div class="location" *ngIf="userRole == 2">
+                    {{singleCar.address}}
+                  </div>
+                </div>
+                <div class="actions-btn">
+                  <ul>
+                    <li>
+                      <a class="btn lite-blue displayNumber" (click)="showNumber('displayNumber',singleCar.id,singleCar.number_counter)">
+                        Click here to show number</a>
+                    </li>
+                    <li *ngIf="userRole == 2 && singleCar?.url != null && singleCar?.s_status == 1 && singleCar?.s_trash == 0">
+                      <a target="_blank" href="{{singleCar.url}}" class="btn red-border">Showroom Website</a>
+                    </li>
+                    <li *ngIf="generalFields.adUserID !== generalFields?.userData?.data?.user_id">
+                      <a class="btn black clickBuyer" (click)="buyerMsg()"> contact to Buyer</a>
+                      <form #textareaForm="ngForm" *ngIf="generalFields?.userData?.data?.login === 'true'" (ngSubmit)="sendContact(textareaForm.form,singleCar.id,singleCar.user_id)">
+                        <textarea placeholder="Write a message ..." class="buyerMsg" name="buyerMsgs" [(ngModel)]="buyerMsgs" required #contactBuyer
+                          id="" cols="12" rows="5"></textarea>
+                        <button type="submit" [disabled]="textareaForm.invalid" class="btn btn-primary buyerMsg">Send</button>
+                      </form>
+                      <div class="alert alert-success fade in" *ngIf="offerSuccess && generalFields?.userData?.data?.login == 'true'">
+                        {{generalFields.contactBuyerSuccessMsg}}.
+                      </div>
+                      <div class="alert alert-danger fade in" *ngIf="offerSuccess && generalFields?.userData?.data?.login == 'false'">
+                        {{generalFields.contactBuyerSuccessMsg}}.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="roll" *ngIf="userRole == 1">private</div>
+                <div class="roll" *ngIf="userRole == 2">dealer</div>
+              </div>
+            </div>
+          </div>
+          <div class="car-stock row">
+            <div class="col-md-6 similar" *ngIf="userData?.data?.login == 'true'">
+              <a  class="link" [href]="similarCar">Sell Similar Car
+              </a>
+            </div>
+            <div class="col-md-6 stock">
+              <a [routerLink]="['/used-car',singleCar.user_id]" class="link" *ngIf="userRole == 2">{{carStock}} cars in stock
+              </a>
+            </div>
+          </div>
+          <div class="saveAdShow ads-sv" *ngIf="generalFields.saveAdShow">
+           <i [ngClass]="{'help-block' : this.heartAdsArr.indexOf(singleCar.id) != -1}"  class="fa fa-heart col-md-3" col-md-6 aria-hidden="true"></i>
+           <div class="col-md-9">
+              <h4>Ad saved successfully</h4>
+              <a href="{{userData?.data?.save_ads_url }}">View All saved Ads</a>
+           </div>
+        </div>
+          <div class="saveAdHide ads-sv" *ngIf="generalFields.saveAdHide">
+           <i class="fa fa-heart-o  col-md-3" aria-hidden="true"></i>
+           <div class="col-md-9">
+              <h4>Ad removed successfully</h4>
+              <a href="{{userData?.data?.save_ads_url }}">View All saved Ads</a>
+           </div>
+        </div>
+        </div>
+        <div class="site-action">
+          <ul>
+            <li>
+              <a (click)="saveAd(singleCar.id)" *ngIf="userData?.data?.login == 'false'" class="btn grey"><span class="icon"><i [ngClass]="{'saveAds-block' : heartAdsArr.indexOf(singleCar.id) != -1}" class="fa
+              fa-heart" aria-hidden="true"></i></span>Save Ad</a>
+              <a (click)="saveAd(singleCar.id)" *ngIf="userData?.data?.login == 'true'" class="btn grey"><span class="icon"><i [ngClass]="{'saveAds-block' : saveAdsID.indexOf(singleCar.id) != -1}" class="fa
+                fa-heart" aria-hidden="true"></i></span>Save Ad</a>
+            </li>
+            <li class="c">
+              <a (click)="printAd()" class="btn grey">
+                <span class="icon">
+                  <i class="fa
+              fa-print" aria-hidden="true"></i>
+                </span>Print Ad</a>
+            </li>
+            <li>
+              <a data-toggle="modal" data-target="#reportAd" (click)="reportOpen()" class="btn grey">
+                <span class="icon">
+                  <i class="fa
+              fa-flag" aria-hidden="true"></i>
+                </span>Report Ad</a>
+            </li>
+          </ul>
+        </div>
+        <div id="reportAd" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Complain Report</h4>
+              </div>
+              <div class="modal-body complainModalBody">
+                <div class="rep-wrap">
+                  <h5>Please let us know what's wrong with this ad.</h5>
+                  <form #reportAdForm="ngForm" (ngSubmit)="sendReport(reportAdForm.form,generalFields.other)">
+                    <div>
+                      <label>
+                        <input type="radio" name="radioClick" (change)="otherRadio()" [(ngModel)]="generalFields.radioClick" required value="Duplicate: There's already a listing posted just like this one."> Duplicate: There's already a listing posted just like this one.
+                      </label>
+                      <label>
+                        <input type="radio" name="radioClick" (change)="otherRadio()" [(ngModel)]="generalFields.radioClick" required value="Spam: It's a Junk Ad."> Spam: It's a Junk Ad.
+                      </label>
+                      <label>
+                        <input type="radio" name="radioClick" required (change)="otherRadio()" [(ngModel)]="generalFields.radioClick" value="Wrong Contact Info: Contact info is incorrect."> Wrong Contact Info: Contact info is incorrect.
+                      </label>
+                      <label>
+                        <input type="radio" name="radioClick" required (change)="otherRadio()" [(ngModel)]="generalFields.radioClick" value="Sold Already: The seller has already sold this item."> Sold Already: The seller has already sold this item.
+                      </label>
+                      <label>
+                        <input type="radio" name="radioClick" required (change)="otherRadio()" [(ngModel)]="generalFields.radioClick" value="Fake Ads: Fake phone number, item doesn't exist, false details etc."> Fake Ads: Fake phone number, item doesn't exist, false details etc.
+                      </label>
+                      <label>
+                        <input type="radio" name="radioClick" required (change)="otherRadio()" [(ngModel)]="generalFields.radioClick" value="Wrong Category: It doesn't belong in this category."> Wrong Category: It doesn't belong in this category.
+                      </label>
+                      <label>
+                        <input type="radio" (change)="otherRadio()" name="radioClick" required [(ngModel)]="generalFields.radioClick" value="Prohibited/Explicit Content: It's got abusive language, explicit/adult content etc."> Prohibited/Explicit Content: It's got abusive language, explicit/adult content etc.
+                      </label>
+                      <label>
+                        <input type="radio" (change)="otherText()" name="radioClick"> Other
+                        <input type="text" *ngIf="generalFields.otherInput" name="other" class="reportOther" required [(ngModel)]="generalFields.radioClick">
+                      </label>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary" [disabled]="reportAdForm.invalid">Submit Report</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dealer-realated">
+          <div id="exTab2">
+            <ul class="nav nav-tabs">
+              <li class="active">
+                <a href="#1" data-toggle="tab">Related Cars</a>
+              </li>
+            </ul>
+            <ngx-loading [show]="loading" [config]="{
+              backdropBackgroundColour: 'rgba(255, 251, 251, 0.51)',
+              backdropBorderRadius: '40px',
+              primaryColour: '#1A578C',
+              secondaryColour: '#1A578C',
+              tertiaryColour: '#1A578C'
+              }">
+            </ngx-loading>
+            <div class="tab-content" *ngIf="relatedCars?.length != 0  else notFoundMsg">
+              <div class="tab-pane item active" id="1">
+                <ul class="car-list row">
+                  <li class="col-sm-12" *ngFor="let relatedCar of relatedCars; let i =index">
+                    <div class="pro-car ">
+                      <div class="thumbnail">
+                        <div class="tag" *ngIf="relatedCar.package_id=== 2">Featured</div>
+                        <div *ngIf="relatedCar.package_id=== 3" class="urgentTag">Urgent</div>
+                        <a [routerLink]="['/used-car-single',relatedCar.id]" class="com-img">
+                          <img *ngIf="relatedCar.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg') == -1" src="{{CarsImagesUrl}}/{{relatedCar?.user_id}}/{{imageSize1}}{{relatedCar.dummy_picture[0]['image1']}}"
+                            alt="">
+                          <img *ngIf="relatedCar.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg') != -1" src="{{relatedCar.dummy_picture[0]['image1']}}"
+                            alt="">
+                        </a>
+                      </div>
+                      <div class="caption">
+                        <h4>
+                          <a [routerLink]="['/used-car-single',relatedCar.id]">{{relatedCar.munuf_name}} {{relatedCar.car_name}} {{relatedCar.model_name}} {{relatedCar.year}}</a>
+                        </h4>
+                        <div class="additional-info">
+                          <ul>
+                            <li *ngIf="relatedCar.city_name">
+                              <span>
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                              </span>{{relatedCar.city_name}}</li>
+                            <li>
+                              <span>
+                                <i class="fa fa-tachometer" aria-hidden="true"></i>
+                              </span>{{relatedCar.mileage}} Km</li>
+                          </ul>
+                        </div>
+                        <p class="price"> {{numberWithCommas(relatedCar.price)}}</p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <ng-template #notFoundMsg>
+                <div class="notFound">
+                  <h4>There is no record in related cars</h4>
+              </div>
+              </ng-template>
+          </div>
+        </div>
+        <car-inspection [adUserID]="generalFields.adUserID"></car-inspection>
+      </div>
+    </div>
+  </div>
+  <recent-viewed [recentViewInput]="recentViewData" (recentViewedCardata)="recentCarData($event)"></recent-viewed>
+</div>
+<div class="print-main" >
+  <div class="listing-page singal-page" id="singleCarImg">
+    <div class="car-details">
+      <div class="container">
+        <div class="row" *ngFor="let singleCar of carDetailsArr; let i = index;">
+          <div class="col-md-8">
+            <div class="title-area">
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="title">
+                    <h1>{{singleCar.munuf_name}} {{singleCar.car_name}} {{singleCar.model_name}} {{singleCar.year}}
+                    </h1>
+                  </div>
+                  <div class="price-con">
+                    <ul>
+                      <li class="price">Demand {{numberWithCommas(singleCar.price)}}
+                      </li>
+    
+                    </ul>
+                  </div>
+                </div>
+    
+                <div class="col-md-3">
+                  <div class="make-offer" *ngIf="generalFields.adUserID !== generalFields?.userData?.data?.user_id && carDetailsArr[0]?.rec_offer == 1">
+                    <a class="btn blue btn-info btn-lg" data-toggle="modal" data-target="#offerModal" >Make An Offer</a>
+                  </div>
+                  <div class="social-cont">
+                      <div class="social">
+                        <a  class="social-icon facebook" target="blank" data-tooltip="Facebook">
+                          <i class="fa fa-facebook"></i>
+                        </a>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+    
+            <div class="row image-gallery">
+                  <ngx-loading [show]="loading" [config]="{
+                    backdropBackgroundColour: 'rgba(255, 251, 251, 0.51)',
+                    backdropBorderRadius: '40px',
+                    primaryColour: '#1A578C',
+                    secondaryColour: '#1A578C',
+                    tertiaryColour: '#1A578C'
+                    }">
+                    </ngx-loading>
+    
+              <div class="col-sm-4 scrollbar" id="slider-thumbs">
+                <ul id="car_gl" class="hide-bullets  ">
+                  <ng-container *ngFor="let dummyImage of singleCar.dummy_picture; let j=index;">
+                    <li class="gl-img" data-target="#myCarousel_" attr.data-slide-to="{{j}}" [ngClass]="{'active': j == 0 }" *ngIf="singleCar.dummy_picture[j]['image'+(j+1)] != ''">
+                      <a class="thumbnail com-img" id="carousel-selector-0">
+                        <img src="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize}}{{dummyImage['image'+(j+1)]}}" alt="">
+                      </a>
+                    </li>
+                  </ng-container>
+                </ul>
+              </div>
+              <div class="col-sm-8">
+    
+                <div class="car-slider" id="slider">
+                  <div class="tag" *ngIf="singleCar.package_id == '2'">Featured</div>
+                  <div class="urgentTag without-space" *ngIf="singleCar.package_id == '3'">Urgent</div>
+                  <div *ngIf="!(singleCar.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg') != -1)">
+                    <div class="carousel-box" id="carousel-bounding-box">
+                      <div id="myCarousel_" class="carousel slide"    data-ride="carousel" >
+                        <div class="carousel-inner">
+                          <ng-container *ngFor="let dummyImage of singleCar.dummy_picture; let j=index;">
+                            <div class="item " *ngIf="singleCar.dummy_picture[j]['image'+(j+1)] != ''" [ngClass]="{'active': j == 0}">
+                              <a data-toggle="modal" class="com-img" data-target="#product_view" attr.index="{{j}}">
+                                <img src="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize3}}{{dummyImage['image'+(j+1)]}}" alt="{{ carDetailsArr[0]?.munuf_name}} {{ carDetailsArr[0]?.car_name}} {{ carDetailsArr[0]?.model_name}} {{ carDetailsArr[0]?.year}}" style="width:100%;">
+                              </a>
+                            </div>
+                            <div>
+                            </div>
+                          </ng-container>
+                        </div>
+    
+                        <a class="left carousel-control" href="#myCarousel_" data-slide="prev">
+                          <span class="glyphicon glyphicon-chevron-left"></span>
+                          <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel_" data-slide="next">
+                          <span class="glyphicon glyphicon-chevron-right"></span>
+                          <span class="sr-only">Next</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="(singleCar.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg') != -1)">
+                    <div class="img-not-found ">
+                      <img src="{{ singleCar.dummy_picture[0]['image1'] }}" alt="{{ carDetailsArr[0]?.munuf_name}} {{ carDetailsArr[0]?.car_name}} {{ carDetailsArr[0]?.model_name}} {{ carDetailsArr[0]?.year}}" style="width:100%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              <div class="main-feature">
+                <ul>
+                  <li>
+                    <span class="icon">
+                      <i class="fa fa-tachometer" aria-hidden="true"></i>
+                    </span>{{singleCar.mileage}} Km</li>
+                  <li>
+                    <span class="icon">
+                      <i class="fa fa-wrench" aria-hidden="true"></i>
+                    </span>{{singleCar.transmission}}</li>
+                  <li>
+                    <span class="icon">
+                      <img src="../../../../assets/images/fuel.png" width="17" height="20">
+                    </span>{{singleCar.engine_type}}</li>
+                  <li>
+                    <span class="icon">
+                      <i class="fa fa-bolt" aria-hidden="true"></i>
+                    </span>{{singleCar.engine_capacity}} cc
+                  </li>
+                </ul>
+              </div>
+              <div class="car-features">
+                <div class="sub-features">
+                  <div class="sub-title">
+                    <h3>Car Features</h3>
+                  </div>
+                  <ul class="row">
+                    <li class="col-md-6">
+                      <div class="points">Year
+                        <span>{{singleCar.year}}</span>
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="points">Registered City
+                        <span>{{singleCar.city_name}}</span>
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="points">Mileage
+                        <span>{{singleCar.mileage}} km</span>
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="points">Color
+                        <span>{{singleCar.color}}</span>
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="points">Transmission
+                        <span>{{singleCar.transmission}}</span>
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="points">Assembly
+                        <span>{{singleCar.car_assemble}}</span>
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="points">Engine Capacity
+                        <span>{{singleCar.engine_capacity}} cc
+                        </span>
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="points">Body Type
+                        <span>{{singleCar.car_body_type}}</span>
+                      </div>
+                    </li>
+                    <li class="col-md-6">
+                      <div class="points">Engine Type
+                        <span>{{singleCar.engine_type}}</span>
+                      </div>
+                    </li>
+    
+                  </ul>
+                </div>
+                <div class="other-features">
+                  <ul class="">
+                    <li class="col-md-3" *ngFor="let carDetailPart of carDetailsParts; let i=index">
+    
+                      <span class="icon">
+                        <img src="{{carFeatureImg}}/{{carFKeys[i]+'.png'}}" alt="">
+                        </span>
+                        {{carDetailPart[carFKeys[i]]}}
+                    </li>
+                  </ul>
+                </div>
+                <div class="custom-detail">
+                  <p>Proin mattis, neque id gravida viverra, enim lectus consequat diam, vel aliquam lectus turpis ac enim. Donec
+                    ornare lorem sed arcu tincidunt pharetra. Praesent pulvinar ac nunc id hendrerit. Nulla dapibus, nibh quis
+                    pretium imperdiet, ex odio ornare mauris, et ultricies nisl metus vitae nulla. Mauris vel est id odio pretium
+                    ornare. Praesent congue velit at enim sodales, ut sagittis mauris rhoncus. Cras pharetra non velit quis tempus.
+                  </p>
+                  <p>Cras ac orci congue, iaculis libero egestas, interdum ligula. Nunc vitae neque consequat, aliquam nibh sit
+                    amet, pulvinar velit. Cras non dolor venenatis nisl faucibus pellentesque.
+                  </p>
+                  <ul>
+                    <li>Nullam maximus justo at nisi finibus, sit amet luctus</li>
+                    <li>Ligula interdum. Duis ut massa augue. Donec efficitur, nisl nec blandit
+                    </li>
+                    <li>Elementum, erat sapien commodo tortor, eu convallis sapien</li>
+                    <li>Urna eget augue. Vivamus sed pharetra erat</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 sidebar-right">
+            <div class="profile-card">
+              <div class="row dated">
+                <div class="posted col-md-6">Post Date |
+                  <a >{{singleCar.start_date | date }}</a>
+                </div>
+                <div class="end col-md-6">End Date |
+                  <a >{{singleCar.end_date | date}}</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 profile">
+                  <div class="det">
+                    <div class="profile-img">
+                      <img src="../../../../assets/images/pro-img.png">
+                    </div>
+                    <div class="caption">
+                      <div class="title">
+                        <h3>{{singleCar.full_name}}</h3>
+                      </div>
+                      <div *ngIf="userRole == 2 && singleCar.rating != null">
+                        <div class="rate ">
+                          <ng-container *ngFor="let rate of singleCar.ratingArr">
+                            <i class="fa fa-star" [ngClass]="{ratings: rate <= singleCar.ratingInNum}"></i>
+                          </ng-container>
+                        </div>
+                      </div>
+                      <div class="location" *ngIf="userRole == 2">
+                        {{singleCar.address}}
+                      </div>
+                    </div>
+                    <div class="actions-btn">
+                      <ul>
+                        <li>
+                          <a class="btn lite-blue displayNumber" (click)="showNumber('displayNumber',singleCar.id,singleCar.number_counter)">
+                            Click here to show number</a>
+                        </li>
+                        <li *ngIf="userRole == 2 && singleCar.url != null && singleCar.s_status == 1 && singleCar.s_trash == 0">
+                          <a target="_blank" href="{{singleCar.url}}" class="btn red-border">Showroom Website</a>
+                        </li>
+                        <li *ngIf="generalFields.adUserID !== generalFields?.userData?.data?.user_id">
+                          <a class="btn black clickBuyer" (click)="buyerMsg()"> contact to Buyer</a>
+                          <form #textareaForm="ngForm" *ngIf="generalFields?.userData?.data?.login === 'true'" (ngSubmit)="sendContact(textareaForm.form,singleCar.id,singleCar.user_id)">
+                            <textarea placeholder="Write a message ..." class="buyerMsg" name="buyerMsgs" [(ngModel)]="buyerMsgs" required #contactBuyer
+                              id="" cols="12" rows="5"></textarea>
+                            <button type="submit" [disabled]="textareaForm.invalid" class="btn btn-primary buyerMsg">Send</button>
+                          </form>
+                          <div class="alert alert-success fade in" *ngIf="offerSuccess && generalFields?.userData?.data?.login == 'true'">
+                            {{generalFields.contactBuyerSuccessMsg}}.
+                          </div>
+                          <div class="alert alert-danger fade in" *ngIf="offerSuccess && generalFields?.userData?.data?.login == 'false'">
+                            {{generalFields.contactBuyerSuccessMsg}}.
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="roll" *ngIf="userRole == 1">private</div>
+                    <div class="roll" *ngIf="userRole == 2">dealer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="car-stock row">
+                <div class="col-md-6 similar" *ngIf="userData?.data?.login == 'true'">
+                  <a  class="link" [routerLink]="similarCar">Sell Similar Car
+                  </a>
+                </div>
+                <div class="col-md-6 stock">
+                  <a [routerLink]="['/used-car',singleCar.user_id]" class="link" *ngIf="userRole == 2">{{carStock}} cars in stock
+                  </a>
+                </div>
+              </div>
+              <div class="saveAdShow ads-sv" *ngIf="generalFields.saveAdShow">
+               <i [ngClass]="{'help-block' : this.heartAdsArr.indexOf(singleCar.id) != -1}"  class="fa fa-heart col-md-3" col-md-6 aria-hidden="true"></i>
+               <div class="col-md-9">
+                  <h4>Ad saved successfully</h4>
+                  <a href="{{userData?.data?.save_ads_url }}">View All saved Ads</a>
+               </div>
+            </div>
+              <div class="saveAdHide ads-sv" *ngIf="generalFields.saveAdHide">
+               <i class="fa fa-heart-o  col-md-3" aria-hidden="true"></i>
+               <div class="col-md-9">
+                  <h4>Ad removed successfully</h4>
+                  <a href="{{userData?.data?.save_ads_url }}">View All saved Ads</a>
+               </div>
+            </div>
+            </div>
+            <div class="site-action">
+              <ul>
+                <li>
+                  <a (click)="saveAd(singleCar.id)" *ngIf="userData?.data?.login == 'false'" class="btn grey"><span class="icon"><i [ngClass]="{'saveAds-block' : heartAdsArr.indexOf(singleCar.id) != -1}" class="fa
+                  fa-heart" aria-hidden="true"></i></span>Save Ad</a>
+                  <a (click)="saveAd(singleCar.id)" *ngIf="userData?.data?.login == 'true'" class="btn grey"><span class="icon"><i [ngClass]="{'saveAds-block' : saveAdsID.indexOf(singleCar.id) != -1}" class="fa
+                    fa-heart" aria-hidden="true"></i></span>Save Ad</a>
+                </li>
+                <li class="c">
+                  <a (click)="printAd()" class="btn grey">
+                    <span class="icon">
+                      <i class="fa
+                  fa-print" aria-hidden="true"></i>
+                    </span>Print Ad</a>
+                </li>
+                <li>
+                  <a data-toggle="modal" data-target="#reportAd" (click)="reportOpen()" class="btn grey">
+                    <span class="icon">
+                      <i class="fa
+                  fa-flag" aria-hidden="true"></i>
+                    </span>Report Ad</a>
+                </li>
+              </ul>
+            </div>
+            <div id="reportAd" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Complain Report</h4>
+                  </div>
+                  <div class="modal-body complainModalBody">
+                    <div class="rep-wrap">
+                      <h5>Please let us know what's wrong with this ad.</h5>
+                      <form #reportAdForm="ngForm" (ngSubmit)="sendReport(reportAdForm.form,generalFields.other)">
+                        <div>
+                          <label>
+                            <input type="radio" name="radioClick" (change)="otherRadio()" [(ngModel)]="generalFields.radioClick" required value="Duplicate: There's already a listing posted just like this one."> Duplicate: There's already a listing posted just like this one.
+                          </label>
+                          <label>
+                            <input type="radio" name="radioClick" (change)="otherRadio()" [(ngModel)]="generalFields.radioClick" required value="Spam: It's a Junk Ad."> Spam: It's a Junk Ad.
+                          </label>
+                          <label>
+                            <input type="radio" name="radioClick" required (change)="otherRadio()" [(ngModel)]="generalFields.radioClick" value="Wrong Contact Info: Contact info is incorrect."> Wrong Contact Info: Contact info is incorrect.
+                          </label>
+                          <label>
+                            <input type="radio" name="radioClick" required (change)="otherRadio()" [(ngModel)]="generalFields.radioClick" value="Sold Already: The seller has already sold this item."> Sold Already: The seller has already sold this item.
+                          </label>
+                          <label>
+                            <input type="radio" name="radioClick" required (change)="otherRadio()" [(ngModel)]="generalFields.radioClick" value="Fake Ads: Fake phone number, item doesn't exist, false details etc."> Fake Ads: Fake phone number, item doesn't exist, false details etc.
+                          </label>
+                          <label>
+                            <input type="radio" name="radioClick" required (change)="otherRadio()" [(ngModel)]="generalFields.radioClick" value="Wrong Category: It doesn't belong in this category."> Wrong Category: It doesn't belong in this category.
+                          </label>
+                          <label>
+                            <input type="radio" (change)="otherRadio()" name="radioClick" required [(ngModel)]="generalFields.radioClick" value="Prohibited/Explicit Content: It's got abusive language, explicit/adult content etc."> Prohibited/Explicit Content: It's got abusive language, explicit/adult content etc.
+                          </label>
+                          <label>
+                            <input type="radio" (change)="otherText()" name="radioClick"> Other
+                            <input type="text" *ngIf="generalFields.otherInput" name="other" class="reportOther" required [(ngModel)]="generalFields.radioClick">
+                          </label>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary" [disabled]="reportAdForm.invalid">Submit Report</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dealer-realated">
+              <div id="exTab2">
+                <ul class="nav nav-tabs">
+                  <li class="active">
+                    <a href="#1" data-toggle="tab">Related Cars</a>
+                  </li>
+                </ul>
+                <ngx-loading [show]="loading" [config]="{
+                  backdropBackgroundColour: 'rgba(255, 251, 251, 0.51)',
+                  backdropBorderRadius: '40px',
+                  primaryColour: '#1A578C',
+                  secondaryColour: '#1A578C',
+                  tertiaryColour: '#1A578C'
+                  }">
+                </ngx-loading>
+                <div class="tab-content" *ngIf="relatedCars?.length != 0  else notFoundMsg">
+                  <div class="tab-pane item active" id="1">
+                    <ul class="car-list row">
+                      <li class="col-sm-12" *ngFor="let relatedCar of relatedCars; let i =index">
+                        <div class="pro-car ">
+                          <div class="thumbnail">
+                            <div class="tag" *ngIf="relatedCar.package_id=== 2">Featured</div>
+                            <div *ngIf="relatedCar.package_id=== 3" class="urgentTag">Urgent</div>
+                            <a [routerLink]="['/used-car-single',relatedCar.id]" class="com-img">
+                              <img *ngIf="relatedCar.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg') == -1" src="{{CarsImagesUrl}}/{{relatedCar?.user_id}}/{{imageSize1}}{{relatedCar.dummy_picture[0]['image1']}}"
+                                alt="">
+                              <img *ngIf="relatedCar.dummy_picture[0]['image1'].indexOf('dummy_picture.jpg') != -1" src="{{relatedCar.dummy_picture[0]['image1']}}"
+                                alt="">
+                            </a>
+                          </div>
+                          <div class="caption">
+                            <h4>
+                              <a [routerLink]="['/used-car-single',relatedCar.id]">{{relatedCar.munuf_name}} {{relatedCar.car_name}} {{relatedCar.model_name}} {{relatedCar.year}}</a>
+                            </h4>
+                            <div class="additional-info">
+                              <ul>
+                                <li *ngIf="relatedCar.city_name">
+                                  <span>
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                  </span>{{relatedCar.city_name}}</li>
+                                <li>
+                                  <span>
+                                    <i class="fa fa-tachometer" aria-hidden="true"></i>
+                                  </span>{{relatedCar.mileage}} Km</li>
+                              </ul>
+                            </div>
+                            <p class="price"> {{numberWithCommas(relatedCar.price)}}</p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <ng-template #notFoundMsg>
+                    <div class="notFound">
+                      <h4>There is no record in related cars</h4>
+                  </div>
+                  </ng-template>
+              </div>
+            </div>
+            <car-inspection [adUserID]="generalFields.adUserID"></car-inspection>
+          </div>
+        </div>
+      </div>
+      <recent-viewed [recentViewInput]="recentViewData" (recentViewedCardata)="recentCarData($event)"></recent-viewed>
+    </div>
+    </div>
+</div>

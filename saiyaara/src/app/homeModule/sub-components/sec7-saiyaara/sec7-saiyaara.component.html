@@ -1,0 +1,67 @@
+
+<div class="sec7-saiyaara">
+    <div class="container">
+
+      <div class="compare-discuss">
+        <div class="title"><p>Cars Comparison</p></div>
+        <div class="tab-content compare-content">
+
+        <div class="tab-pane active" id="2"><div class="row">
+        <div class="col-md-8">
+        <div class="left">
+        <div class="vs"><h4 class="left">Toyota Prius</h4><span><a href="#">VS</a></span><h4 class="right">Honda City</h4></div>
+        <div class="car-left"><img src="../../../../assets/images/toyata.jpg" width="407" height="187"></div>
+        <div class="car-right"><img src="../../../../assets/images/honda.jpg" width="407" height="187"></div>
+        </div>
+        </div>
+        <div class="col-md-4">
+        <div class="right">
+        <ul>
+        <li><span class="lft">Toyota Vitz</span>  <span class="v">VS</span>  <span class="rt">FAW V2</span></li>
+        <li><span class="lft">Suzuki Alto</span>  <span class="v">VS</span>  <span class="rt">Honda Life</span></li>
+        <li><span class="lft">Suzuki Mehran</span>  <span class="v">VS</span> <span class="rt">Daihatsu Mira</span></li>
+        </ul>
+        <a  class="btn red-border">Compare Now <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+        </div>
+        </div>
+        </div></div>
+        </div>
+      </div>
+    <div class="by-city">
+
+    <div class="title"><h3>Used Cars By City</h3></div>
+
+
+    <div class="cars">
+
+    <ul>
+
+
+
+
+    <li class="carByCity" *ngFor = "let carByCity of carByCities"  >
+      <a [routerLink]="['/used-car']" [queryParams]="{ad_city: carByCity.id}" >Cars {{carByCity.name}}
+        <span class="count">{{carByCity.total}} Used Cars</span>
+
+      </a>
+    </li>
+
+   <!--
+    <li><a href="#">Cars Faisalabad<span class="count">10000+ Used Cars</span></a></li>
+    <li><a href="#">Cars Gujrawala<span class="count">10000+ Used Cars</span></a></li>	 -->
+    </ul>
+    <ngx-loading  [show]="loading"
+        [config]="{
+        backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+        backdropBorderRadius: '40px',
+        primaryColour: '#1A578C',
+        secondaryColour: '#1A578C',
+        tertiaryColour: '#1A578C'
+        }">
+            </ngx-loading>
+    <div class="action">
+      <a [routerLink]="['/used-car']"  class="btn red"> View More Cars <i class="fa fa-car" aria-hidden="true"></i></a></div>
+    </div>
+    </div>
+    </div>
+    </div>

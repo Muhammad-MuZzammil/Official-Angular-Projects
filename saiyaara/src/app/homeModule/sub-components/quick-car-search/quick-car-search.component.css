@@ -1,0 +1,14 @@
+.more-field-btn a i{
+    font-size: 39px;
+    text-align: center;
+}
+.more-field-btn a{
+    text-align: center;
+    display: block;
+    width: 25px;
+    margin: 0 auto;
+}
+.form-group.drp.row .clear {
+    float: right;
+    margin-right: 6px;
+}

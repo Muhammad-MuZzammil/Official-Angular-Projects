@@ -1,0 +1,9 @@
+.autoAlertFormSuccess{
+    color:green;
+    padding-left: 9rem
+}
+
+.autoAlertFormError{
+    color:red;
+    padding-left: 9rem
+}

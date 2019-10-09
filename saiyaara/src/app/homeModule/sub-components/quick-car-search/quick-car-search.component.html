@@ -1,0 +1,148 @@
+    <div class="search-box">
+      
+      <form #quickSearchForm="ngForm" id="quickSearchForm" (ngSubmit)="searchCarSubmit()">
+        <div class="form-group drp row">  
+        <div class="title col-md-9">
+            <h3>Quick Car Search</h3>
+        </div>
+        <div class="clear-all">
+          <a href="javascript:;" class="clear c-all" (click)="clearQ('all')" *ngIf="selectManuFect || selectCarName || selectCarModel || selectCities || selectMinPrice || selectMaxPrice || selectColors || selectTransmission || selectEngingeTypes || selectAssembly || selectRegCities || nearlyNew"> Clear</a>
+        </div>
+        <div class="col-md-3 box">
+            <label class="col-md-7">Show</label>
+            <div class="col-md-5">
+              <label class="radio-inline" for="nearly-new">
+                <input type="checkbox" (change)="onCheckChange($event)" [(ngModel)]="nearlyNew"  name="nearly_new" id="nearly-new"
+                  value="{{generalVarArr['nearlyNew']}}">
+                Nearly new </label>
+            </div>
+        </div>
+          </div>
+        
+        <div class="form-group drp row">
+          <div class="col-md-3">
+            <label>Select Manufacture</label>
+            <a href="javascript:;" class="clear" (click)="clearQ('manufacture')" *ngIf="selectManuFect"> <i class="fa fa-times"></i> </a>
+           <select2 name="manufacture"  [data]="carManufec" [(ngModel)]="selectManuFect" ngDefaultControl
+              class="form-control
+              selectpicker" ></select2>
+          </div>
+          <div class="col-md-3">
+              <label>Select Car Name</label>
+              <a href="javascript:;" class="clear" (click)="clearQ('car_name')"  *ngIf="selectCarName"> <i class="fa fa-times"></i> </a>
+            <select2 name="car_name"   [data]="selectCarNameArr" [(ngModel)]="selectCarName" ngDefaultControl
+              class="form-control
+              selectpicker" ></select2>
+          </div>
+          <div class="col-md-3">
+             <label>Select Car Model</label>
+             <a href="javascript:;" class="clear" (click)="clearQ('car_model')"  *ngIf="selectCarModel"> <i class="fa fa-times"></i> </a>
+              <select2 name="car_model"  [data]="carModelArr" [(ngModel)]="selectCarModel" ngDefaultControl
+                class="form-control
+                selectpicker" ></select2>
+          </div>
+            <ngx-loading [show]="loading"
+              [config]="{
+              backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+              backdropBorderRadius: '40px',
+              primaryColour: '#1A578C',
+              secondaryColour: '#1A578C',
+              tertiaryColour: '#1A578C'
+              }">
+            </ngx-loading>
+            <div class="col-md-3">
+              <label>Select Clty</label>
+              <a href="javascript:;" class="clear" (click)="clearQ('ad_city')" *ngIf="selectCities"> <i class="fa fa-times"></i> </a>
+              <select2 name="ad_city"  [data]="adCities"  [(ngModel)]="selectCities" ngDefaultControl
+                class="form-control
+                selectpicker" ></select2>
+            </div>
+        </div>
+        <div class="show-more-fields"  [hidden]="!isMoreFieldVis">
+        <div class="row drp form-group">
+          <div class="col-md-3">
+            <label>Select Min Price</label>
+            <a href="javascript:;" class="clear" (click)="clearQ('price1')" *ngIf="selectMinPrice"> <i class="fa fa-times"></i> </a>
+            <select2 name="price1"  [data]="MinPriceArr" [(ngModel)]="selectMinPrice" ngDefaultControl
+              class="form-control
+              selectpicker" ></select2>
+          </div>
+          <div class="col-md-3">
+              <label>Select Max Price</label>
+              <a href="javascript:;" class="clear" (click)="clearQ('price2')" *ngIf="selectMaxPrice"> <i class="fa fa-times"></i> </a>
+              <select2 name="price2" [data]="MaxPriceArr" [(ngModel)]="selectMaxPrice" ngDefaultControl
+              class="form-control
+              selectpicker" ></select2>
+            
+          </div>
+          <div class="col-md-3">
+              <label>Select Color</label>
+              <a href="javascript:;" class="clear" (click)="clearQ('color')"  *ngIf="selectColors"><i class="fa fa-times"></i> </a>
+              <select2 name="color"   [data]="carColorArr" [(ngModel)]="selectColors" ngDefaultControl
+              class="form-control
+              selectpicker" ></select2>
+            </div>
+          <div class="col-md-3">
+              <label>Transmission</label>
+                <a href="javascript:;" class="clear" (click)="clearQ('transmission')"  *ngIf="selectTransmission"> <i class="fa fa-times"></i> </a>
+                <select name="transmission" required (change)="transEngAss()"  class="form-control n1 selectpicker select2"
+                  [(ngModel)]="selectTransmission"
+                  >
+                  <option value="undefined" disabled selected hidden>Transmission</option>
+                  <option value="{{trans}}" *ngFor="let trans of quickSearch?.transmission">{{trans}}</option>
+                </select>
+              </div>
+        </div>
+      
+          <div class="row drp form-group">
+            <div class="col-md-3">
+              <label>Engine Type</label>
+              <a href="javascript:;" class="clear"  *ngIf="selectEngingeTypes" (click)="clearQ('engine_type')"> <i class="fa fa-times"></i> </a>
+              <select name="engine_type" required  (change)="transEngAss()" class="form-control n1 selectpicker  select2"
+                [(ngModel)]="selectEngingeTypes"
+                >
+                <option value="undefined" disabled selected hidden>Enginge Types</option>
+                <option value="{{engine_t}}" *ngFor="let engine_t of quickSearch?.engine_type">{{ engine_t }}</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+                <label>Select Assembly</label>
+                <a href="javascript:;" class="clear" *ngIf="selectAssembly"  (click)="clearQ('assembly')"> <i class="fa fa-times"></i> </a>
+              <select name="assembly" required (change)="transEngAss()"  class="form-control n1 selectpicker select2"
+                [(ngModel)]="selectAssembly"
+                >
+                <option value="undefined" disabled selected hidden>Assembly</option>
+                <option value="{{assemb}}" *ngFor="let assemb of quickSearch?.assembly">{{ assemb}}</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+                <label>Select Reg City</label>
+                <a href="javascript:;" class="clear" (click)="clearQ('reg_city')" *ngIf="selectRegCities"  > <i class="fa fa-times"></i> </a>
+                <select2 name="reg_city"  [data]="regCities"  [(ngModel)]="selectRegCities" ngDefaultControl
+                class="form-control
+                selectpicker" ></select2>
+              </div>
+          </div>
+          <div class="row drp form-group">
+            
+          </div>
+        </div>
+        
+        <div class="ftr-form row drp form-group">
+          <div class="col-md-2 left">
+          <button type="submit"  >
+            Search Cars<span>{{generalVarArr['quickSearchCarAvailable']}} cars available</span>
+          </button>
+        </div>
+        <div class="col-md-2 right">
+            <div class="more-field-btn">
+                <a href="javascript:;" (click)="isMoreFieldVis=!isMoreFieldVis">
+                  <span  [hidden]="isMoreFieldVis">more option </span>
+                  <span [hidden]="!isMoreFieldVis">less option </span>
+                  <i class="fa " [ngClass]="{'fa-angle-double-down': !isMoreFieldVis, 'fa-angle-double-up': isMoreFieldVis}"></i>
+                </a>
+              </div>
+        </div>
+        </div>
+      </form>
+    </div>

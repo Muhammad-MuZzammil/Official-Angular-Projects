@@ -1,0 +1,313 @@
+<div class="  car-details ">
+    <div class="container">
+      <div class="row" *ngFor="let singleCar of carDetailsArr; let i = index;">
+        <div class="col-md-8">
+          <div class="title-area">
+            <div class="row">
+              <div class="col-md-9">
+                <div class="title">
+                  <h1>{{singleCar.munuf_name}} {{singleCar.car_name}} {{singleCar.model_name}} {{singleCar.year}}
+                  </h1></div>
+                <div class="price-con">
+                  <ul>
+
+                    <li class="price">Demand {{numberWithCommas(singleCar.price)}}</li>
+                    <!-- <li class="certified"><i class="fa fa-check-circle-o"
+                        aria-hidden="true"></i> <a href="#">Certified</a></li> -->
+                    <!-- <li class="added"><i class="fa fa-mobile" aria-hidden="true"></i>
+                      Added via Phone</li> -->
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="row image-gallery">
+            <div class="col-sm-4" id="slider-thumbs">
+              <!-- Bottom switcher of slider -->
+              <ul class="hide-bullets">
+                <li class="">
+                  <a class="thumbnail" id="carousel-selector-0">
+                    <img src="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize}}{{carAdsImg[i]}}">
+
+                  </a>
+                </li>
+
+                <li class="">
+                  <a class="thumbnail" id="carousel-selector-1"><img
+                      src="../../../../assets/images/car/img2.jpg"></a>
+                </li>
+
+                <li class="">
+                  <a class="thumbnail" id="carousel-selector-2"><img
+                      src="../../../../assets/images/car/img3.jpg"></a>
+                </li>
+
+                <li class="">
+                  <a class="thumbnail" id="carousel-selector-3"><img
+                      src="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize}}{{carAdsImg[i]}}"></a>
+                </li>
+
+                <li class="">
+                  <a class="thumbnail" id="carousel-selector-4"><img
+                      src="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize}}{{carAdsImg[i]}}"></a>
+                </li>
+
+                <li class="">
+                  <a class="thumbnail" id="carousel-selector-5"><img
+                      src="../../../../assets/images/car/img6.jpg"></a>
+                </li>
+                <li class="">
+                  <a class="thumbnail" id="carousel-selector-6"><img
+                      src="../../../../assets/images/car/img7.jpg"></a>
+                </li>
+                <li class="">
+                  <a class="thumbnail" id="carousel-selector-7"><img
+                      src="../../../../assets/images/car/img8.jpg"></a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-sm-8">
+              <div class="car-slider" id="slider">
+                <!-- Top part of the slider -->
+                <div class="tag">Featured</div>
+
+                <div class="carousel-box" id="carousel-bounding-box">
+                  <div class="carousel slide" id="myCarousel">
+                    <!-- Carousel items -->
+
+
+
+
+
+
+
+                    <div class="carousel-inner">
+                      <div class="item" data-slide-number="0">
+                          <a  data-fancybox="gallery"  href="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize}}{{carAdsImg[i]}}"  data-width="1000" data-height="500">
+
+                            <img class="fancybox" src="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize}}{{carAdsImg[i]}}" ></a>
+                          </div>
+                        <!-- <img src="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{carAdsImg}}"> -->
+                      <div class="item" data-slide-number="1">
+                          <a data-fancybox="gallery"  href="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize}}{{carAdsImg[i]}}"  data-width="1000" data-height="500">
+                            <img class="fancybox" src="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize}}{{carAdsImg[i]}}" ></a>
+                          </div>
+                      <div class="item" data-slide-number="2">
+                          <a data-fancybox="gallery" href="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize}}{{carAdsImg[i]}}"  data-width="1000" data-height="500">
+                            <img class="fancybox" src="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize}}{{carAdsImg[i]}}" ></a>
+                      </div>
+                      <div class="item active" data-slide-number="3">
+                        <a data-fancybox="gallery" href="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize}}{{carAdsImg[i]}}"  data-width="1000" data-height="500">
+                          <img class="fancybox" src="{{CarsImagesUrl}}/{{singleCar?.user_id}}/{{imageSize}}{{carAdsImg[i]}}" ></a>
+                      </div>
+                      <div class="item" data-slide-number="4">
+                        <a data-fancybox="gallery" href="../../../../assets/images/s2.jpg"  data-width="1000" data-height="500">
+                          <img class="fancybox" src="../../../../assets/images/s2.jpg" ></a>
+                      </div>
+                      <div class="item" data-slide-number="5">
+                        <a data-fancybox="gallery" href="../../../../assets/images/s2.jpg"  data-width="1000" data-height="500">
+                          <img class="fancybox" src="../../../../assets/images/s2.jpg" ></a>
+                      </div>
+
+                    </div>
+
+                    <!-- Carousel nav -->
+                    <a class="left carousel-control" href="#myCarousel"
+                      role="button" data-slide="prev">
+                      <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel"
+                      role="button" data-slide="next">
+                      <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="main-feature">
+            <ul>
+              <li><span class="icon"><i class="fa fa-tachometer"
+                    aria-hidden="true"></i></span>{{singleCar.mileage}} Km</li>
+              <li><span class="icon"><i class="fa fa-wrench" aria-hidden="true"></i></span>Automatic</li>
+              <li><span class="icon"><img src="../../../../assets/images/fuel.png"
+                    width="17" height="20"></span>Petrol</li>
+              <li><span class="icon"><i class="fa fa-bolt" aria-hidden="true"></i></span>{{singleCar.engine_capacity}}
+                cc</li>
+            </ul>
+          </div>
+          <div class="car-features">
+            <div class="sub-features">
+              <div class="sub-title">
+                <h3>Car Features</h3>
+                <h1>
+                    <!-- recent view car {{recentCarData(event)}} -->
+                     {{recentView}}
+                    </h1>
+              </div>
+              <ul class="row">
+                <li class="col-md-6"><div class="points">Year <span>{{singleCar.year}}</span></div></li>
+                <li class="col-md-6"><div class="points">Registered City <span>{{singleCar.city_name}}</span></div></li>
+                <li class="col-md-6"><div class="points">Mileage <span>{{singleCar.mileage}} km</span></div></li>
+                <li class="col-md-6"><div class="points">Color <span>White</span></div></li>
+                <li class="col-md-6"><div class="points">Transmission <span>Automatic</span></div></li>
+                <li class="col-md-6"><div class="points">Assembly <span>Local</span></div></li>
+                <li class="col-md-6"><div class="points">Engine Capacity <span>{{singleCar.engine_capacity}}
+                      cc</span></div></li>
+                <li class="col-md-6"><div class="points">Body Type <span>Sedian</span></div></li>
+                <li class="col-md-6"><div class="points">Engine Type <span>{{singleCar.engine_capacity}}</span></div></li>
+                <li class="col-md-6"><div class="points">Last Updated <span>May 11
+                      2017</span></div></li>
+                <li class="col-md-6"><div class="points">Ad Ref # <span>2115705</span></div></li>
+              </ul>
+            </div>
+            <div class="other-features" >
+              <ul class="" >
+                  <li class="col-md-3" ><span class="icon"><img
+                    src="../../../../assets/images/features/icon8.png"></span>{{Alloy_Rim}}</li>
+              <li class="col-md-3"><span class="icon"><img
+                    src="../../../../assets/images/features/icon9.png"></span>{{CD_Player}}</li>
+                 <!-- <li  class="col-md-3"><span class="icon"><img
+                      src="../../../../assets/images/features/icon1.png"></span>{{Console_Box}}</li> -->
+                <li class="col-md-3"><span class="icon"><img
+                      src="../../../../assets/images/features/icon2.png"></span>{{HID}}</li>
+                <!--<li class="col-md-3"><span class="icon"><img
+                      src="../../../../assets/images/features/icon3.png"></span>Power
+                  Locks</li>
+                <li class="col-md-3"><span class="icon"><img
+                      src="../../../../assets/images/features/icon4.png"></span>Power
+                  Mirrors</li>
+                <li class="col-md-3"><span class="icon"><img
+                      src="../../../../assets/images/features/icon5.png"></span>Power
+                  Steering</li>
+                <li class="col-md-3"><span class="icon"><img
+                      src="../../../../assets/images/features/icon6.png"></span>Power
+                  Windows</li>
+                <li class="col-md-3"><span class="icon"><img
+                      src="../../../../assets/images/features/icon7.png"></span>Air
+                  Bags</li> -->
+
+                <!-- <li class="col-md-3"><span class="icon"><img
+                      src="../../../../assets/images/features/icon10.png"></span>Cruise
+                  Control</li>
+                <li class="col-md-3"><span class="icon"><img
+                      src="../../../../assets/images/features/icon11.png"></span>DVD
+                  Player</li>
+                <li class="col-md-3"><span class="icon"><img
+                      src="../../../../assets/images/features/icon12.png"></span>Immobilizer
+                  Key</li>
+                <li class="col-md-3"><span class="icon"><img
+                      src="../../../../assets/images/features/icon13.png"></span>Keyless
+                  Entry</li>
+                <li class="col-md-3"><span class="icon"><img
+                      src="../../../../assets/images/features/icon14.png"></span>Navigation
+                  System</li>
+                <li class="col-md-3"><span class="icon"><img
+                      src="../../../../assets/images/features/icon15.png"></span>Sun
+                  Roof</li> -->
+              </ul>
+            </div>
+            <div class="custom-detail">
+              <p>Proin mattis, neque id gravida viverra, enim lectus consequat
+                diam, vel aliquam lectus turpis ac enim. Donec ornare lorem sed
+                arcu tincidunt pharetra. Praesent pulvinar ac nunc id hendrerit.
+                Nulla dapibus, nibh quis pretium imperdiet, ex odio ornare mauris,
+                et ultricies nisl metus vitae nulla. Mauris vel est id odio
+                pretium ornare. Praesent congue velit at enim sodales, ut sagittis
+                mauris rhoncus. Cras pharetra non velit quis tempus.</p>
+
+              <p>Cras ac orci congue, iaculis libero egestas, interdum ligula.
+                Nunc vitae neque consequat, aliquam nibh sit amet, pulvinar velit.
+                Cras non dolor venenatis nisl faucibus pellentesque.</p>
+
+              <ul>
+                <li>Nullam maximus justo at nisi finibus, sit amet luctus</li>
+                <li>Ligula interdum. Duis ut massa augue. Donec efficitur, nisl
+                  nec blandit</li>
+                <li>Elementum, erat sapien commodo tortor, eu convallis sapien</li>
+                <li>Urna eget augue. Vivamus sed pharetra erat</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 sidebar-right">
+          <div class="profile-card">
+            <div class="row dated">
+              <div class="posted col-md-6">Post Date | <a href="#">{{singleCar.start_date}}</a></div>
+              <div class="end col-md-6">End Date | <a href="#">{{singleCar.end_date}}</a></div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 profile">
+                <div class="det">
+                  <div class="profile-img"><img
+                      src="../../../../assets/images/pro-img.png"></div>
+                  <div class="caption">
+                    <div class="title"><h3>Asim Afaq</h3>
+                    </div>
+                    <div *ngIf="userRole && singleCar.rating != null">
+                      <div class="rate " >
+                        <ng-container *ngFor="let rate of singleCar.ratingArr">
+                          <i class="fa fa-star"   [ngClass]="{ratings: rate <= singleCar.ratingInNum}"></i>
+                        </ng-container>
+
+
+
+                      </div>
+                    </div>
+                    <div class="location" *ngIf="userRole">
+                      <!-- <span class="icon" ><i class="fa
+                          fa-map-marker" aria-hidden="true"></i></span>  -->
+                          {{singleCar.address}}
+                      </div>
+                  </div>
+                  <div class="actions-btn">
+                    <ul>
+                      <li *ngIf="userRole && singleCar.showrom_number != null">
+                        <a class="btn lite-blue displayNumber" (click)="showNumber('displayNumber')">
+                        Click here to show number</a>
+                      </li>
+                      <li *ngIf="userRole && singleCar.url != null">
+                        <a  class="btn red-border" >{{singleCar.url}}</a>
+                      </li>
+                      <li>
+                        <a class="btn black clickBuyer" (click)="buyerMsg()"
+                        > contact to Buyer</a>
+                        <form #textareaForm="ngForm" (ngSubmit)="sendContact(textareaForm.form)">
+                          <textarea     placeholder="Write a message ..."  class="buyerMsg" name="buyerMsgs"
+                           [(ngModel)]="buyerMsgs"  required #contactBuyer
+                             id="" cols="12" rows="5"
+                           ></textarea>
+
+                          <button type="submit" [disabled]="textareaForm.invalid" class="btn btn-primary buyerMsg" >Send</button>
+                        </form>
+                          <div class="alert alert-success fade in" *ngIf="offerSuccess">
+                               {{generalFields.contactBuyerSuccessMsg}}.
+                          </div>
+
+                        </li>
+
+                    </ul>
+
+
+                  </div>
+                  <div class="roll" *ngIf="userRole">dealer</div>
+                  <!-- <div class="roll" *ngIf="!userRole  != '1'">private User</div> -->
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+
+          <!-- <div class="saiyaara-ads">
+            <img src="../../../../assets/images/ad10.png">
+          </div> -->
+
+        </div>
+      </div>
+    </div>
+  </div>

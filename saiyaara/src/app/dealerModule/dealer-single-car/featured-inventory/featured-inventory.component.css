@@ -1,0 +1,13 @@
+agm-map {
+  height: 200px;
+}
+.disabled {
+  pointer-events: none !important;
+  opacity: .50 !important;
+}
+.pagination li.active.disabled {
+  opacity: 1 !important;
+}
+.pagination li.active.disabled a{
+   color: #fff !important
+}

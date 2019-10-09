@@ -1,0 +1,238 @@
+<ngx-loading [show]="loading"
+          [config]="{
+          backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+          backdropBorderRadius: '40px',
+          primaryColour: '#1A578C',
+          secondaryColour: '#1A578C',
+          tertiaryColour: '#1A578C'
+          }">
+        </ngx-loading>
+<div class="col-md-3 left-sidebar dealer">
+  <div id="accordion" class="panel panel-primary behclick-panel">
+    <div class="panel-heading">
+      <h3 class="panel-title">Show Result By</h3>
+    </div>
+    <div class="panel-body">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse0">
+            <i class="indicator fa fa-caret-down" aria-hidden="true"></i>
+            Search by Name
+          </a>
+        </h4>
+      </div>
+      <div id="collapse0" class="panel-collapse collapse in">
+        <div class="search-fil">
+          <label class="filter-check clearfix placeholder">
+            <input type="text" class="controls" [(ngModel)]="searchByName"
+              (keypress)="searchByInputField($event,searchByName,'name')"
+              placeholder="Search By Name">
+            <i class="fa fa-search cursorPointer"
+              (click)="searchByIcon($event,searchByName,'name')"></i>
+          </label>
+        </div>
+        
+      </div>
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse1">
+            <i class="indicator fa fa-caret-down" aria-hidden="true"></i>
+            Search by Area
+          </a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse in">
+        <div class="search-fil">
+          <label class="filter-check clearfix placeholder">
+            <div class="search-by-area">
+            <input type="text" id="pac-input" class="controls s-area"
+              placeholder="Search Dealer Near by You" [(ngModel)]="sarea" #searchByArea
+               (keypress)="searchByInputField($event,searchByArea,'area')"  (change)="searchByInputField($event,searchByArea,'area')"  (blur)="searchByInputField($event,searchByArea,'area')" >
+            </div>  
+              <div class="search-by-m">
+                <select name="km" class="form-control s-km" [(ngModel)]="km" #skm >
+                    <option value="{{i+1}}" *ngFor="let kms of kmArr; let i = index ">{{i+1}} Km</option>
+                  </select>
+                </div>
+            <div id="map"></div>
+            <i class="fa fa-search cursorPointer"
+              (click)="GetLatlong()"></i>
+          </label>
+        </div>
+        
+      </div>
+      <!-- <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse3"><i class="indicator fa
+              fa-caret-down" aria-hidden="true"></i>City</a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse in">
+        <ul class="list-group">
+          <li [ngClass]="{'hide': dbFieldS.cityCount== 2 && i> 1}"
+            class="list-group-item" *ngFor="let cityName of
+            dbFieldS['cityName'] ; let i = index">
+            <div class="checkbox">
+              <label class="filter-check clearfix">
+                <a title="Cars for Sale in Karachi, Pakistan">
+                  <input type="checkbox" [value]="cityName.id" name="cities"
+                    id="cities" (change)="onCheckedEvent($event)">
+                  {{cityName.name}}
+                  <span class="pull-right count">{{cityName.count}}</span>
+                </a>
+              </label>
+            </div>
+          </li>
+        </ul>
+        <a class="more-choose cityCount cursorPointer"
+          (click)="showMoreLess('cityCount')">more choices...</a>
+      </div> -->
+    </div>
+  </div>
+</div>
+<div class="col-md-7">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="well well-sm">
+        <div class="pagination">
+          <div class="pages">
+            <ul>
+                <li class="pre cursorPointer" [ngClass]="{disabled:firstPrevDisable}" >
+                    <a  (click)="pagination(globalCV-1)">
+                    <i class="fa fa-chevron-left"
+                        aria-hidden="true"></i></a>
+                </li>
+                <li class="next cursorPointer" [ngClass]="{disabled:lastNextDisable}">
+                    <a  (click)="pagination(globalCV+1)">
+                    <i class="fa fa-chevron-right"
+                        aria-hidden="true"></i></a>
+                </li>
+            </ul>
+            <p class="numbers">Page {{globalCV+1}} of {{showroms?.last_page}}</p>
+          </div>
+        </div>
+        <div class="btn-group">
+          <a (click)="list()" id="list" class="btn btn-default btn-sm"
+            [ngClass]="{'active': isGridOrList== 'list'}"><span
+              class="glyphicon glyphicon-th-list">
+            </span>List</a>
+          <a (click)="grid()" id="grid" class="btn btn-default
+            btn-sm" [ngClass]="{'active': isGridOrList== 'grid'}"><span
+              class="glyphicon glyphicon-th"></span>Grid</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div id="products" class="row list-group">
+        
+        <div class="notFound" *ngIf="totalRecords== 0">
+          <h1>Record not found</h1>
+        </div>
+        <div class="item col-xs-12 col-lg-6" *ngFor="let dealerData of
+          dealerAds">
+
+          <div class="car-u">
+            <div class="thumbnail">
+              <a [routerLink]="['/car-dealer-single',dealerData.id]">
+                <img *ngIf="dealerData.logo != ''"
+                  src="{{dealerAdsImage}}/{{dealerData.user_id}}/{{dealerData.logo}}"
+                  alt="dealers">
+                <img *ngIf="dealerData.logo== ''"
+                  src="{{APImainURL}}/img/dummy_picture.jpg" alt="">
+              </a>
+            </div>
+            <div class="caption">
+              <div class="item-title">
+                <h4><a [routerLink]="['/car-dealer-single',dealerData.id]">{{dealerData.name}}</a><span
+                    class="city">Dealers - {{dealerData.city_name}}</span></h4>
+              </div>
+              <div class="adrss">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <p *ngIf="!searchFilterArr.area">
+                  {{dealerData.address | limitTo:5}}
+                </p>
+                <p *ngIf="searchFilterArr.area">
+                  <b>{{dealerData.distance}}</b> away from
+                  {{searchFilterArr.area}}
+                </p>
+              </div>
+              <div class="ftr">
+                <div class="re-rating" >
+                  <ul>
+                    <li class="reviews"><a class="">{{dealerData.no_of_user_review}}
+                        reviews</a></li>
+                    <li class="ratings">
+                      {{dealerData.ratings}}.0
+                      <ng-container *ngFor="let rate of dealerData.ratingArr; let i = index;">
+                        <i class="fa fa-star" id="s{{dealerData.id}}" [ngClass]="{ratingStyle: rate <=
+                          dealerData.ratings}" (click)="sRating(i+1, $event)"></i>
+                      </ng-container>
+                    </ul>
+                  </div>
+                  <ul>
+                    <li>
+                      <ng-template #popTemplate>
+                        <div [innerHtml]="popoveruser + ' '+dealerData.name
+                          +popoverbr + popoverphone + ' '+ dealerData.number"></div>
+                      </ng-template>
+                      <button
+                        [popover]="popTemplate"
+                        placement="bottom"
+                        triggers="focus"
+                        class="btn blue">
+                        <i class="fa fa-phone" aria-hidden="true">
+                        </i> Contact Dealer</button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        
+          <div>
+            <div class="text-center">
+              <ul *ngIf="dealerAds && dealerAds.length; let i = index" class="pagination">
+                  <li [ngClass]="{disabled:firstPrevDisable}" class="cursorPointer">
+                      <a  (click)="pagination(0)">First</a>
+                  </li>
+                  <li [ngClass]="{disabled:firstPrevDisable}" class="cursorPointer">
+                      <a (click)="pagination(globalCV-1)">Previous</a>
+                  </li>
+                  <li *ngIf="paginationPageNo?.length > 4 && globalCV > 1">
+                    <a id="page" (click)="pagination(0)" class="cursorPointer">1</a>
+                  </li>
+                  <li  class="disabled" *ngIf="paginationPageNo?.length > 4 && globalCV != 0">
+                    <a id="page" class="cursorPointer disabled">...</a>
+                  </li>
+                  
+                  <li *ngFor="let page of paginationPageNo | slice: startOff:(startOff+4) ; let i = index; " class="active" [ngClass]="{'active disabled':globalCV === page}">
+                    <a id="page" class="cursorPointer" (click)="pagination(page)">{{page +1 }}
+                    </a>
+                  </li>
+                  <li  class="disabled" *ngIf="paginationPageNo?.length > 4 && globalCV < showroms?.last_page-4">
+                    <a id="page" class="cursorPointer disabled">...</a>
+                  </li>
+                  <li  *ngIf="paginationPageNo?.length > 4 && globalCV < showroms?.last_page-5">
+                    <a id="page" class="cursorPointer" (click)="pagination(showroms?.last_page-1)">{{ showroms?.last_page }}</a>
+                  </li>
+                  <li [ngClass]="{disabled:lastNextDisable}">
+                      <a (click)="pagination(globalCV +1)"   class="cursorPointer">Next</a>
+                  </li>
+                  <li [ngClass]="{disabled:lastNextDisable}">
+                      <a (click)="pagination(showroms?.last_page-1)"   class="cursorPointer">Last</a>
+                  </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div class="ad"><img src="../../../../assets/images/ads2.jpg" width="179"
+        height="536"></div>
+  </div>
+  

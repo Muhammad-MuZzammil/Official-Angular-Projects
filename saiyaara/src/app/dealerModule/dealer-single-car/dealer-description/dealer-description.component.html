@@ -1,0 +1,86 @@
+<ngx-loading  [show]="loading"
+ [config]="{
+ backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+ backdropBorderRadius: '40px',
+ primaryColour: '#1A578C',
+ secondaryColour: '#1A578C',
+ tertiaryColour: '#1A578C'
+ }">
+ </ngx-loading>
+<div class="row">
+  <div class="col-md-12">
+    <div class="dealer-profile" *ngFor="let singleDealer of singleDealerData">
+      <div class="car-img">
+        <img *ngIf="singleDealer.logo != ''"
+          src="{{dealerImg}}/{{singleDealer.user_id}}/{{singleDealer.logo}}"
+          width="260"
+          height="260">
+          <img *ngIf="singleDealer.logo == ''"
+          src="{{APImainURL}}/img/dummy_picture.jpg"
+          width="260"
+          height="260">
+        </div>
+      <div class="detail-area">
+        <div class="right">
+          <h1>{{singleDealer.showrom_name}}</h1>
+          <p class="add">
+            {{singleDealer.address}}, {{singleDealer.city_name}}</p>
+          <p class="ph"><a >{{singleDealer.number}}</a></p>
+        </div>
+        <div class="left box-grey">
+          <ul>
+            <li><span><i class="fa fa-envelope"
+                  aria-hidden="true"></i></span><a
+                >Email this dealer</a></li>
+            <li><span><i class="fa
+                  fa-map-marker"
+                  aria-hidden="true"></i></span><a class="cursorPointer"
+                (click)="openModalWithClass(template)">Get direction</a></li>
+            <li><span><i class="fa fa-globe"
+                  aria-hidden="true"></i></span><a
+                href="{{singleDealer.website_url}}" target="_blank">Visit
+                our website</a></li>
+            <li><span><i class="fa fa-usd"
+                  aria-hidden="true"></i></span><a
+               >Finance with us</a></li>
+          </ul>
+        </div>
+      </div>
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <agm-map
+   [latitude]="generalArr.origin.lat"
+    [longitude]="generalArr.origin.lng"
+    [zoom]="15"
+    >
+      <agm-marker
+      [latitude]="generalArr.origin.lat"
+      [longitude]="generalArr.origin.lng"
+      >
+      <agm-direction
+       [origin]="generalArr.origin"
+        [destination]="generalArr.delaerDestination"
+        >
+      </agm-direction>
+  </agm-marker>
+    </agm-map>
+    <div class="map">
+      </div>
+  </div>
+</ng-template>
+      <div class="ad"><img src="../../../../assets/images/ad7.jpg"
+          width="285" height="247"></div>
+    </div>
+  </div>
+</div>
+<div #target>
+  <ng-container *ngFor="let distanceMat of distanceMatrix">
+    <featured-inventory [directionData]="distanceMat" [showromAds]="showroomAds"></featured-inventory>
+  </ng-container>
+</div>

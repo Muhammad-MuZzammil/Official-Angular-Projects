@@ -1,0 +1,112 @@
+<div class="sec4-saiyaara">
+
+  <div class="p-brand-sec">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="populars">
+                      <h3>Popular Brands</h3>
+                      <ul>
+                          <li class="popularBrands" *ngFor="let popularBrand of popularBrands;let i = index" >
+                            <a [routerLink]="['/used-car']" [queryParams]="{manufacture: popularBrand.id}" > 
+                                <img src="{{popularImgLogo +'/'+ popularBrand.logo}}">
+                                <span>{{popularBrand.name}} :<a class="count" >{{popularBrand.total}}</a></span>
+                            </a>   
+                          </li>
+                      </ul>
+                      <a class="btn red" data-toggle="modal" data-target="#popularBrand">View All Popular Brands</a>
+                  </div>
+                  <div class="modal fade " id="popularBrand" role="dialog">
+                      <div class="modal-dialog modal-lg ">
+                          <div class="modal-content ">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <h4 class="modal-title popupHeader">All Popular Brands</h4>
+                              </div>
+                              <div class="modal-body">
+                                  <div class="populars">
+                                      <ul>
+                                          <li class="popularBrands" *ngFor="let popularBrand of allPopularBrands;let i = index" data-dismiss="modal"  [routerLink]="['/used-car']" [queryParams]="{manufacture: popularBrand.id}">
+                                            <a [routerLink]="['/used-car']" [queryParams]="{manufacture: popularBrand.id}" >  
+                                            <img src="{{popularImgLogo +'/'+ popularBrand.logo}}">
+                                              <span>{{popularBrand.name}} :
+                                                <a class="count" >{{popularBrand.total}}</a> </span>
+                                            </a>
+                                          </li>
+                                      </ul>
+
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <ngx-loading [show]="loading" [config]="{
+         backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+         backdropBorderRadius: '40px',
+         primaryColour: '#1A578C',
+         secondaryColour: '#1A578C',
+         tertiaryColour: '#1A578C'
+        }">
+                  </ngx-loading>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="p-search-sec">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="populars-search">
+                      <h3>Popular Searches</h3>
+                      <ul>
+                          <li *ngFor="let popularCarSearch of popularCarSearches">
+                              <p>{{popularCarSearch.name}}
+                                  <a class="searchCount">{{popularCarSearch.search_count}}</a>
+                              </p>
+                          </li>
+
+                      </ul>
+                      <a class="btn under-line red" data-toggle="modal" data-target="#myModal">View All Popular Search</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Modal -->
+      <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">All Popular Car Searches</h4>
+                  </div>
+                  <div class="modal-body">
+                      <ul class="populars-search">
+                          <li *ngFor="let popularCarSearch of popularCarSearches">
+                              <p>{{popularCarSearch.name}}
+                                  <a class="searchCount">{{popularCarSearch.search_count}}</a>
+                              </p>
+                          </li>
+                      </ul>
+
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+      <ngx-loading [show]="loading" [config]="{
+         backdropBackgroundColour: 'rgba(255,255,255,0.3)',
+         backdropBorderRadius: '40px',
+         primaryColour: '#1A578C',
+         secondaryColour: '#1A578C',
+         tertiaryColour: '#1A578C'
+        }">
+
+      </ngx-loading>
+  </div>
+
+</div>

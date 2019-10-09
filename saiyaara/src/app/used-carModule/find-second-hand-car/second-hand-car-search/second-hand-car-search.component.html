@@ -1,0 +1,116 @@
+<div class="head-sec">
+  <div class="main-title text-center">
+    <h1>Find Second Hand Cars for Sale</h1>
+    <p>Search new and used cars by make and model.</p>
+  </div>
+  <div class="search-filter-form second-hand-filter">
+      
+    <form #secondHandCarSearch="ngForm" id="secondHandCarSearch" (ngSubmit)="secondHandCarSubmit()">
+        
+      <div class="row form-body s-s-wrap">
+          <ngx-loading [show]="loading" [config]="{
+            backdropBackgroundColour: 'rgba(255, 251, 251, 0)',
+            backdropBorderRadius: '40px',
+            primaryColour: '#1A578C',
+            secondaryColour: '#1A578C',
+            tertiaryColour: '#1A578C'
+            }">
+            </ngx-loading>
+          <div class="clear-all">
+            <a href="javascript:;" class="clear c-all" (click)="clearQ('all')" *ngIf="selectManuFect || selectCarName || selectCarModel || selectCities || selectMinPrice || selectMaxPrice || selectColors || selectTransmission || selectEngingeTypes || selectAssembly || selectRegCities"> Clear</a>
+          </div>    
+        <div class="form-group col-md-3">
+          <label>Car Make</label>
+          <a href="javascript:;" class="clear" (click)="clearQ('manufacture')" *ngIf="selectManuFect"> <i class="fa fa-times"></i> </a>
+          <select2 name="manufacture" [data]="carManufec" [(ngModel)]="selectManuFect" ngDefaultControl class="form-control
+          selectpicker"></select2>
+        </div>
+        <div class="form-group col-md-3">
+          <label>Car Name</label>
+          <a href="javascript:;" class="clear" (click)="clearQ('car_name')"  *ngIf="selectCarName"> <i class="fa fa-times"></i> </a>
+          <select2 name="car_name" [data]="selectCarNameArr" [(ngModel)]="selectCarName" ngDefaultControl class="form-control
+              selectpicker"></select2>
+        </div>
+        <div class="form-group col-md-3">
+            <label>Select Car Model</label>
+            <a href="javascript:;" class="clear" (click)="clearQ('car_model')"  *ngIf="selectCarModel"> <i class="fa fa-times"></i> </a>
+             <select2 name="car_model"  [data]="carModelArr" [(ngModel)]="selectCarModel" ngDefaultControl
+               class="form-control
+               selectpicker" ></select2>
+        </div>
+        <div class="form-group col-md-3">
+            <label>Cities</label>
+            <a href="javascript:;" class="clear" (click)="clearQ('ad_city')"  *ngIf="selectCities"> <i class="fa fa-times"></i> </a>
+            <select2 name="ad_city" [data]="adCities" [(ngModel)]="selectCities" ngDefaultControl class="form-control
+            selectpicker"></select2>
+        </div>    
+        <div class="moreSearchDiv">
+          <div >
+            <div class="form-group col-md-3">
+              <label>Min Price</label>
+              <a href="javascript:;" class="clear" (click)="clearQ('price1')"  *ngIf="selectMinPrice"> <i class="fa fa-times"></i> </a>
+              <select2 name="price1"  [data]="MinPriceArr" [(ngModel)]="selectMinPrice" ngDefaultControl
+                class="form-control
+                selectpicker" ></select2>
+            </div>
+            <div class="form-group col-md-3">
+                <label>Max Price</label>
+                <a href="javascript:;" class="clear" (click)="clearQ('price2')"  *ngIf="selectMaxPrice"> <i class="fa fa-times"></i> </a>
+                <select2 name="price2" [data]="MaxPriceArr" [(ngModel)]="selectMaxPrice" ngDefaultControl
+                class="form-control
+                selectpicker" ></select2>
+            </div> 
+          
+          <div class="form-group col-md-3">
+            <label>Colors</label>
+            <a href="javascript:;" class="clear" (click)="clearQ('color')"  *ngIf="selectColors"> <i class="fa fa-times"></i> </a>
+            <select2 name="color" [data]="carColorArr" [(ngModel)]="selectColors" ngDefaultControl class="form-control
+              selectpicker"></select2>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Transmission</label>
+            <a href="javascript:;" class="clear" (click)="clearQ('transmission')"  *ngIf="selectTransmissoin"> <i class="fa fa-times"></i> </a>
+            <select id="transmissoin" name="transmission" required [(ngModel)]="selectTransmissoin" (change)="loadingTrigger()" class="form-control">
+              <option value="undefined" disabled selected hidden>Select Transmission</option>
+              <option *ngFor="let transmission of transmissions" value="{{transmission.tranmissoin}}">{{transmission.tranmissoin}}</option>
+            </select>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Enginge Types</label>
+            <a href="javascript:;" class="clear" (click)="clearQ('engine_type')"  *ngIf="selectEngineType"> <i class="fa fa-times"></i> </a>
+            <select id="all_engine_type" name="engine_type" required  (change)="loadingTrigger()"  [(ngModel)]="selectEngineType" class="form-control">
+              <option value="undefined" disabled selected hidden>Select Enginge Types</option>
+              <option *ngFor="let engineType of engineTypes" value="{{engineType.engine_type}}">{{engineType.engine_type}}</option>
+            </select>
+          </div>
+          <div class="form-group col-md-3">
+              <label>Assembly</label>
+              <a href="javascript:;" class="clear" (click)="clearQ('assembly')"  *ngIf="selectAssembly"> <i class="fa fa-times"></i> </a>
+              <select id="all_cities" name="assembly" required [(ngModel)]="selectAssembly" (change)="loadingTrigger()"  class="form-control">
+                <option value="undefined" disabled selected hidden>Select Assembly</option>
+                <option *ngFor="let assembly of assemblies" value="{{assembly.car_assemble}}">{{assembly.car_assemble}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-3">
+              <label>Register City</label>
+              <a href="javascript:;" class="clear" (click)="clearQ('reg_city')"  *ngIf="selectRegCities"> <i class="fa fa-times"></i> </a>
+              <select2 name="reg_city" [data]="regCities" [(ngModel)]="selectRegCities" ngDefaultControl class="form-control
+                  selectpicker"></select2>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="form-ftr">
+        <div class="more-option">
+          <button type="button" *ngIf="showOption" class="btn btn-primary" (click)="moreSearch()">More Search Option
+          </button>
+          <button type="button" *ngIf="!showOption" class="btn btn-primary" (click)="moreSearch()">Less Search Option
+          </button>
+        </div>
+        <div class="submit-btn">
+          <button class="btn red" type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
